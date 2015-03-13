@@ -1,0 +1,117 @@
+/* CSS Document */
+
+html, body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #555;
+	background-color: #D9EAED;
+	font-size: 12px;
+	height: 100%;
+	margin: 0px;
+}  
+
+h3 { 
+	font-size: 17px; 
+	padding: 0 0 10px 0;
+	font-weight: bold;
+	color: #294145;
+}
+
+h4 {
+	font-size: 13px; 
+	padding: 0;
+	color: #555555;
+	margin-top: 7px;
+	margin-bottom: 10px;
+	font-weight: normal;
+	padding-right: 20px;
+}
+
+.content-box {
+	border: 1px solid #BDD2D6;
+	margin: 0 0 20px 0;
+	background: #fff;
+	width: 400px;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.content-box-header {
+	background-color: #D9EAED;
+	margin-top: 1px;
+	height: 40px;
+}
+
+.content-box-header h3 {
+	margin-top: 10px;
+	padding: 0px 0px 0px 10px;
+	float: left;
+}
+
+.content-box-content {
+	padding: 20px;
+	font-size: 13px;
+	border-top: 1px solid #E8E7E1;
+}
+
+form input {
+	border:1px solid #C3D7DB;
+	padding:3px;
+	margin-bottom:5px;
+	width:200px;
+}
+
+.wrapper {
+	height: 100%;
+	width: 100%;
+	display: table;
+	/*vertical-align: middle;*/
+}
+
+.container {
+	/*text-align: center;
+	position: relative;*/
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.button {
+	padding-right:5px;
+	cursor:pointer;
+	width:100px;
+	font-weight:bold;
+	background:#fff url(../images/form_mix.gif) repeat-x top left;
+	color: #294145;
+}
+
+.button:hover {
+	background-position:center left;
+}
+
+.error {
+	border: 1px solid #C53E3E;
+	padding: 3px;
+	font-weight: bold;
+	color: #C53E3E;
+	background-color: #F0A4A4;
+	width: 300px;
+	text-align: center;
+	margin: -15px auto 10px auto;
+}
+
+/************ For Rounding Corner ************/
+
+.content-box,
+.content-box-header {
+	-moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.content-box-header {
+	-moz-border-radius-bottomleft: 0;
+	-moz-border-radius-bottomright: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
