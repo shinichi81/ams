@@ -17,11 +17,6 @@
                   <td><?php echo $all_data->misc_info; ?></td>
             </tr>
             <tr>
-                  <td>Harga</td>
-                  <td>:</td>
-                  <td><?php echo $all_data->harga; ?></td>
-            </tr>
-            <tr>
                   <td valign="top">Rubrik</td>
                   <td valign="top">:</td>
                   <td>
@@ -43,21 +38,26 @@
             <thead>
                   <tr>
                         <th>Posisi</th>
+<!--
                         <th>Harga</th>
+-->
                   </tr>
             </thead>
             <tbody>
                   <?php
                   $n = 0;
-                  foreach ($selected_harga as $position):
+                  // foreach ($selected_harga as $position):
+                  foreach ($selected_position as $position):
                         ?>
                         <tr class='remove'>
                               <td align='center'>
                                     <?php echo $position->name; ?>
                               </td>
+<!--
                               <td align='center'>
                                     <?php echo "Rp. " . number_format($position->harga,0,",","."); ?>
                               </td>
+-->
                         </tr>
                         <?php
                         $n += 1;

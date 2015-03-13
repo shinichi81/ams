@@ -359,13 +359,20 @@ class Productgroup_Model extends CI_Model {
 	  
 	  public function getPositionHarga($id_kanal, $id_product, $id_position) {
 			try {
-                  $this->db->select("a.id_position, b.name, a.harga");
-                  $this->db->from("tbl_product_group_harga a");
-                  $this->db->join("tbl_position b", "a.id_position = b.id");
-                  $this->db->where("a.id_kanal", $id_kanal);
-                  $this->db->where("a.id_product", $id_product);
-                  $this->db->where("a.id_position in (" . $id_position . ")", NULL);
-				  $this->db->order_by('a.id_position', 'asc');
+                  // $this->db->select("a.id_position, b.name, a.harga");
+                  // $this->db->from("tbl_product_group_harga a");
+                  // $this->db->join("tbl_position b", "a.id_position = b.id");
+                  // $this->db->where("a.id_kanal", $id_kanal);
+                  // $this->db->where("a.id_product", $id_product);
+                  // $this->db->where("a.id_position in (" . $id_position . ")", NULL);
+				  // $this->db->order_by('a.id_position', 'asc');
+                  $this->db->select("a.id, a.name, b.harga");
+                  $this->db->from("tbl_position a");
+                  $this->db->join("tbl_product_group_harga b", "a.id = b.id_position", "left");
+                  $this->db->where("b.id_kanal", $id_kanal);
+                  $this->db->where("b.id_product", $id_product);
+                  $this->db->where("a.id in (" . $id_position . ")", NULL);
+				  $this->db->order_by('a.id', 'asc');
                   $query = $this->db->get();
 
                   if (!$query)
