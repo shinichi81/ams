@@ -35,7 +35,7 @@ class Harga_Model extends CI_Model {
 	
 	public function get($id) {
 		try {
-			$this->db->select("a.id, b.name AS kanal, c.name AS rubrik, d.name AS product, e.name AS position, a.harga, a.update_date");
+			$this->db->select("a.id, a.id_kanal, a.id_rubrik, a.id_product, a.id_position, b.name AS kanal, c.name AS rubrik, d.name AS product, e.name AS position, a.harga, a.update_date");
 			$this->db->from("tbl_product_group_harga a");
             $this->db->join("tbl_kanal b", "a.id_kanal = b.id");
             $this->db->join("tbl_rubrik c", "a.id_rubrik = c.id");
