@@ -67,7 +67,6 @@
 		?>
 		<select name="selectOrderBy" id="selectOrderBy">
 			<option value="ALL" <?php echo $selectedAll; ?>>Semua</option>
-			<option value="nopaket" <?php echo $selectedName; ?>>Kanal</option>
 		</select>
 		<input type="text" name="txtSearch" id="txtSearch" <?php echo (empty($selectedName)) ? "style='display: none;'" : "value='".$order_by."'"; ?> />
 	</div>

@@ -18,7 +18,6 @@
 				  </div>
 				  <div id="statusBukti"></div>
 				  <br>
-<!--
 				  <label for="report">Report : </label> 
 				  <input name="report" id="report" type="file" />
 				  <input type="submit" name="uploadReport" id="uploadReport" value="Upload File Excel">
@@ -27,7 +26,6 @@
 					<div class="percent">0%</div >
 				  </div>
 				  <div id="statusReport"></div>
--->
                   <input name="hdId" id="hdId" type="hidden" value="<?php echo $all_data->no_paket; ?>" />
             </fieldset>
             <div class="ajax-loader" style="display: none;">&nbsp;</div>
