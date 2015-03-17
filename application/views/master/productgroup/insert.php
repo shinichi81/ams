@@ -46,13 +46,6 @@
                               <?php endforeach; ?>
                         </select>
                   </div>
-                  <div style="float: left"> 
-                        <select name="hargaSource" id="hargaSource" multiple="multiple" size="5" style="width: 100px;" hidden>
-                              <?php foreach ($all_harga as $harga): ?>
-                                    <option value="<?php echo $harga->id_position; ?>"><?php echo "Rp. " . number_format($harga->harga, 0, ",", "."); ?></option>
-                              <?php endforeach; ?>
-                        </select>
-                  </div>
                   <div style="float: left; margin-top: 15px; margin-right: 8px;">
                         <a href="javascript:void(0);" id="positiontodestination">
                               <input id="button2" type="button" value=">>" style="width: 25px" />
@@ -65,9 +58,6 @@
                   <div style="float: left">
                         <select name="selectPositionDestination" id="selectPositionDestination" multiple="multiple" size="5" style="width: 150px;">
                         </select> <span class="error" id="errTxtPosition"></span>
-                  </div>
-                  <div style="float: left">
-                        <select name="hargaDestination" id="hargaDestination" multiple="multiple" size="5" style="width: 120px;"></select>
                   </div>
                   <div style="clear: both;"></div>
                   <label for="name">CPM : </label> 
@@ -84,7 +74,6 @@
             $(document).ready(function() {
                   $("#selectKanal").change(function() {
                         loadListOption2('<?php echo site_url("master_productgroup/get_rubrik"); ?>', 'selectKanal', 'list_rubrik');
-                        loadListOption3('<?php echo site_url("master_productgroup/get_harga"); ?>', 'selectKanal', 'hargaSource');
                   });
                                                                   		
                   $("#rubriktodestination").click(function() {
@@ -96,8 +85,7 @@
                   });
                                                                   		
                   $("#positiontodestination").click(function() {
-                        posisi = movePosition("selectPositionSource", "selectPositionDestination");
-                        moveHarga("hargaSource", "hargaDestination", posisi);
+                        move("selectPositionSource", "selectPositionDestination");
                         tobeCpm("selectPositionDestination", "cpm_position");
                   });
                                                                   		
@@ -119,28 +107,6 @@
                         $("select[name="+destination+"]").append($(this).clone());
                         $(this).remove();
                   });
-            }
-
-            function movePosition(source, destination) {
-                  var index;
-				  $("select[name="+source+"] option:selected").each(function() {
-                        $("select[name="+destination+"]").append($(this).clone());
-						index = $(this).val();
-                        $(this).remove();
-                  });
-				  // alert(index);
-				  return index;
-            }
-
-            function moveHarga(source, destination, id) {
-                  var index;
-				  $("select[name="+source+"] option[value="+id+"]").each(function() {
-                        $("select[name="+destination+"]").append($(this).clone());
-						index = $(this).val();
-                        $(this).remove();
-                  });
-				  // alert(index);
-				  return index;
             }
 
             function tobeCpm(source, destination) {

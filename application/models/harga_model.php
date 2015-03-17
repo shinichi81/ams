@@ -10,6 +10,9 @@ class Harga_Model extends CI_Model {
             $this->db->join("tbl_product_group d", "a.id_product = d.id");
             $this->db->join("tbl_position e", "a.id_position = e.id");
 			$this->db->order_by('a.id_kanal', 'asc');
+			$this->db->order_by('a.id_rubrik', 'asc');
+			$this->db->order_by('a.id_product', 'asc');
+			$this->db->order_by('a.id_position', 'asc');
 			if ($orderBy <> "ALL") {
 				$this->db->like("kanal", $orderBy);
 			}
@@ -32,9 +35,13 @@ class Harga_Model extends CI_Model {
 	
 	public function get($id) {
 		try {
-			$this->db->select("id, id_kanal, id_rubrik, id_product, id_position, harga, update_date");
-			$this->db->from("tbl_product_group_harga");
-			$this->db->where("id", $id);
+			$this->db->select("a.id, b.name AS kanal, c.name AS rubrik, d.name AS product, e.name AS position, a.harga, a.update_date");
+			$this->db->from("tbl_product_group_harga a");
+            $this->db->join("tbl_kanal b", "a.id_kanal = b.id");
+            $this->db->join("tbl_rubrik c", "a.id_rubrik = c.id");
+            $this->db->join("tbl_product_group d", "a.id_product = d.id");
+            $this->db->join("tbl_position e", "a.id_position = e.id");
+			$this->db->where("a.id", $id);
 			$query = $this->db->get();
 			
 			if (!$query)
@@ -123,13 +130,8 @@ class Harga_Model extends CI_Model {
 	
 	public function delete($id) {
 		try {
-			$data = array(
-				"update_user"	=>	$this->session->userdata("username"),
-				"active"	=>	'N',
-			);
-			
 			$this->db->where("id", $id);
-			$query = $this->db->update("tbl_production", $data);
+			$query = $this->db->delete("tbl_product_group_harga");
 			
 			if (!$query)
 				throw new Exception();

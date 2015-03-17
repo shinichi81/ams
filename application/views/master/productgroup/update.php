@@ -54,13 +54,6 @@
                               <?php endforeach; ?>
                         </select>
                   </div>
-                  <div style="float: left"> 
-                        <select name="hargaSource" id="hargaSource" multiple="multiple" size="5" style="width: 100px;" hidden>
-                              <?php foreach ($all_harga as $harga): ?>
-                                    <option value="<?php echo $harga->id_position; ?>"><?php echo "Rp. " . number_format($harga->harga,0,",","."); ?></option>
-                              <?php endforeach; ?>
-                        </select>
-                  </div>
                   <div style="float: left; margin-top: 15px; margin-right: 8px;">
                         <a href="javascript:void(0);" id="positiontodestination">
                               <input id="button2" type="button" value=">>" style="width: 25px" />
@@ -76,13 +69,6 @@
                                     <option value="<?php echo $position->id; ?>"><?php echo $position->name; ?></option>
                               <?php endforeach; ?>
                         </select> <span class="error" id="errTxtPosition"></span>
-                  </div>
-                  <div style="float: left">
-                        <select name="hargaDestination" id="hargaDestination" multiple="multiple" size="5" style="width: 120px;">
-						      <?php foreach ($selected_harga as $harga): ?>
-                                    <option value="<?php echo $harga->id_position; ?>"><?php echo "Rp. " . number_format($harga->harga,0,",","."); ?></option>
-                              <?php endforeach; ?>
-						</select>
                   </div>
                   <div style="clear: both;"></div>
                   <label for="name">CPM : </label> 
@@ -116,23 +102,14 @@
                                     		
                   $("#positiontodestination").click(function() {
                         move("selectPositionSource", "selectPositionDestination");
-                        move("selectHargaSource", "selectHargaDestination");
                         tobeCpm("selectPositionDestination", "cpm_position");
                   });
                                     		
                   $("#positiontosource").click(function() {
                         move("selectPositionDestination", "selectPositionSource");
-                        move("selectHargaDestination", "selectHargaSource");
                         tobeCpm("selectPositionDestination", "cpm_position");
                   });
 				  
-				  $("#hargaDestination").dblclick(function() {
-					  $("#hargaDestination option:selected").each(function() {
-							alert('test');
-                        // $("select[name="+destination+"]").append($(this).clone());
-                        // $(this).remove();
-					  });
-                  });
             });
                                     	
             function move(source, destination) {

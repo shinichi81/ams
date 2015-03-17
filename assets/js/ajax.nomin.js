@@ -698,8 +698,10 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var no_paket = $("#hdId").val();
                   var no_po = $("#noPO").val();
                   var no_so = $("#noSO").val();
+                  var bukti = $("#statusBukti").text();
+                  var report = $("#statusReport").text();
                         
-                  var arrParam = new Array(no_paket, no_po, no_so);
+                  var arrParam = new Array(no_paket, no_po, no_so, bukti, report);
             } else if (todo == "delete") {
             }
       } else if (obj == "production") {

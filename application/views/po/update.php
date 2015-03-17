@@ -10,23 +10,24 @@
                   <input name="noSO" id="noSO" type="text" value="<?php echo $all_data->no_so; ?>" />
                   <br>
 				  <label for="bukti">Bukti Tayang : </label> 
-				  <input name="userfile" id="userfile" type="file" />
-				  <input type="submit" name="uploadPicture" id="uploadPicture" value="Upload Picture">
+				  <input name="bukti" id="bukti" type="file" />
+				  <input type="submit" name="uploadBukti" id="uploadBukti" value="Upload Picture">
 				  <div class="progress">
 					<div class="bar"></div >
 					<div class="percent">0%</div >
 				  </div>
-				  <div id="status"></div>
+				  <div id="statusBukti"></div>
 				  <br>
+<!--
 				  <label for="report">Report : </label> 
-				  <input name="userfile" id="userfile" type="file" />
+				  <input name="report" id="report" type="file" />
 				  <input type="submit" name="uploadReport" id="uploadReport" value="Upload File Excel">
 				  <div class="progress">
 					<div class="bar"></div >
 					<div class="percent">0%</div >
 				  </div>
-				  <div id="status"></div>
-				  <br>
+				  <div id="statusReport"></div>
+-->
                   <input name="hdId" id="hdId" type="hidden" value="<?php echo $all_data->no_paket; ?>" />
             </fieldset>
             <div class="ajax-loader" style="display: none;">&nbsp;</div>
@@ -41,24 +42,24 @@
 			/* s: UNTUK PROSES UPLOAD GAMBAR */
 			var bar = $(".bar");
 			var percent = $(".percent");
-			var status = $("#status");
+			var status = $("#statusBukti");
 			   
-			// $("form").ajaxForm({
-				// beforeSend: function() {
-					// status.empty();
-					// var percentVal = "0%";
-					// bar.width(percentVal)
-					// percent.html(percentVal);
-				// },
-				// uploadProgress: function(event, position, total, percentComplete) {
-					// var percentVal = percentComplete + "%";
-					// bar.width(percentVal)
-					// percent.html(percentVal);
-				// },
-				// complete: function(xhr) {
-					// status.html(xhr.responseText);
-				// }
-			// });
+			$("form").ajaxForm({
+				beforeSend: function() {
+					status.empty();
+					var percentVal = "0%";
+					bar.width(percentVal)
+					percent.html(percentVal);
+				},
+				uploadProgress: function(event, position, total, percentComplete) {
+					var percentVal = percentComplete + "%";
+					bar.width(percentVal)
+					percent.html(percentVal);
+				},
+				complete: function(xhr) {
+					status.html(xhr.responseText);
+				}
+			});
 			/* e: UNTUK PROSES UPLOAD GAMBAR */
 		});
       </script>
