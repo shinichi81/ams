@@ -16,6 +16,16 @@ if ($this->uri->segment(1) == "order") {
 					document.getElementById('diskonNominal').value = diskonNominal.formatMoney(0);
 					document.getElementById('addDiskonNominal').value = diskonLainNominal.formatMoney(0);
 					document.getElementById('totalHarga').value = hargaTotal.formatMoney(0);
+
+					var totalProduction = document.getElementById('totalProduction').value;
+					totalProduction = parseInt(totalProduction.toString().split('.').join(''));
+					var totalEvent = document.getElementById('totalEvent').value;
+					totalEvent = parseInt(totalEvent.toString().split('.').join(''));
+					var total = (hargaTotal + totalProduction + totalEvent);
+					var pajak = total * 10 / 100;
+					var akhir = total + pajak;
+					document.getElementById('pajak').value = pajak.formatMoney(0);
+					document.getElementById('akhir').value = akhir.formatMoney(0);
 				}
 				
 				function hitungTotal() {

@@ -322,7 +322,7 @@
 						document.getElementById('total').value = simpan.formatMoney(0);
 						document.getElementById('hargaGross').value = simpan;
 						gantiHarga();
-						hitungTotal();
+						// hitungTotal();
                   });
                                                                   						  
 				// gunakan fungsi live untuk membind event 'click' ke #btnHapus
@@ -334,7 +334,7 @@
 						document.getElementById('total').value = simpan.formatMoney(0);
 						document.getElementById('hargaGross').value = simpan;
 						gantiHarga();
-						hitungTotal();
+						// hitungTotal();
 
                         $(this).parents(".remove").remove();
                   });
@@ -368,15 +368,17 @@
 						simpan = simpan - harga;
 						document.getElementById('total').value = simpan.formatMoney(0);
 						
-                        loadListOption(index, '<?php echo site_url("order/get_harga"); ?>', 'selectPosition', 'harga');
-                        loadListOption(index, '<?php echo site_url("order/get_harga_total"); ?>', 'selectPosition', 'hargaTotal');
+                        loadHargaPaket(index, '<?php echo site_url("order/get_harga"); ?>', 'selectKanal', 'selectProductGroup', 'selectPosition', 'harga');
+                        alert(loadHargaPaket(index, '<?php echo site_url("order/get_harga_total"); ?>', 'selectKanal', 'selectProductGroup', 'selectPosition', 'hargaTotal'));
 
 						var harga2 = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
 						harga2 = parseInt(harga2.split('.').join(""));
 						simpan = simpan + harga2;
-						// alert(harga2);
 						
-						// document.getElementById('total').value = simpan.formatMoney(0);
+						document.getElementById('total').value = simpan.formatMoney(0);
+						document.getElementById('hargaGross').value = simpan;
+						gantiHarga();
+						// hitungTotal();
 
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtStartDate]").val("");
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtEndDate]").val("");
@@ -489,7 +491,7 @@
                               loadForm('<?php echo site_url("order/search_page/B"); ?>')
                   });
 
-//TAMBAHAN WILLY				  
+//TAMBAHAN WILLY
 				var DateDiff = {
 
 					inDays: function(d1, d2) {
@@ -534,7 +536,15 @@
 							var harga = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHarga").val();
 							harga = harga.split('.').join("");
 							harga = harga * (DateDiff.inDays(d1, d2) + 1);
-							$("#addme tr").eq(index).children().next().next().next().next().next().next().find("#txtHargaTotal").val(harga);
+							var hargaTotal = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
+							hargaTotal = hargaTotal.split('.').join("");
+							simpan = simpan - hargaTotal;
+							$("#addme tr").eq(index).children().next().next().next().next().next().next().find("#txtHargaTotal").val(harga.formatMoney(0));
+							simpan = simpan + harga;
+							document.getElementById('total').value = simpan.formatMoney(0);							
+							document.getElementById('hargaGross').value = simpan;
+							gantiHarga();
+							// hitungTotal();
 						}
 				  });
 
@@ -557,8 +567,10 @@
 							simpan = simpan - hargaTotal;
 							$("#addme tr").eq(index).children().next().next().next().next().next().next().find("#txtHargaTotal").val(harga.formatMoney(0));
 							simpan = simpan + harga;
-							document.getElementById('total').value = simpan.formatMoney(0);
-							hitungTotal();
+							document.getElementById('total').value = simpan.formatMoney(0);							
+							document.getElementById('hargaGross').value = simpan;
+							gantiHarga();
+							// hitungTotal();
 						}
 				  });
 
@@ -616,8 +628,13 @@
 						hargaTotal = hargaTotal.split('.').join("");
 						simpanProd = simpanProd - hargaTotal;
                         loadHargaProd(index, '<?php echo site_url("order/get_harga_prod"); ?>', 'selectProduction', 'harga');
-                        loadHargaProd(index, '<?php echo site_url("order/get_harga_prod_total"); ?>', 'selectProduction', 'hargaTotal');
-						$("#addmeProduction tr").eq(index).children().next().next().find("#txtQty").val(1);
+                        alert(loadHargaProd(index, '<?php echo site_url("order/get_harga_prod_total"); ?>', 'selectProduction', 'hargaTotal'));
+						$("#addmeProduction tr").eq(index).children().next().find("#txtQty").val(1);
+						
+						var hargaBaru = $("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val();
+						hargaBaru = parseInt(hargaBaru.split('.').join(""));
+						simpanProd = simpanProd + hargaBaru;
+						
 						// simpanProd = simpanProd + newHarga;
 						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
 						hitungTotal();
@@ -690,5 +707,6 @@
 						hitungTotal();
 				  });
             });
+//END TAMBAHAN WILLY
       </script>
 <?php endif; ?>

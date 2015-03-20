@@ -44,8 +44,8 @@ class Order_Model extends CI_Model {
 
       public function get($no_paket) {
             try {
-                  $this->db->select("a.no_paket, a.no_paket_user, a.request_date, a.ae_id, e.name sales, a.agency_id, c.name agency, a.client_id, b.name client, a.approve, a.done, a.budget, a.diskon, a.benefit, a.is_restrict, a.industrycat_id, a.industry_id, a.progress, a.misc_info, a.misc_info_event, a.misc_info_production_cost, a.no_reference, a.harga_sistem, a.harga_gross, a.disc_nominal, a.harga_disc, a.pajak, a.diskon, a.total_harga");
-                  $this->db->select("IFNULL(a.no_paket_user, '-') no_paket_user, IFNULL(d.name, '-') industry, IFNULL(a.harga_sistem, '0') harga_sistem", FALSE);
+                  $this->db->select("a.no_paket, a.no_paket_user, a.request_date, a.ae_id, e.name sales, a.agency_id, c.name agency, a.client_id, b.name client, a.approve, a.done, a.budget, a.diskon, a.benefit, a.is_restrict, a.industrycat_id, a.industry_id, a.progress, a.misc_info, a.misc_info_event, a.misc_info_production_cost, a.no_reference");
+                  $this->db->select("IFNULL(a.no_paket_user, '-') no_paket_user, IFNULL(d.name, '-') industry", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_client b", "a.client_id = b.id", "left");
                   $this->db->join("tbl_agency c", "a.agency_id = c.id", "left");
@@ -837,7 +837,7 @@ class Order_Model extends CI_Model {
             }
       }
 
-      public function insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $no_reference, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id, $harga_sistem, $harga_gross, $disc_nominal, $harga_disc, $pajak, $total_harga) {
+      public function insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $no_reference, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id) {
             try {
                   $progress = 0;
                   $progress_date = null;
@@ -871,12 +871,6 @@ class Order_Model extends CI_Model {
                             "no_reference" => $no_reference,
                             "progress" => $progress,
                             "progress_date" => $progress_date,
-                            "harga_sistem" => $harga_sistem,
-                            "harga_gross" => $harga_gross,
-                            "disc_nominal" => $disc_nominal,
-                            "harga_disc" => $harga_disc,
-                            "pajak" => $pajak,
-                            "total_harga" => $total_harga,
                             "create_user" => $this->session->userdata("username"),
                         );
                   } else {
@@ -894,12 +888,6 @@ class Order_Model extends CI_Model {
                             "no_reference" => $no_reference,
                             "progress" => $progress,
                             "progress_date" => $progress_date,
-                            "harga_sistem" => $harga_sistem,
-                            "harga_gross" => $harga_gross,
-                            "disc_nominal" => $disc_nominal,
-                            "harga_disc" => $harga_disc,
-                            "pajak" => $pajak,
-                            "total_harga" => $total_harga,
                             "create_user" => $this->session->userdata("username"),
                         );
                   }
@@ -958,7 +946,7 @@ class Order_Model extends CI_Model {
             }
       }
 
-      public function updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id, $harga_sistem, $harga_gross, $disc_nominal, $harga_disc, $pajak, $total_harga) {
+      public function updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id) {
             try {
                   if ($is_restrict == "true") {
                         $data = array(
@@ -977,12 +965,6 @@ class Order_Model extends CI_Model {
                             "done" => "N",
                             "industrycat_id" => $industrycat_id,
                             "industry_id" => $industry_id,
-                            "harga_sistem" => $harga_sistem,
-                            "harga_gross" => $harga_gross,
-                            "disc_nominal" => $disc_nominal,
-                            "harga_disc" => $harga_disc,
-                            "pajak" => $pajak,
-                            "total_harga" => $total_harga,
                             "update_user" => $this->session->userdata("username"),
                             "active_status" => "Y",
                         );
@@ -1004,12 +986,6 @@ class Order_Model extends CI_Model {
                             "done" => "N",
                             "industrycat_id" => "",
                             "industry_id" => "",
-                            "harga_sistem" => $harga_sistem,
-                            "harga_gross" => $harga_gross,
-                            "disc_nominal" => $disc_nominal,
-                            "harga_disc" => $harga_disc,
-                            "pajak" => $pajak,
-                            "total_harga" => $total_harga,
                             "update_user" => $this->session->userdata("username"),
                             "active_status" => "Y",
                         );
@@ -1121,11 +1097,13 @@ class Order_Model extends CI_Model {
 	  
 	  //TAMBAHAN DARI WILLY
 	  
-      public function getHarga($id) {
+      public function getHarga($idKanal, $idProduct, $idPosition) {
             try {
                   $this->db->select("harga");
                   $this->db->from("tbl_product_group_harga");
-                  $this->db->where("id_position", $id);
+                  $this->db->where("id_kanal", $idKanal);
+                  $this->db->where("id_product", $idProduct);
+                  $this->db->where("id_position", $idPosition);
                   $query = $this->db->get();
 
                   if (!$query)

@@ -1423,5 +1423,30 @@ function loadHargaProd(index, url, idSource, idDestination) {
             });
       });
 	
-      return false;
+      return "Changed";
+}
+
+function loadHargaPaket(index, url, idKanal, idProduct, idPosition, idDestination) {
+      var kanal = $("#addme tr").eq(index).children().children("#"+idKanal).val();
+      var product = $("#addme tr").eq(index).children().children("#"+idProduct).val();
+      var position = $("#addme tr").eq(index).children().children("#"+idPosition).val();
+      var url = url+"/"+kanal+"/"+product+"/"+position;
+	
+      var jqxhr = $.get(url,
+            function(data) {
+                  $("#addme tr").eq(index).children().children("#"+idDestination).html(data);
+            }
+            );
+	
+      jqxhr.complete(function() {
+            $("#"+idDestination).trigger("change", [index]);
+      });
+	
+      jqxhr.error(function() {
+            $.fancybox({
+                  "content" : "Error occurred. Try again!"
+            });
+      });
+	  
+      return "Changed";
 }

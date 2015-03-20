@@ -43,12 +43,6 @@
                   <div style="float: left;">
                         <label for="budget">Budget : </label> 
                         <input name="txtBudget" id="txtBudget" type="text" value="<?php echo $all_data->budget; ?>" />
-                        <br>
-                        <label for="diskon">Diskon : </label> 
-                        <input name="txtDiskon" id="txtDiskon" type="text" value="<?php echo $all_data->diskon; ?>" /> <span class="error" id="errTxtDiskon"></span>
-						<br />
-                        <label for="additionalDiskon">Additional Diskon : </label> 
-                        <input name="txtAddDiskon" id="txtAddDiskon" type="text" value="<?php echo $all_data->additional_diskon; ?>" />
 						<br />
                         <label for="campaign">Campaign : </label> 
                         <input name="txtCampaign" id="txtCampaign" type="text" value="<?php echo $all_data->campaign; ?>" />
@@ -232,28 +226,24 @@
                         </tbody>
                   </table>
 				  <div style="float:right; margin-right:50px;">
-					<label>Total Harga :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-					<input name="total" id="total" style="width:70px;" type="text" value="<?php echo $all_data->harga_sistem; ?>" />
+					<label>Harga Sistem :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<input name="total" id="total" style="width:100px;" type="text" value="<?php echo $all_data->harga_sistem; ?>" />
 				  </div>
 				  <br />
                   <label for="hargaGross">Harga Paket Gross : </label> 
                   <input name="hargaGross" id="hargaGross" type="text" value="<?php echo $all_data->harga_gross; ?>" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" />
                   <br>
                   <label for="diskon">Diskon : </label> 
-                  <input name="diskon" id="diskon" type="text" value="<?php echo $all_data->diskon; ?>" readonly />
+                  <input name="txtDiskon" id="txtDiskon" type="text" value="<?php echo $all_data->diskon; ?>" readonly />
+				  <br />
+				  <label for="additionalDiskon">Additional Diskon : </label> 
+				  <input name="txtAddDiskon" id="txtAddDiskon" type="text" value="<?php echo $all_data->additional_diskon; ?>" readonly />
                   <br>
                   <label for="diskonNominal">Diskon (Nominal) : </label> 
-                  <input name="diskonNominal" id="diskonNominal" type="text" value="<?php echo $all_data->disc_nominal; ?>" readonly />
+                  <input name="diskonNominal" id="diskonNominal" type="text" value="0" readonly />
                   <br>
-                  <label for="hargaDiskon">Harga setelah Diskon : </label> 
-                  <input name="hargaDiskon" id="hargaDiskon" type="text" value="<?php echo $all_data->harga_disc; ?>" readonly />
-                  <br>
-                  <label for="pajak">Ppn / Pph : </label> 
-                  <input name="pajak" id="pajak" type="text" value="<?php echo $all_data->pajak; ?>" readonly />
-                  <br>
-                  <label for="totalHarga">Total Harga : </label> 
-                  <input name="totalHarga" id="totalHarga" type="text" value="<?php echo $all_data->total_harga; ?>" readonly />
-                  <br>
+                  <label for="addDiskonNominal">Additional Diskon (Nominal) : </label> 
+                  <input name="addDiskonNominal" id="addDiskonNominal" type="text" value="0" readonly />
             </fieldset>
             <fieldset id="conflict">
                   <legend>Conflict Brand</legend>

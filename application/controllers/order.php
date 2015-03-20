@@ -187,7 +187,7 @@ class Order extends CI_Controller {
         $allPosition = $this->Order_Model->getAllPosition($allProductGroup[0]->position_id);
         $allAgency = $this->Order_Model->getAgency();
         $allClient = $this->Order_Model->getClient();
-		$harga = $this->Order_Model->getHarga(1);
+		$harga = $this->Order_Model->getHarga(1,1,1);
         $allProduction = $this->Order_Model->getAllProd();
 		$hargaProd = $this->Order_Model->getHargaProd(1);
         $allIndustry = array();
@@ -1281,8 +1281,8 @@ class Order extends CI_Controller {
         $this->load->view("order/detail_brandcomm", $data);
     }
 
-    public function get_harga($id) {
-        $harga = $this->Order_Model->getHarga($id);
+    public function get_harga($idKanal, $idProduct, $idPosition) {
+        $harga = $this->Order_Model->getHarga($idKanal, $idProduct, $idPosition);
 
         $data = '<input name="txtHarga" id="txtHarga" type="text" readonly="readonly" style="width: 70px;" value="' . number_format($harga->harga,0,",",".") . '" />';
 
@@ -1290,8 +1290,8 @@ class Order extends CI_Controller {
         die;
     }
 
-    public function get_harga_total($id) {
-        $harga = $this->Order_Model->getHarga($id);
+    public function get_harga_total($idKanal, $idProduct, $idPosition) {
+        $harga = $this->Order_Model->getHarga($idKanal, $idProduct, $idPosition);
 
         $data = '<input name="txtHargaTotal" id="txtHargaTotal" type="text" readonly="readonly" style="width: 70px;" value="' . number_format($harga->harga,0,",",".") . '" />';
 
