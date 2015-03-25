@@ -7,8 +7,8 @@ if ($this->uri->segment(1) == "order") {
 								
 				function gantiHarga()	{
 					var harga = parseInt(document.getElementById('hargaGross').value);
-					var diskon = parseInt(document.getElementById('txtDiskon').value);
-					var diskonLain = parseInt(document.getElementById('txtAddDiskon').value);
+					var diskon = parseFloat(document.getElementById('txtDiskon').value);
+					var diskonLain = parseFloat(document.getElementById('txtAddDiskon').value);
 					var diskonNominal = (diskon / 100) * harga;
 					var hargaDiskon = harga - diskonNominal;
 					var diskonLainNominal = (diskonLain / 100) * hargaDiskon;
@@ -761,7 +761,6 @@ if ($this->uri->segment(1) == "order") {
 }	else if ($this->uri->segment(1) == "approve_manager") {
       echo "	<script type='text/javascript'>
 				loadContent('" . site_url("approve_manager/content") . "');
-				loadForm('" . site_url("approve_manager/insert_page") . "');
 				
 				$(document).ready(function() {
 					$('#selectPage').live('change', function() {

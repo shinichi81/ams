@@ -5,8 +5,7 @@ class Approve_Manager_Model extends CI_Model {
       public function getAll($startLimit, $endLimit, $orderBy = "ALL") {
             try {
 				  $this->db->distinct();
-                  // $this->db->select("a.no_paket, a.no_po, a.harga_sistem, a.harga_gross, a.disc_nominal, a.harga_disc, a.pajak, a.diskon, a.total_harga, a.no_so, a.request_date, b.name AS brand, c.name AS company, a.ae_id");
-                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS brand, c.name AS company");
+                  $this->db->select("a.no_paket, f.no_po, f.no_so, a.request_date, b.name AS brand, c.name AS company");
                   $this->db->select("IFNULL(f.no_po, e.no_po) AS no_po", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_agency b", "a.agency_id = b.id");
@@ -173,15 +172,14 @@ class Approve_Manager_Model extends CI_Model {
 
       public function getTotal($orderBy = "ALL") {
             try {
-                  $this->db->from("tbl_order_paket");
+                  $this->db->from("tbl_order_paket a");
+                  $this->db->join("tbl_invoice f", "f.no_paket = a.no_paket", "left");
 				  if ($orderBy <> "ALL") {
-						$this->db->like("no_paket", $orderBy);
+						$this->db->like("a.no_paket", $orderBy);
                   }
-                  $this->db->where("approve", "Y");
-                  $this->db->where("approve_manager", "N");
-				  $this->db->where("no_po IS NOT NULL");
-				  $this->db->where("no_so IS NOT NULL");
-                  $this->db->where("active_status", "Y");
+                  $this->db->where("a.approve", "Y");
+                  $this->db->where("a.active_status", "Y");
+                  $this->db->where("f.approve_manager", "N");
                   $result = $this->db->count_all_results();
 
                   // if (!$result)

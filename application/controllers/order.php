@@ -563,19 +563,23 @@ class Order extends CI_Controller {
         $harga_sistem = $arrParam[21];
         $harga_gross = $arrParam[22];
         $disc_nominal = $arrParam[23];
-        $harga_disc = $arrParam[24];
-        $pajak = $arrParam[25];
-        $total_harga = $arrParam[26];
-        $selectProduction = $arrParam[27];
-        $txtQty = $arrParam[28];
-        $txtHargaProd = $arrParam[29];
-        $txtHargaProdTotal = $arrParam[30];
-        $txtInfoProd = $arrParam[31];
-        $txtEvent = $arrParam[32];
-        $txtStartDateEvent = $arrParam[33];
-        $txtEndDateEvent = $arrParam[34];
-        $txtHargaEvent = $arrParam[35];
-        $txtInfoEvent = $arrParam[36];
+        $additional_disc = $arrParam[24];
+        $additional_disc_nominal = $arrParam[25];
+        $selectProduction = $arrParam[26];
+        $txtQty = $arrParam[27];
+        $txtHargaProd = $arrParam[28];
+        $txtHargaProdTotal = $arrParam[29];
+        $txtInfoProd = $arrParam[30];
+        $txtEvent = $arrParam[31];
+        $txtStartDateEvent = $arrParam[32];
+        $txtEndDateEvent = $arrParam[33];
+        $txtHargaEvent = $arrParam[34];
+        $txtInfoEvent = $arrParam[35];
+        $total_harga = $arrParam[36];
+        $total_production = $arrParam[37];
+        $total_event = $arrParam[38];
+        $pajak = $arrParam[39];
+        $total_semua = $arrParam[40];
         $date = true;
         $validNo = true;
         $tempIdInUse = "";
@@ -817,6 +821,10 @@ class Order extends CI_Controller {
 							throw new Exception($insertEvent);
 					}
 				}
+				
+				$insertHarga = $this->Order_Model->insertOrderHarga($no_paket, $harga_sistem, $harga_gross, $disc_nominal, $additional_disc, $additional_disc_nominal, $total_harga, $total_production, $total_event, $pajak, $total_semua);
+                if ($insertHarga !== true)
+                    throw new Exception($insertHarga);
 
                 if ($packet_type <> "Y") {
                     $insert = $this->Order_Model->updateStatusIsOrderPaket($no, $packet_type);

@@ -1305,4 +1305,34 @@ class Order_Model extends CI_Model {
                   return error_message($errNo);
             }
       }
+	  
+	  public function insertOrderHarga() {
+			try {
+					$data = array(
+						"no_paket" => $no_paket,
+						"paket_sistem" => $paket_sistem,
+						"paket_gross" => $paket_gross,
+						"diskon_nominal" => $diskon_nominal,
+						"additional_diskon" => $additional_diskon,
+						"additional_diskon_nominal" => $additional_diskon_nominal,
+						"paket_total" => $paket_total,
+						"produksi_total" => $produksi_total,
+						"event_total" => $event_total,
+						"pajak" => $pajak,
+						"total" => $total,
+					);
+
+                  $query = $this->db->insert("tbl_order_harga", $data);
+
+                  if (!$query)
+                        throw new Exception();
+
+                  return true;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+	  }
 }

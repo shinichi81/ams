@@ -356,10 +356,9 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var hargaSistem = $("#total").val();
                   var hargaGross = $("#hargaGross").val();
                   var diskonNominal = $("#diskonNominal").val();
-                  var hargaDiskon = $("#hargaDiskon").val();
-                  var pajak = $("#pajak").val();
-                  var totalHarga = $("#totalHarga").val();
-				  
+				  var addDiskon = $("#txtAddDiskon").val();
+				  var addDiskonNominal = $("#addDiskonNominal").val();				  
+
                   var selectProduction = ($("select[name=selectProduction]").length > 0) ? $("select[name=selectProduction]").serializeArray() : "";
                   var txtQty = ($("input[name=txtQty]").length > 0) ? $("input[name=txtQty]").serializeArray() : "";
                   var txtHargaProd = ($("input[name=txtHargaProd]").length > 0) ? $("input[name=txtHargaProd]").serializeArray() : "";
@@ -371,9 +370,16 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
 				  var txtEndDateEvent = ($("input[name=txtEndDateEvent]").length > 0) ? $("input[name=txtEndDateEvent]").serializeArray() : "";
 				  var txtHargaEvent = ($("input[name=txtHargaEvent]").length > 0) ? $("input[name=txtHargaEvent]").serializeArray() : "";
                   var txtInfoEvent = ($("textarea[name=txtInfoEvent]").length > 0) ? $("textarea[name=txtInfoEvent]").serializeArray() : "";
+
+                  var totalHarga = $("#totalHarga").val();
+                  var totalProduction = $("#totalProduction").val();
+                  var totalEvent = $("#totalEvent").val();
+                  var pajak = $("#pajak").val();
+                  var totalSemua = $("#totalSemua").val();
 				  //END TAMBAHAN
                         				  
-                  var arrParam = new Array(selectPacketType, txtNo, txtAgency, txtClient, txtBudget, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, hargaDiskon, pajak, totalHarga, selectProduction, txtQty, txtHargaProd, txtHargaProdTotal, txtInfoProd, txtEvent, txtStartDateEvent, txtEndDateEvent, txtHargaEvent, txtInfoEvent);
+                  var arrParam = new Array(selectPacketType, txtNo, txtAgency, txtClient, txtBudget, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, addDiskon, addDiskonNominal, selectProduction, txtQty, txtHargaProd, txtHargaProdTotal, txtInfoProd, txtEvent, txtStartDateEvent, txtEndDateEvent, txtHargaEvent, txtInfoEvent, totalHarga, totalProduction, totalEvent, pajak, totalSemua);
+				  // alert(arrParam);
             } else if (todo == "update") {
                   var txtNoPaket = $("#txtNoPaket").val();
                   var txtAgency = $("#selectAgency").val();
@@ -407,7 +413,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var totalHarga = $("#totalHarga").val();
 				  // END TAMBAHAN
 
-                  var arrParam = new Array(txtNoPaket, txtAgency, txtClient, txtBudget, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, hdStartDate, hdEndDate, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, hargaDiskon, pajak, totalHarga);
+                  var arrParam = new Array(txtNoPaket, txtAgency, txtClient, txtBudget, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, hdStartDate, hdEndDate, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, pajak, totalHarga);
             } else if (todo == "progress") {
                   var hdNoPaket = $("#hdNoPaket").val();
                   var txtPercent = $("#percent").text();			

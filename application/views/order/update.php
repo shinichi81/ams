@@ -245,6 +245,54 @@
                   <label for="addDiskonNominal">Additional Diskon (Nominal) : </label> 
                   <input name="addDiskonNominal" id="addDiskonNominal" type="text" value="0" readonly />
             </fieldset>
+            <fieldset id="production">
+                  <legend>Production Cost</legend>
+                  <button type="button" name="btnTambahProduction" id="btnTambahProduction" title="Tambah" class="btn"><img src="<?php echo image_url("icons/add.png"); ?>" alt="Tambah" /></button>
+                  <table>
+                        <thead>
+                        <th>Production</th>
+                        <th>Qty</th>
+                        <th>Biaya</th>
+                        <th>Biaya Total</th>
+                        <th>Keterangan</th>
+                        <th>&nbsp;</th>
+                        </thead>
+                        <tbody id="addmeProduction">			
+                        </tbody>
+                  </table>
+            </fieldset>
+            <fieldset id="event">
+                  <legend>Event</legend>
+                  <button type="button" name="btnTambahEvent" id="btnTambahEvent" title="Tambah" class="btn"><img src="<?php echo image_url("icons/add.png"); ?>" alt="Tambah" /></button>
+                  <table>
+                        <thead>
+                        <th>Event</th>
+                        <th>Periode</th>
+                        <th>Biaya</th>
+                        <th>Keterangan</th>
+                        <th>&nbsp;</th>
+                        </thead>
+                        <tbody id="addmeEvent">			
+                        </tbody>
+                  </table>
+            </fieldset>
+			<fieldset id="totalSemua">
+					<legend>Total Biaya</legend>
+					<label>Total Harga Paket :</label> 
+					<input name="totalHarga" id="totalHarga" type="text" value="0" readonly />
+					<br>
+					<label>Total Harga Produksi :</label>
+					<input name="totalProduction" id="totalProduction" type="text" value="0" readonly />
+					<br>
+					<label>Total Harga Event :</label>
+					<input name="totalEvent" id="totalEvent" type="text" value="0" readonly />					
+					<br>
+					<label>PPN :</label>
+					<input name="pajak" id="pajak" type="text" value="0" />
+					<br>
+					<label>Total Biaya Keseluruhan :</label>
+					<input name="totalSemua" id="akhir" type="text" value="0" />
+			</fieldset>
             <fieldset id="conflict">
                   <legend>Conflict Brand</legend>
                   <label for="conflict">Conflict Brand : </label> 
@@ -277,6 +325,7 @@
                         </select>
                   </span>
             </fieldset>
+	<!--
             <fieldset id="others">
                   <legend>Others</legend>
                   <div style="float: left; width: 400px;">
@@ -288,6 +337,7 @@
                         <textarea name="txtMiscInfoProductionCost" id="txtMiscInfoProductionCost" style="height: 80px; width: 250px;"><?php echo $all_data->misc_info_production_cost; ?></textarea>
                   </div>
             </fieldset>
+-->
             <div class="ajax-loader" style="display: none;">&nbsp;</div>
             <div align="center">
                   <input id="button1" type="button" value="Simpan" onclick="ajaxChange('order', 'update', '<?php echo site_url("order/update"); ?>', '<?php echo site_url("order/content"); ?>', '<?php echo site_url("order/insert_page"); ?>')" /> 
@@ -296,13 +346,24 @@
       </form>
 
       <script type="text/javascript">
+			Number.prototype.formatMoney = function(c, d, t){
+				var n = this, 
+					c = isNaN(c = Math.abs(c)) ? 2 : c, 
+					d = d == undefined ? "," : d, 
+					t = t == undefined ? "." : t, 
+					s = n < 0 ? "-" : "", 
+					i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", 
+					j = (j = i.length) > 3 ? j % 3 : 0;
+				   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+			};
+ 
             function numberOnly(e) {
                   var charCode = (e.which) ? e.which : e.keyCode;
-                                                		
+                                          		
                   if (!((charCode >= 48 && charCode <= 57) || charCode == 8 || charCode == 9))
                         return false;
             }
-                                                      
+                                                
             function currencySeparator(obj, separator) {
                   a = obj.value;
                   b = a.replace(/[^\d]/g, "");
@@ -322,7 +383,9 @@
             }
                                                       
             $(document).ready(function() {
-				  var simpan = parseInt($("#total").val());
+				var simpan = parseInt($("#total").val());
+				var simpanProd = parseInt($("#totalProduction").val());
+				var simpanEvent = parseInt($("#totalEvent").val());
                   $("#btnTambah").click(function() {
                         $("#addme").append("<tr class='remove'>"+
                               "	<td align='center'>"+
@@ -390,6 +453,138 @@
 						document.getElementById('total').value = simpan;
                   });
 
+                  $("#btnTambahProduction").click(function() {
+                        $("#addmeProduction").append("<tr class='remove'>"+
+                              "	<td align='center'>"+
+                              "		<select name='selectProduction' id='selectProduction'>"+
+                              "			<?php foreach ($all_production as $production): ?>"+
+                              "			<option value='<?php echo $production->id; ?>'><?php echo $production->nama; ?></option>"+
+                              "			<?php endforeach; ?>"+
+                              "		</select>"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+                              "		<input type='number' name='txtQty' id='txtQty' value='1' style='width:50px;' />"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+							  "		<div id='harga'>"+
+							  "			<input name='txtHargaProd' id='txtHarga' type='text' readonly='readonly' style='width: 90px;' value='<?= number_format($harga_production->harga,0,",","."); ?>' />"+
+							  "		</div>"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+							  "		<div id='hargaTotal'>"+
+							  "			<input name='txtHargaProdTotal' id='txtHargaTotal' type='text' readonly='readonly' style='width: 90px;' value='<?= number_format($harga_production->harga,0,",","."); ?>' />"+
+							  "		</div>"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+                              "		<textarea name='txtInfoProd' id='txtInfoProd' style='height: 30px; width: 130px;'></textarea>"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+                              "		<button type='button' name='btnHapusProduction' id='btnHapusProduction' title='Hapus' class='btn'><img src='<?php echo image_url("icons/delete.gif"); ?>' alt='Hapus' /></button>"+
+                              "		<div class='error' id='errConflict'></div>"+
+                              "	</td>"+
+                              "</tr>");
+							  
+						simpanProd = simpanProd + 0;
+						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
+						hitungTotal();
+				  });
+
+                  $("#btnHapusProduction").die('click').live('click', function() {
+                        var index = $(this).parents(".remove").prevAll().length;
+                        var harga = $("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val();
+						harga = harga.split('.').join("");
+						simpanProd = simpanProd - harga;
+						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
+                        $(this).parents(".remove").remove();
+						hitungTotal();
+                  });
+				  
+                  $("#selectProduction").die('change').live('change', function(event, index) {
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+                                                
+                        var hargaTotal = $("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val();
+						hargaTotal = hargaTotal.split('.').join("");
+						simpanProd = simpanProd - hargaTotal;
+                        loadHargaProd(index, '<?php echo site_url("order/get_harga_prod"); ?>', 'selectProduction', 'harga');
+                        alert(loadHargaProd(index, '<?php echo site_url("order/get_harga_prod_total"); ?>', 'selectProduction', 'hargaTotal'));
+						$("#addmeProduction tr").eq(index).children().next().find("#txtQty").val(1);
+						
+						var hargaBaru = $("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val();
+						hargaBaru = parseInt(hargaBaru.split('.').join(""));
+						simpanProd = simpanProd + hargaBaru;
+						
+						// simpanProd = simpanProd + newHarga;
+						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
+						hitungTotal();
+				  });
+				  
+                  $("input[name=txtQty]").die('change').live('change', function(event, index) {
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+						
+                        var harga = $("#addmeProduction tr").eq(index).children().next().next().find("#txtHarga").val();
+                        var hargaTotal = $("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val();
+						harga = harga.split('.').join("");
+						hargaTotal = hargaTotal.split('.').join("");
+						simpanProd = simpanProd - hargaTotal;
+						hargaTotal = harga * $(this).val();
+						simpanProd = simpanProd + hargaTotal;
+						$("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val(hargaTotal.formatMoney(0));                                                
+						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
+						hitungTotal();
+				  });
+				  				  
+                  $("#btnTambahEvent").click(function() {
+                        $("#addmeEvent").append("<tr class='remove'>"+
+                              "	<td align='center'>"+
+							  "		<input name='txtEvent' id='txtEvent' type='text' style='width:150px;' />"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+                              "		<input name='txtStartDateEvent' class='txtStartDate' type='text' style='width:70px;' readonly='readonly' onmousedown='$(this).datepicker({dateFormat: \"yy-mm-dd\", minDate: new Date(<?php echo date("Y"); ?>, <?php echo date("n") - 1; ?>, <?php echo date("j"); ?>)});' />"+
+                              "		-"+
+                              "		<input name='txtEndDateEvent' class='txtEndDate' type='text' style='width:70px;' readonly='readonly' onmousedown='$(this).datepicker({dateFormat: \"yy-mm-dd\", minDate: new Date(<?php echo date("Y"); ?>, <?php echo date("n") - 1; ?>, <?php echo date("j"); ?>)});' />"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+							  "		<input name='txtHargaEvent' id='txtHargaEvent' type='text' style='width: 90px;' value='0'  />"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+                              "		<textarea name='txtInfoEvent' id='txtInfoEvent' style='height: 30px; width: 130px;'></textarea>"+
+                              "	</td>"+
+                              "	<td align='center'>"+
+                              "		<button type='button' name='btnHapusEvent' id='btnHapusEvent' title='Hapus' class='btn'><img src='<?php echo image_url("icons/delete.gif"); ?>' alt='Hapus' /></button>"+
+                              "		<div class='error' id='errConflict'></div>"+
+                              "	</td>"+
+                              "</tr>");
+						hitungTotal();
+				  });
+
+                  $("#btnHapusEvent").die('click').live('click', function() {
+                        var index = $(this).parents(".remove").prevAll().length;
+                        $(this).parents(".remove").remove();
+						hitungTotal();
+                  });
+
+				  $('input[name=txtHargaEvent]').live('focus', function(event, index){
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+						
+						$("#addmeEvent tr").eq(index).children().next().next().find("#txtHargaEvent").attr('oldValue',$("#addmeEvent tr").eq(index).children().next().next().find("#txtHargaEvent").val());
+				  });
+				  
+                  $("input[name=txtHargaEvent]").die('change').live('change', function(event, index) {
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+					  
+						var oldValue = $("#addmeEvent tr").eq(index).children().next().next().find("#txtHargaEvent").attr('oldValue');
+						oldValue = parseInt(oldValue);
+						simpanEvent = simpanEvent - oldValue;
+                        var harga = $("#addmeEvent tr").eq(index).children().next().next().find("#txtHargaEvent").val();
+						harga = parseInt(harga);
+						simpanEvent = simpanEvent + harga;
+						document.getElementById('totalEvent').value = simpanEvent.formatMoney(0);
+						hitungTotal();
+				  });
 
       <?php /* ?>
         // gunakan fungsi live untuk membind event 'click' ke #btnHapus
