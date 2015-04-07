@@ -2,7 +2,6 @@
 	<thead>
 		<tr>
 			<th width="40px"><a href="#">No</a></th>
-        	<th><a href="#">Kanal</a></th>
         	<th><a href="#">Nama</a></th>
         	<th><a href="#">Keterangan</a></th>
             <th width="130px"><a href="#">Tanggal Buat</a></th>
@@ -16,7 +15,6 @@
 		foreach ($all_data as $data): ?>
 		<tr class="a-center">
         	<td><?php echo $no; ?></td>
-        	<td><?php echo $data->kanal; ?></td>
         	<td><?php echo $data->name; ?></td>
         	<td><?php echo $data->misc_info; ?></td>
             <td><?php echo format_date($data->create_date); ?></td>

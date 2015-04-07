@@ -4,12 +4,17 @@ class Productgroup_Model extends CI_Model {
 
       public function getAll($startLimit, $endLimit, $orderBy = "ALL") {
             try {
-                  $this->db->select("a.id, b.name kanal, a.name, a.misc_info, a.create_date, a.update_date");
-                  $this->db->from("tbl_product_group a");
-                  $this->db->join("tbl_kanal b", "a.kanal_id = b.id");
-                  $this->db->where("a.active_status", "Y");
+                  $this->db->select("id, name, misc_info, create_date, update_date");
+                  $this->db->from("tbl_product_group_new");
+                  $this->db->where("active_status", "Y");
+				  
+//FUNGSI LAMA
+                  // $this->db->select("a.id, b.name kanal, a.name, a.misc_info, a.create_date, a.update_date");
+                  // $this->db->from("tbl_product_group a");
+                  // $this->db->join("tbl_kanal b", "a.kanal_id = b.id");
+                  // $this->db->where("a.active_status", "Y");
 				  if ($orderBy <> "ALL") {
-						$this->db->like("a.name", $orderBy);
+						$this->db->like("name", $orderBy);
                   }
                   $this->db->limit($endLimit, $startLimit);
                   $query = $this->db->get();
@@ -29,10 +34,15 @@ class Productgroup_Model extends CI_Model {
 
       public function get($id) {
             try {
-                  $this->db->select("id, name, misc_info, kanal_id, rubrik_id, position_id");
-                  $this->db->from("tbl_product_group");
+                  $this->db->select("id, name, misc_info");
+                  $this->db->from("tbl_product_group_new");
                   $this->db->where("id", $id);
                   $this->db->where("active_status", "Y");
+
+                  // $this->db->select("id, name, misc_info, kanal_id, rubrik_id, position_id");
+                  // $this->db->from("tbl_product_group");
+                  // $this->db->where("id", $id);
+                  // $this->db->where("active_status", "Y");
                   $query = $this->db->get();
 
                   if (!$query)
@@ -72,7 +82,7 @@ class Productgroup_Model extends CI_Model {
 
       public function getTotal($orderBy = "ALL") {
             try {
-                  $this->db->from("tbl_product_group");
+                  $this->db->from("tbl_product_group_new");
 				  if ($orderBy <> "ALL") {
 						$this->db->like("name", $orderBy);
                   }

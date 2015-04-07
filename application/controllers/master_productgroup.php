@@ -28,18 +28,18 @@ class Master_Productgroup extends CI_Controller {
             $id = $this->input->post("id");
 
             $allData = $this->Productgroup_Model->get($id);
-            $allCpm = $this->Productgroup_Model->getCpm($id);
-            $selectedKanal = $this->Productgroup_Model->getSelectedKanal($allData->kanal_id);
-            $selectedRubrik = $this->Productgroup_Model->getSelectedRubrik($allData->rubrik_id);
-            $selectedPosition = $this->Productgroup_Model->getSelectedPosition($allData->position_id);
-            $selectedHarga = $this->Productgroup_Model->getPositionHarga($allData->kanal_id, $id, $allData->position_id);
+            // $allCpm = $this->Productgroup_Model->getCpm($id);
+            // $selectedKanal = $this->Productgroup_Model->getSelectedKanal($allData->kanal_id);
+            // $selectedRubrik = $this->Productgroup_Model->getSelectedRubrik($allData->rubrik_id);
+            // $selectedPosition = $this->Productgroup_Model->getSelectedPosition($allData->position_id);
+            // $selectedHarga = $this->Productgroup_Model->getPositionHarga($allData->kanal_id, $id, $allData->position_id);
 
             $data["all_data"] = $allData;
-            $data["all_cpm"] = $allCpm;
-            $data["selected_kanal"] = $selectedKanal;
-            $data["selected_rubrik"] = $selectedRubrik;
-            $data["selected_position"] = $selectedPosition;
-            $data["selected_harga"] = $selectedHarga;
+            // $data["all_cpm"] = $allCpm;
+            // $data["selected_kanal"] = $selectedKanal;
+            // $data["selected_rubrik"] = $selectedRubrik;
+            // $data["selected_position"] = $selectedPosition;
+            // $data["selected_harga"] = $selectedHarga;
             $data["read"] = $this->_access["read"];
 
             $this->load->view("master/productgroup/show", $data);
