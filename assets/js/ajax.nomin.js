@@ -1155,7 +1155,7 @@ function injectError(obj, error) {
             $("#errTxtAgency").text("");
             $("#errTxtClient").text("");
             $("#errTxtBudget").text("");
-            $("#errTxtDiskon").text("");
+            // $("#errTxtDiskon").text("");
             $("#errTxtBenefit").text("");
             $("#errPaket").text("");
             //$("#errTxtNoPaket").text("");
@@ -1176,8 +1176,8 @@ function injectError(obj, error) {
                         $("#errTxtAgency").text("* required");
                   if (error[index] == "txtClient")
                         $("#errTxtClient").text("* required");
-                  if (error[index] == "txtDiskon")
-                        $("#errTxtDiskon").text("* required");
+                  // if (error[index] == "txtDiskon")
+                        // $("#errTxtDiskon").text("* required");
                   if (error[index] == "txtDate")
                         $("#errPaket").text("* some field(s) empty");
                   if (error[index] == "txtConflict") {

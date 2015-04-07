@@ -246,6 +246,9 @@ class Order extends CI_Controller {
         $allKanal = $this->Order_Model->getAllKanal();
         $allAgency = $this->Order_Model->getAgency();
         $allClient = $this->Order_Model->getClient();
+		$harga = $this->Order_Model->getHarga(1,1,1);
+        $allProduction = $this->Order_Model->getAllProd();
+		$hargaProd = $this->Order_Model->getHargaProd(1);
         $allIndustry = array();
         
         $arrExp = (isset($allDataIndustry->subindustry_id)) ? explode(",", $allDataIndustry->subindustry_id) : array();
@@ -338,6 +341,8 @@ class Order extends CI_Controller {
         $data["all_cpm_position"] = $arrCpmPosition;
         $data["all_default_cpm_position"] = $arrDefaultCpmPosition;
         $data["harga"] = $harga;
+        $data["all_production"] = $allProduction;
+        $data["harga_production"] = $hargaProd;
         $data["update"] = $this->_access["update"];
 
         $this->load->view("order/update", $data);

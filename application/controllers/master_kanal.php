@@ -24,11 +24,13 @@ class Master_Kanal extends CI_Controller {
 	public function show_page() {
 		$id = $this->input->post("id");
 		
-		$allData = $this->Kanal_Model->get($id);		
+		$allData = $this->Kanal_Model->get($id);
 		$allRubrik = $this->Kanal_Model->getRubrik($id);
+		$allRubrikName = $this->Kanal_Model->getRubrikName($allRubrik[0]->rubrik_id);
 		
 		$data["all_data"] = $allData;
-		$data["all_rubrik"] = $allRubrik;
+		// $data["all_rubrik"] = $allRubrik;
+		$data["all_rubrik"] = $allRubrikName;
 		$data["read"] = $this->_access["read"];
 		
 		$this->load->view("master/kanal/show", $data);
@@ -45,9 +47,11 @@ class Master_Kanal extends CI_Controller {
 		
 		$allData = $this->Kanal_Model->get($id);		
 		$allRubrik = $this->Kanal_Model->getRubrik($id);
+		$allRubrikName = $this->Kanal_Model->getRubrikName($allRubrik[0]->rubrik_id);
 		
 		$data["all_data"] = $allData;
-		$data["all_rubrik"] = $allRubrik;
+		// $data["all_rubrik"] = $allRubrik;
+		$data["all_rubrik"] = $allRubrikName;
 		$data["update"] = $this->_access["update"];
 		
 		$this->load->view("master/kanal/update", $data);

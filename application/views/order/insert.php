@@ -342,17 +342,17 @@
                   // gunakan fungsi live untuk membind event 'change' ke #selectKanal
                   $("#selectKanal").die('change').live('change', function() {
                         var index = $(this).parents(".remove").prevAll().length;
-                                                                  			
+
                         loadListOption(index, '<?php echo site_url("order/get_product_group"); ?>', 'selectKanal', 'selectProductGroup');
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtStartDate]").val("");
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtEndDate]").val("");
                   });
-                                                                  		
+ 
                   // gunakan fungsi live untuk membind event 'change' ke #selectProductGroup
                   $("#selectProductGroup").die('change').live('change', function(event, index) {
                         if (index == undefined)
                               var index = $(this).parents(".remove").prevAll().length;
-                                                                  				
+
                         loadListOption(index, '<?php echo site_url("order/get_position"); ?>', 'selectProductGroup', 'selectPosition');
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtStartDate]").val("");
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtEndDate]").val("");

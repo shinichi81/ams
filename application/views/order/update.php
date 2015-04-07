@@ -105,7 +105,8 @@
                         <th>Posisi</th>
                         <th>Imps Quota/Day</th>
                         <th>Periode</th>
-                        <th>Harga</th>
+                        <th>Harga / Hari</th>
+                        <th>Harga Total</th>
                         <th>Keterangan</th>
                         <th>&nbsp;</th>
                         </thead>
@@ -208,7 +209,12 @@
                                           </td>
 										  <td align='center'>
 												<div id="harga">
-													<input name="txtHarga" id="txtHarga" type="text" style="width: 70px;" value="<?= number_format($harga->harga,0,",","."); $jumlah = $jumlah + $harga->harga;?>" readonly />
+													<input name="txtHarga" id="txtHarga" type="text" style="width: 70px;" value="<?= number_format($harga->harga,0,",",".");// $jumlah = $jumlah + $harga->harga;?>" readonly />
+												</div>
+										  </td>
+										  <td align='center'>
+												<div id="hargaTotal">
+													<input name="txtHargaTotal" id="txtHargaTotal" type="text" style="width: 70px;" value="<?= number_format($harga->harga,0,",",".");// $jumlah = $jumlah + $harga->harga;?>" readonly />
 												</div>
 										  </td>
                                           <td align='center'>
@@ -431,6 +437,11 @@
 							  "		</div>"+
                               "	</td>"+
                               "	<td align='center'>"+
+							  "		<div id='hargaTotal'>"+
+							  "			<input name='txtHargaTotal' id='txtHargaTotal' type='text' readonly='readonly' style='width: 70px;' value='<?= number_format($harga->harga,0,",","."); ?>' />"+
+							  "		</div>"+
+                              "	</td>"+
+                              "	<td align='center'>"+
                               "		<textarea name='txtMiscInfoPaket' id='txtMiscInfoPaket' style='height: 30px; width: 130px;'></textarea>"+
                               "	</td>"+
                               "	<td align='center'>"+
@@ -441,16 +452,78 @@
 						// simpan = simpan + <?= $harga->harga; ?>;
 						document.getElementById('total').value = simpan;
                   });
+
+				// gunakan fungsi live untuk membind event 'click' ke #btnHapus
+                  $("#btnHapus").die('click').live('click', function() {
+                        var index = $(this).parents(".remove").prevAll().length;
+                        var harga = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
+						harga = harga.split('.').join("");
+						simpan = simpan - harga;
+						document.getElementById('total').value = simpan.formatMoney(0);
+						document.getElementById('hargaGross').value = simpan;
+						gantiHarga();
+						// hitungTotal();
+
+                        $(this).parents(".remove").remove();
+                  });
+                                                                  		
+                  // gunakan fungsi live untuk membind event 'change' ke #selectKanal
+                  $("#selectKanal").die('change').live('change', function() {
+                        var index = $(this).parents(".remove").prevAll().length;
+                                                                  			
+                        loadListOption(index, '<?php echo site_url("order/get_product_group"); ?>', 'selectKanal', 'selectProductGroup');
+						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtStartDate]").val("");
+						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtEndDate]").val("");
+                  });
 				  
                    // gunakan fungsi live untuk membind event 'change' ke #selectProductGroup
+                  // gunakan fungsi live untuk membind event 'change' ke #selectProductGroup
                   $("#selectProductGroup").die('change').live('change', function(event, index) {
                         if (index == undefined)
                               var index = $(this).parents(".remove").prevAll().length;
-                                                                  				
-                        loadListOption(index, '<?php echo site_url("order/get_position"); ?>', 'selectProductGroup', 'selectPosition');
-                        loadListOption(index, '<?php echo site_url("order/get_harga"); ?>', 'selectProductGroup', 'harga');
 
-						document.getElementById('total').value = simpan;
+                        loadListOption(index, '<?php echo site_url("order/get_position"); ?>', 'selectProductGroup', 'selectPosition');
+						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtStartDate]").val("");
+						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtEndDate]").val("");
+                  });
+				  
+                  // gunakan fungsi live untuk membind event 'change' ke #selectPosition
+                  $("#selectPosition").die('change').live('change', function(event, index) {
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+                                                
+						var harga = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
+						harga = parseInt(harga.split('.').join(""));
+						simpan = simpan - harga;
+						document.getElementById('total').value = simpan.formatMoney(0);
+						
+                        loadHargaPaket(index, '<?php echo site_url("order/get_harga"); ?>', 'selectKanal', 'selectProductGroup', 'selectPosition', 'harga');
+                        alert(loadHargaPaket(index, '<?php echo site_url("order/get_harga_total"); ?>', 'selectKanal', 'selectProductGroup', 'selectPosition', 'hargaTotal'));
+
+						var harga2 = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
+						harga2 = parseInt(harga2.split('.').join(""));
+						simpan = simpan + harga2;
+						
+						document.getElementById('total').value = simpan.formatMoney(0);
+						document.getElementById('hargaGross').value = simpan;
+						gantiHarga();
+						// hitungTotal();
+
+						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtStartDate]").val("");
+						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtEndDate]").val("");
+
+                        var relVal = $("#addme tr").eq(index).children().next().next().next().find("#selectPosition option:selected").attr("rel");
+
+                        if (relVal == "Y") {
+                              $("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtCpmQuota]").removeAttr("readonly");
+                              $("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtCpmQuota]").css("background-color", "");
+                              $("#addme tr").eq(index).children().next().next().next().next().find("#show_cpm").show();
+                        } else {
+                              $("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtCpmQuota]").val("0");
+                              $("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtCpmQuota]").attr("readonly", "readonly");
+                              $("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtCpmQuota]").css("background-color", "#DCDCDC");
+                              $("#addme tr").eq(index).children().next().next().next().next().find("#show_cpm").hide();
+                        }
                   });
 
                   $("#btnTambahProduction").click(function() {

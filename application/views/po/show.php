@@ -25,37 +25,37 @@
             <tr>
                   <td>Harga Total Sistem</td>
                   <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->harga_sistem, 0, ",", "."); ?></td>
+                  <td><?php echo "Rp. " . number_format($all_data->harga_sistem, 0, ",", "."); ?></td>
             </tr>
             <tr>
                   <td>Harga Paket Gross</td>
                   <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->harga_gross, 0, ",", "."); ?></td>
+                  <td><?php echo "Rp. " . number_format($all_data->harga_gross, 0, ",", "."); ?></td>
             </tr>
             <tr>
                   <td>Diskon</td>
                   <td>:</td>
-                  <td><?php //echo $all_data->diskon; ?></td>
+                  <td><?php echo $all_data->diskon; ?></td>
             </tr>
             <tr>
                   <td>Diskon (Nominal)</td>
                   <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->disc_nominal, 0, ",", "."); ?></td>
+                  <td><?php echo "Rp. " . number_format($all_data->disc_nominal, 0, ",", "."); ?></td>
             </tr>
             <tr>
                   <td>Harga setelah Diskon</td>
                   <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->harga_disc, 0, ",", "."); ?></td>
+                  <td><?php echo "Rp. " . number_format($all_data->harga_disc, 0, ",", "."); ?></td>
             </tr>
             <tr>
                   <td>Ppn / Pph</td>
                   <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->pajak, 0, ",", "."); ?></td>
+                  <td><?php echo "Rp. " . number_format($all_data->pajak, 0, ",", "."); ?></td>
             </tr>
             <tr>
                   <td>Total Harga</td>
                   <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->total_harga, 0, ",", "."); ?></td>
+                  <td><?php echo "Rp. " . number_format($all_data->total_harga, 0, ",", "."); ?></td>
             </tr>
 -->
             <tr>

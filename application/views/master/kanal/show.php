@@ -7,6 +7,11 @@
 			<td><?php echo $all_data->name; ?></td>
 		</tr>
 		<tr>
+			<td width="50px">Keterangan</td>
+			<td width="15px">:</td>
+			<td><?php echo $all_data->misc_info; ?></td>
+		</tr>
+		<tr>
 			<td valign="top">Rubrik</td>
 			<td valign="top">:</td>
 			<td>
