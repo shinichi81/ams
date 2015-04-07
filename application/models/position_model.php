@@ -5,7 +5,7 @@ class Position_Model extends CI_Model {
       public function getAll($startLimit, $endLimit, $orderBy = "ALL") {
             try {
                   $this->db->select("id, name, misc_info, allow_override, create_date, update_date");
-                  $this->db->from("tbl_position");
+                  $this->db->from("tbl_position_new");
                   $this->db->where("active_status", "Y");
 				  if ($orderBy <> "ALL") {
 						$this->db->like("name", $orderBy);
@@ -29,7 +29,7 @@ class Position_Model extends CI_Model {
       public function get($id) {
             try {
                   $this->db->select("id, name, misc_info, allow_override, cpm_quota");
-                  $this->db->from("tbl_position");
+                  $this->db->from("tbl_position_new");
                   $this->db->where("id", $id);
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();
@@ -49,7 +49,7 @@ class Position_Model extends CI_Model {
 
       public function getTotal($orderBy = "ALL") {
             try {
-                  $this->db->from("tbl_position");
+                  $this->db->from("tbl_position_new");
 				  if ($orderBy <> "ALL") {
 						$this->db->like("name", $orderBy);
                   }
@@ -78,7 +78,7 @@ class Position_Model extends CI_Model {
                       "create_user" => $this->session->userdata("username"),
                   );
 
-                  $query = $this->db->insert("tbl_position", $data);
+                  $query = $this->db->insert("tbl_position_new", $data);
 
                   if (!$query)
                         throw new Exception();
@@ -103,7 +103,7 @@ class Position_Model extends CI_Model {
                   );
 
                   $this->db->where("id", $id);
-                  $query = $this->db->update("tbl_position", $data);
+                  $query = $this->db->update("tbl_position_new", $data);
 
                   if (!$query)
                         throw new Exception();
@@ -125,7 +125,7 @@ class Position_Model extends CI_Model {
                   );
 
                   $this->db->where("id", $id);
-                  $query = $this->db->update("tbl_position", $data);
+                  $query = $this->db->update("tbl_position_new", $data);
 
                   if (!$query)
                         throw new Exception();
