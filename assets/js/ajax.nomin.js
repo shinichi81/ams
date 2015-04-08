@@ -726,19 +726,17 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
       } else if (obj == "harga") {
             if (todo == "insert") {
                   var selectKanal = $("#selectKanal").val();
-                  var selectRubrik = $("#selectRubrik").val();
                   var selectProduk = $("#selectProduk").val();
                   var selectPosition = $("#selectPosition").val();
                   var txtHarga = $("#txtHarga").val();
-                  var arrParam = new Array(selectKanal, selectRubrik, selectProduk, selectPosition, txtHarga);
+                  var arrParam = new Array(selectKanal, selectProduk, selectPosition, txtHarga);
            } else if (todo == "update") {
                   var hdId = $("#hdId").val();
                   var selectKanal = $("#selectKanal").val();
-                  var selectRubrik = $("#selectRubrik").val();
                   var selectProduk = $("#selectProduk").val();
                   var selectPosition = $("#selectPosition").val();
                   var txtHarga = $("#txtHarga").val();
-                  var arrParam = new Array(hdId, selectKanal, selectRubrik, selectProduk, selectPosition, txtHarga);
+                  var arrParam = new Array(hdId, selectKanal, selectProduk, selectPosition, txtHarga);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
             }
@@ -1155,7 +1153,8 @@ function injectError(obj, error) {
             $("#errTxtAgency").text("");
             $("#errTxtClient").text("");
             $("#errTxtBudget").text("");
-            // $("#errTxtDiskon").text("");
+            $("#errTxtCampaign").text("");
+            $("#errTxtDiskon").text("");
             $("#errTxtBenefit").text("");
             $("#errPaket").text("");
             //$("#errTxtNoPaket").text("");
@@ -1178,6 +1177,8 @@ function injectError(obj, error) {
                         $("#errTxtClient").text("* required");
                   // if (error[index] == "txtDiskon")
                         // $("#errTxtDiskon").text("* required");
+                  if (error[index] == "txtCampaign")
+                        $("#errTxtCampaign").text("* required");
                   if (error[index] == "txtDate")
                         $("#errPaket").text("* some field(s) empty");
                   if (error[index] == "txtConflict") {

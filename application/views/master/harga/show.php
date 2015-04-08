@@ -3,9 +3,6 @@
 	Kanal : <?php echo $all_data->kanal; ?>
 </p>
 <p>
-	Rubrik : <?php echo $all_data->rubrik; ?>
-</p>
-<p>
 	Product : <?php echo $all_data->product; ?>
 </p>
 <p>

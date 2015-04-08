@@ -3,7 +3,6 @@
 		<tr>
 			<th width="40px"><a href="#">No</a></th>
         	<th><a href="#">Kanal</a></th>
-        	<th><a href="#">Rubrik</a></th>
         	<th><a href="#">Nama</a></th>
         	<th><a href="#">Posisi</a></th>
         	<th><a href="#">Harga</a></th>
@@ -18,7 +17,6 @@
 		<tr class="a-center">
         	<td><?php echo $no; ?></td>
         	<td><?php echo $data->kanal; ?></td>
-        	<td><?php echo $data->rubrik; ?></td>
         	<td><?php echo $data->product; ?></td>
         	<td><?php echo $data->position; ?></td>
         	<td><?php echo "Rp. " . number_format($data->harga,0,",","."); ?></td>

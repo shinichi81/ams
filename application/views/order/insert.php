@@ -55,13 +55,12 @@
                                     <option value="<?php echo $client->id; ?>"><?php echo $client->name; ?></option>
                               <?php endforeach; ?>
                         </select>
-                  </div>
-                  <div style="float: left;">
+						<br />
                         <label for="budget">Budget : </label> 
                         <input name="txtBudget" id="txtBudget" type="text" />
                         <br>
                         <label for="campaign">Campaign : </label> 
-                        <input name="txtCampaign" id="txtCampaign" type="text" />
+                        <input name="txtCampaign" id="txtCampaign" type="text" /> <span class="error" id="errTxtCampaign"></span>
 <!--                        <br>
                         <label for="benefit">Benefit : </label> 
                         <input name="txtBenefit" id="txtBenefit" type="text" />

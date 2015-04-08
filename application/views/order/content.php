@@ -5,8 +5,8 @@
                   <th><a href="#">Tanggal Request</a></th>
                   <th><a href="#">No Paket</a></th>
                   <th><a href="#">No Paket User</a></th>
-                  <th><a href="#">Agency</a></th>
-                  <th><a href="#">Client</a></th>
+                  <th><a href="#">Perusahaan</a></th>
+                  <th><a href="#">Brand</a></th>
                   <th><a href="#">Done</a></th>
                   <th><a href="#">Approve</a></th>
                   <?php /*

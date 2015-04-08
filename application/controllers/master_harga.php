@@ -34,13 +34,11 @@ class Master_Harga extends CI_Controller {
 	
 	public function insert_page() {
 		$allKanal = $this->Harga_Model->getAllKanal();
-		$allRubrik = $this->Harga_Model->getAllRubrik($allKanal[0]->id);
 		$allProduk = $this->Harga_Model->getAllProduk($allKanal[0]->id);
 		$allPosition = $this->Harga_Model->getAllPosition();
 		// $allHarga = $this->Harga_Model->getAllHarga($allKanal[0]->id, $allRubrik[0]->id);
 
 		$data["all_kanal"] = $allKanal;
-		$data["all_rubrik"] = $allRubrik;
 		$data["all_position"] = $allPosition;
 		$data["all_produk"] = $allProduk;
 		// $data["all_harga"] = $allHarga;
@@ -54,13 +52,11 @@ class Master_Harga extends CI_Controller {
 		
 		$allData = $this->Harga_Model->get($id);
 		$allKanal = $this->Harga_Model->getAllKanal();
-		$allRubrik = $this->Harga_Model->getAllRubrik($allData->id_kanal, $allData->id_rubrik);
 		$allProduk = $this->Harga_Model->getAllProduk($allData->id_kanal, $allData->id_product);
 		$allPosition = $this->Harga_Model->getAllPosition();
 		
 		$data["all_data"] = $allData;
 		$data["all_kanal"] = $allKanal;
-		$data["all_rubrik"] = $allRubrik;
 		$data["all_produk"] = $allProduk;
 		$data["all_position"] = $allPosition;
 		$data["update"] = $this->_access["update"];
@@ -104,16 +100,15 @@ class Master_Harga extends CI_Controller {
 		
 		$arrParam = $this->input->post("arrParam");
 		$id_kanal = $arrParam[0];
-		$id_rubrik = $arrParam[1];
-		$id_produk = $arrParam[2];
-		$id_position = $arrParam[3];
-		$harga = $arrParam[4];
+		$id_produk = $arrParam[1];
+		$id_position = $arrParam[2];
+		$harga = $arrParam[3];
 		
 		if (empty($id_kanal) or empty($id_position)) {
 			$data["status"] = false;
 			$data["error"] = true;
 		} else {
-			$insert = $this->Harga_Model->insert($id_kanal, $id_rubrik, $id_produk, $id_position, $harga);
+			$insert = $this->Harga_Model->insert($id_kanal, $id_produk, $id_position, $harga);
 			
 			$data["status"] = $insert;
 		}
@@ -129,16 +124,15 @@ class Master_Harga extends CI_Controller {
 		$arrParam = $this->input->post("arrParam");
 		$id = $arrParam[0];
 		$id_kanal = $arrParam[1];
-		$id_rubrik = $arrParam[2];
-		$id_produk = $arrParam[3];
-		$id_position = $arrParam[4];
-		$harga = $arrParam[5];
+		$id_produk = $arrParam[2];
+		$id_position = $arrParam[3];
+		$harga = $arrParam[4];
 		
 		if (empty($nama) or empty($harga)) {
 			$data["status"] = false;
 			$data["error"] = true;
 		} else {
-			$update = $this->Harga_Model->update($id, $id_kanal, $id_rubrik, $id_produk, $id_position, $harga);
+			$update = $this->Harga_Model->update($id, $id_kanal, $id_produk, $id_position, $harga);
 			
 			$data["status"] = $update;
 		}
@@ -161,18 +155,7 @@ class Master_Harga extends CI_Controller {
 		echo json_encode($data);
 		die;
 	}
-	
-    public function get_rubrik($kanal_id) {
-		$allRubrik = $this->Harga_Model->getAllRubrik($kanal_id);
-
-		$data = "";
-		foreach ($allRubrik as $rubrik)
-			$data .= "<option value='" . $rubrik->id . "'>" . $rubrik->name . "</option>";
-
-		echo $data;
-		die;
-    }
-	
+		
     public function get_produk($kanal_id) {
 		$allProduk = $this->Harga_Model->getAllProduk($kanal_id);
 

@@ -12,14 +12,6 @@
 		</select>
 		<span class="error" id="errSelectKanal"></span>
 		<br />
-		<label for="rubrik">Rubrik : </label>
-		<select name="selectRubrik" id="selectRubrik" class="list_rubrik" >
-			<option value="" disabled selected>-- Pilih Rubrik --</option>
-			<?php foreach ($all_rubrik as $rubrik): ?>
-			<option value="<?php echo $rubrik->id; ?>"><?php echo $rubrik->name; ?></option>
-			<?php endforeach; ?>
-		</select>
-		<br />
 		<label for="produk">Produk Group : </label>
 		<select name="selectProduk" id="selectProduk"  class="list_produk">
 			<option value="" disabled selected>-- Pilih Produk --</option>
@@ -55,7 +47,6 @@
 	}
 	$(document).ready(function() {
 		  $("#selectKanal").change(function() {
-				loadListOption2('<?php echo site_url("master_harga/get_rubrik"); ?>', 'selectKanal', 'list_rubrik');
 				loadListOption2('<?php echo site_url("master_harga/get_produk"); ?>', 'selectKanal', 'list_produk');
 		  });
 	});

@@ -3,14 +3,12 @@
 class Harga_Model extends CI_Model {
 	public function getAll($startLimit, $endLimit, $orderBy = "ALL") {
 		try {
-			$this->db->select("a.id, b.name AS kanal, c.name AS rubrik, d.name AS product, e.name AS position, a.harga, a.update_date");
+			$this->db->select("a.id, b.name AS kanal, d.name AS product, e.name AS position, a.harga, a.update_date");
 			$this->db->from("tbl_product_group_harga a");
-            $this->db->join("tbl_kanal b", "a.id_kanal = b.id");
-            $this->db->join("tbl_rubrik c", "a.id_rubrik = c.id");
-            $this->db->join("tbl_product_group d", "a.id_product = d.id");
-            $this->db->join("tbl_position e", "a.id_position = e.id");
+            $this->db->join("tbl_kanal_new b", "a.id_kanal = b.id");
+            $this->db->join("tbl_product_group_new d", "a.id_product = d.id");
+            $this->db->join("tbl_position_new e", "a.id_position = e.id");
 			$this->db->order_by('a.id_kanal', 'asc');
-			$this->db->order_by('a.id_rubrik', 'asc');
 			$this->db->order_by('a.id_product', 'asc');
 			$this->db->order_by('a.id_position', 'asc');
 			if ($orderBy <> "ALL") {
@@ -35,12 +33,11 @@ class Harga_Model extends CI_Model {
 	
 	public function get($id) {
 		try {
-			$this->db->select("a.id, a.id_kanal, a.id_rubrik, a.id_product, a.id_position, b.name AS kanal, c.name AS rubrik, d.name AS product, e.name AS position, a.harga, a.update_date");
+			$this->db->select("a.id, a.id_kanal, a.id_product, a.id_position, b.name AS kanal, d.name AS product, e.name AS position, a.harga, a.update_date");
 			$this->db->from("tbl_product_group_harga a");
-            $this->db->join("tbl_kanal b", "a.id_kanal = b.id");
-            $this->db->join("tbl_rubrik c", "a.id_rubrik = c.id");
-            $this->db->join("tbl_product_group d", "a.id_product = d.id");
-            $this->db->join("tbl_position e", "a.id_position = e.id");
+            $this->db->join("tbl_kanal_new b", "a.id_kanal = b.id");
+            $this->db->join("tbl_product_group_new d", "a.id_product = d.id");
+            $this->db->join("tbl_position_new e", "a.id_position = e.id");
 			$this->db->where("a.id", $id);
 			$query = $this->db->get();
 			
@@ -78,11 +75,10 @@ class Harga_Model extends CI_Model {
 		}
 	}
 	
-	public function insert($id_kanal, $id_rubrik, $id_produk, $id_position, $harga) {
+	public function insert($id_kanal, $id_produk, $id_position, $harga) {
 		try {
 			$data = array(
 				"id_kanal"			=>	$id_kanal,
-				"id_rubrik"		=>	$id_rubrik,
 				"id_product"		=>	$id_produk,
 				"id_position"	=>	$id_position,
 				"harga"				=>	$harga,
@@ -102,11 +98,10 @@ class Harga_Model extends CI_Model {
 		}
 	}
 	
-	public function update($id, $id_kanal, $id_rubrik, $id_produk, $id_position, $harga) {
+	public function update($id, $id_kanal, $id_produk, $id_position, $harga) {
 		try {
 			$data = array(
 				"id_kanal"			=>	$id_kanal,
-				"id_rubrik"		=>	$id_rubrik,
 				"id_product"		=>	$id_produk,
 				"id_position"	=>	$id_position,
 				"harga"				=>	$harga,
@@ -165,27 +160,6 @@ class Harga_Model extends CI_Model {
 		}
 	}
 
-    public function getAllRubrik($kanal_id, $id = "''") {
-		try {
-			$this->db->select("id, name");
-			$this->db->from("tbl_rubrik");
-			$this->db->where("active_status", "Y");
-            $this->db->where("kanal_id", $kanal_id);
-            $query = $this->db->get();
-
-            if (!$query)
-				throw new Exception();
-
-			$result = $query->result();
-			return $result;
-        } catch (Exception $e) {
-			$errNo = $this->db->_error_number();
-			//$errMsg = $this->db->_error_message();
-
-			return error_message($errNo);
-        }
-    }
-		  
     public function getAllProduk($kanal_id, $id = "''") {
 		try {
 			$this->db->select("id, name");
