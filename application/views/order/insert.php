@@ -278,7 +278,7 @@
                               "	<td align='center'>"+
                               "		<select name='selectProductGroup' id='selectProductGroup'>"+
                               "			<?php foreach ($all_productgroup as $productgroup): ?>"+
-                                    "			<option value='<?php echo $productgroup->id; ?>'><?php echo $productgroup->name; ?></option>"+
+                                    "			<option value='<?php echo $productgroup->id; ?>'><?php echo preg_replace('/[^A-Za-z0-9\-]/', '', $productgroup->name); ?></option>"+
                                     "			<?php endforeach; ?>"+
                               "		</select>"+
                               "	</td>"+

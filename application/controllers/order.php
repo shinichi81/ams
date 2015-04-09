@@ -183,7 +183,8 @@ class Order extends CI_Controller {
         $allDataIndustry = $this->Order_Model->getAllIndustryCatId($allIndustryCat[0]->id);
         $allAds = $this->Order_Model->getAllAds();
         $allKanal = $this->Order_Model->getAllKanal();
-        $allProductGroup = $this->Order_Model->getAllProductGroup($allKanal[0]->id);
+        // $allProductGroup = $this->Order_Model->getAllProductGroup($allKanal[0]->id);
+        $allProductGroup = $this->Order_Model->getAllProductGroup();
         $allPosition = $this->Order_Model->getAllPosition($allProductGroup[0]->position_id);
         $allAgency = $this->Order_Model->getAgency();
         $allClient = $this->Order_Model->getClient();
