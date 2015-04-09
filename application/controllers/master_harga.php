@@ -34,7 +34,7 @@ class Master_Harga extends CI_Controller {
 	
 	public function insert_page() {
 		$allKanal = $this->Harga_Model->getAllKanal();
-		$allProduk = $this->Harga_Model->getAllProduk($allKanal[0]->id);
+		$allProduk = $this->Harga_Model->getAllProduk();
 		$allPosition = $this->Harga_Model->getAllPosition();
 		// $allHarga = $this->Harga_Model->getAllHarga($allKanal[0]->id, $allRubrik[0]->id);
 
@@ -154,16 +154,5 @@ class Master_Harga extends CI_Controller {
 		
 		echo json_encode($data);
 		die;
-	}
-		
-    public function get_produk($kanal_id) {
-		$allProduk = $this->Harga_Model->getAllProduk($kanal_id);
-
-		$data = "";
-		foreach ($allProduk as $produk)
-			$data .= "<option value='" . $produk->id . "'>" . $produk->name . "</option>";
-
-		echo $data;
-		die;
-    }
+	}		
 }

@@ -4,7 +4,7 @@
 	<fieldset id="personal">
 		<legend>Data</legend>
 		<label for="kanal">Kanal : </label>
-		<select name="selectKanal" id="selectKanal" style="width:150px;" >
+		<select name="selectKanal" id="selectKanal" style="width:250px;" >
 			<option value="" disabled selected>-- Pilih Kanal --</option>
 			<?php foreach ($all_kanal as $kanal): ?>
 			<option value="<?php echo $kanal->id; ?>"><?php echo $kanal->name; ?></option>
@@ -13,7 +13,7 @@
 		<span class="error" id="errSelectKanal"></span>
 		<br />
 		<label for="produk">Produk Group : </label>
-		<select name="selectProduk" id="selectProduk"  class="list_produk">
+		<select name="selectProduk" id="selectProduk"  class="list_produk" style="width:250px;">
 			<option value="" disabled selected>-- Pilih Produk --</option>
 			<?php foreach ($all_produk as $produk): ?>
 			<option value="<?php echo $produk->id; ?>"><?php echo $produk->name; ?></option>
@@ -21,7 +21,7 @@
 		</select>
 		<br />
 		<label for="position">Posisi : </label>
-		<select name="selectPosition" id="selectPosition" style="width: 150px;">
+		<select name="selectPosition" id="selectPosition" style="width: 250px;">
 			<option value="" disabled selected>-- Pilih Posisi --</option>
 			<?php foreach ($all_position as $position): ?>
 			<option value="<?php echo $position->id; ?>"><?php echo $position->name; ?></option>
@@ -46,9 +46,9 @@
 				return false;
 	}
 	$(document).ready(function() {
-		  $("#selectKanal").change(function() {
-				loadListOption2('<?php echo site_url("master_harga/get_produk"); ?>', 'selectKanal', 'list_produk');
-		  });
+		  // $("#selectKanal").change(function() {
+				// loadListOption2('<?php echo site_url("master_harga/get_produk"); ?>', 'selectKanal', 'list_produk');
+		  // });
 	});
 </script>
 <?php endif; ?>

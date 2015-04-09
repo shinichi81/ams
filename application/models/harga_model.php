@@ -143,7 +143,7 @@ class Harga_Model extends CI_Model {
     public function getAllKanal() {
 		try {
 			$this->db->select("id, name");
-			$this->db->from("tbl_kanal");
+			$this->db->from("tbl_kanal_new");
 			$this->db->where("active_status", "Y");
 			$query = $this->db->get();
 
@@ -160,12 +160,11 @@ class Harga_Model extends CI_Model {
 		}
 	}
 
-    public function getAllProduk($kanal_id, $id = "''") {
+    public function getAllProduk($id = "''") {
 		try {
 			$this->db->select("id, name");
-			$this->db->from("tbl_product_group");
+			$this->db->from("tbl_product_group_new");
 			$this->db->where("active_status", "Y");
-            $this->db->where("kanal_id", $kanal_id);
 			$query = $this->db->get();
 
 			if (!$query)
@@ -184,7 +183,7 @@ class Harga_Model extends CI_Model {
     public function getAllPosition($id = "''") {
 		try {
 			$this->db->select("id, name");
-			$this->db->from("tbl_position");
+			$this->db->from("tbl_position_new");
 			$this->db->where("active_status", "Y");
 			$query = $this->db->get();
 
