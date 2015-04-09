@@ -13,5 +13,46 @@
             </tr>
 		</table>
 		
+		<table class="noborder">
+            <tr>
+                  <td width="150px"><strong>POSISI</strong></td>
+                  <td width="20px">&nbsp;</td>
+                  <td>&nbsp;</td>
+            </tr>
+		</table>
+      <table>
+            <thead>
+                  <tr>
+                        <th>Posisi</th>
+                  </tr>
+            </thead>
+            <tbody>
+                  <?php
+                  $n = 0;
+                  foreach ($selected_position as $position):
+                        ?>
+                        <tr class='remove'>
+                              <td align='center'>
+                                    <?php echo $position->name; ?>
+                              </td>
+                        </tr>
+                        <?php
+                        $n += 1;
+                  endforeach;
+                  ?>
+            </tbody>
+      </table>
+	  
+		<table class="noborder">
+            <tr>
+                  <td valign="top">Posisi CPM</td>
+                  <td valign="top">:</td>
+                  <td>
+                        <?php foreach ($all_cpm as $cpm): ?>
+                              > <?php echo $cpm->position_name; ?><br>
+                        <?php endforeach; ?>
+                  </td>
+            </tr>
+		</table>
       </p>
 <?php endif; ?>

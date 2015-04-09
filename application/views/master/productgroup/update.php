@@ -9,6 +9,7 @@
                   <label for="keterangan">Keterangan : </label> 
                   <input name="txtKeterangan" id="txtKeterangan" type="text" value="<?php echo $all_data->misc_info; ?>" />
                   <br>
+<!--
                   <label for="kanal">Kanal : </label> 
                   <select name="selectKanal" id="selectKanal">
                         <?php
@@ -46,6 +47,7 @@
                         </select> <span class="error" id="errTxtRubrik"></span>
                   </div>
                   <div style="clear: both;"></div>
+-->
                   <label for="position">Posisi : </label>
                   <div style="float: left"> 
                         <select name="selectPositionSource" id="selectPositionSource" multiple="multiple" size="5" style="width: 150px;">

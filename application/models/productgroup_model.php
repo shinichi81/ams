@@ -34,7 +34,7 @@ class Productgroup_Model extends CI_Model {
 
       public function get($id) {
             try {
-                  $this->db->select("id, name, misc_info");
+                  $this->db->select("id, name, misc_info, position_id");
                   $this->db->from("tbl_product_group_new");
                   $this->db->where("id", $id);
                   $this->db->where("active_status", "Y");
@@ -104,7 +104,7 @@ class Productgroup_Model extends CI_Model {
       public function getAllKanal() {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_kanal");
+                  $this->db->from("tbl_kanal_new");
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();
 
@@ -124,7 +124,7 @@ class Productgroup_Model extends CI_Model {
       public function getSelectedKanal($id) {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_kanal");
+                  $this->db->from("tbl_kanal_new");
                   $this->db->where("active_status", "Y");
                   $this->db->where("id", $id);
                   $query = $this->db->get();
@@ -188,7 +188,7 @@ class Productgroup_Model extends CI_Model {
       public function getAllPosition($id = "''") {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_position");
+                  $this->db->from("tbl_position_new");
                   $this->db->where("active_status", "Y");
                   $this->db->where("id not in (" . $id . ")", NULL);
                   $query = $this->db->get();
@@ -209,7 +209,7 @@ class Productgroup_Model extends CI_Model {
       public function getSelectedPosition($id) {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_position");
+                  $this->db->from("tbl_position_new");
                   $this->db->where("active_status", "Y");
                   $this->db->where("id in (" . $id . ")", NULL);
                   $query = $this->db->get();
@@ -227,18 +227,19 @@ class Productgroup_Model extends CI_Model {
             }
       }
 
-      public function insert($name, $misc_info, $kanal_id, $rubrik_id, $position_id) {
+      // public function insert($name, $misc_info, $kanal_id, $rubrik_id, $position_id) {
+      public function insert($name, $misc_info, $position_id) {
             try {
                   $data = array(
                       "name" => $name,
                       "misc_info" => $misc_info,
-                      "kanal_id" => $kanal_id,
-                      "rubrik_id" => $rubrik_id,
+                      // "kanal_id" => $kanal_id,
+                      // "rubrik_id" => $rubrik_id,
                       "position_id" => $position_id,
                       "create_user" => $this->session->userdata("username"),
                   );
 
-                  $query = $this->db->insert("tbl_product_group", $data);
+                  $query = $this->db->insert("tbl_product_group_new", $data);
 
                   if (!$query)
                         throw new Exception();
@@ -252,10 +253,11 @@ class Productgroup_Model extends CI_Model {
             }
       }
       
-      public function insertCpm($kanal_id, $product_group_id, $position_id, $cpm_quota = 0) {
+      // public function insertCpm($kanal_id, $product_group_id, $position_id, $cpm_quota = 0) {
+      public function insertCpm($product_group_id, $position_id, $cpm_quota = 0) {
             try {
                   $data = array(
-                      "kanal_id" => $kanal_id,
+                      // "kanal_id" => $kanal_id,
                       "product_group_id" => $product_group_id,
                       "position_id" => $position_id,
                       "cpm_quota" => $cpm_quota,
@@ -276,19 +278,20 @@ class Productgroup_Model extends CI_Model {
             }
       }
 
-      public function update($id, $name, $misc_info, $kanal_id, $rubrik_id, $position_id) {
+      // public function update($id, $name, $misc_info, $kanal_id, $rubrik_id, $position_id) {
+      public function update($id, $name, $misc_info, $position_id) {
             try {
                   $data = array(
                       "name" => $name,
                       "misc_info" => $misc_info,
-                      "kanal_id" => $kanal_id,
-                      "rubrik_id" => $rubrik_id,
+                      // "kanal_id" => $kanal_id,
+                      // "rubrik_id" => $rubrik_id,
                       "position_id" => $position_id,
                       "update_user" => $this->session->userdata("username"),
                   );
 				  
                   $this->db->where("id", $id);
-                  $query = $this->db->update("tbl_product_group", $data);
+                  $query = $this->db->update("tbl_product_group_new", $data);
 
                   if (!$query)
                         throw new Exception();
@@ -310,7 +313,7 @@ class Productgroup_Model extends CI_Model {
                   );
 
                   $this->db->where("id", $id);
-                  $query = $this->db->update("tbl_product_group", $data);
+                  $query = $this->db->update("tbl_product_group_new", $data);
 
                   if (!$query)
                         throw new Exception();

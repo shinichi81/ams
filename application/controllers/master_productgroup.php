@@ -28,17 +28,17 @@ class Master_Productgroup extends CI_Controller {
             $id = $this->input->post("id");
 
             $allData = $this->Productgroup_Model->get($id);
-            // $allCpm = $this->Productgroup_Model->getCpm($id);
+            $allCpm = $this->Productgroup_Model->getCpm($id);
             // $selectedKanal = $this->Productgroup_Model->getSelectedKanal($allData->kanal_id);
             // $selectedRubrik = $this->Productgroup_Model->getSelectedRubrik($allData->rubrik_id);
-            // $selectedPosition = $this->Productgroup_Model->getSelectedPosition($allData->position_id);
+            $selectedPosition = $this->Productgroup_Model->getSelectedPosition($allData->position_id);
             // $selectedHarga = $this->Productgroup_Model->getPositionHarga($allData->kanal_id, $id, $allData->position_id);
 
             $data["all_data"] = $allData;
-            // $data["all_cpm"] = $allCpm;
+            $data["all_cpm"] = $allCpm;
             // $data["selected_kanal"] = $selectedKanal;
             // $data["selected_rubrik"] = $selectedRubrik;
-            // $data["selected_position"] = $selectedPosition;
+            $data["selected_position"] = $selectedPosition;
             // $data["selected_harga"] = $selectedHarga;
             $data["read"] = $this->_access["read"];
 
@@ -46,15 +46,15 @@ class Master_Productgroup extends CI_Controller {
       }
 
       public function insert_page() {
-            $allKanal = $this->Productgroup_Model->getAllKanal();
-            $allRubrik = $this->Productgroup_Model->getAllRubrik($allKanal[0]->id);
+            // $allKanal = $this->Productgroup_Model->getAllKanal();
+            // $allRubrik = $this->Productgroup_Model->getAllRubrik($allKanal[0]->id);
             $allPosition = $this->Productgroup_Model->getAllPosition();
-			$allHarga = $this->Productgroup_Model->getAllHarga($allKanal[0]->id, $allRubrik[0]->id);
+			// $allHarga = $this->Productgroup_Model->getAllHarga($allKanal[0]->id, $allRubrik[0]->id);
 
-            $data["all_kanal"] = $allKanal;
-            $data["all_rubrik"] = $allRubrik;
+            // $data["all_kanal"] = $allKanal;
+            // $data["all_rubrik"] = $allRubrik;
             $data["all_position"] = $allPosition;
-            $data["all_harga"] = $allHarga;
+            // $data["all_harga"] = $allHarga;
             $data["create"] = $this->_access["create"];
 
             $this->load->view("master/productgroup/insert", $data);
@@ -64,29 +64,28 @@ class Master_Productgroup extends CI_Controller {
             $id = $this->input->post("id");
 
             $allData = $this->Productgroup_Model->get($id);
-            $allCpm = $this->Productgroup_Model->getCpm($id);
-            $allKanal = $this->Productgroup_Model->getAllKanal();
-            $allRubrik = $this->Productgroup_Model->getAllRubrik($allData->kanal_id, $allData->rubrik_id);
-            $selectedRubrik = $this->Productgroup_Model->getSelectedRubrik($allData->rubrik_id);
+            // $allCpm = $this->Productgroup_Model->getCpm($id);
+            // $allKanal = $this->Productgroup_Model->getAllKanal();
+            // $allRubrik = $this->Productgroup_Model->getAllRubrik($allData->kanal_id, $allData->rubrik_id);
+            // $selectedRubrik = $this->Productgroup_Model->getSelectedRubrik($allData->rubrik_id);
             $allPosition = $this->Productgroup_Model->getAllPosition($allData->position_id);
             $selectedPosition = $this->Productgroup_Model->getSelectedPosition($allData->position_id);
-            $allHarga = $this->Productgroup_Model->getAllHarga($allData->kanal_id, $allData->rubrik_id, $allData->position_id);
-			// $allHarga = $this->Productgroup_Model->getAllHarga($allKanal[0]->id, $allRubrik[0]->id);
-            $selectedHarga = $this->Productgroup_Model->getPositionHarga($allData->kanal_id, $id, $allData->position_id);
+            // $allHarga = $this->Productgroup_Model->getAllHarga($allData->kanal_id, $allData->rubrik_id, $allData->position_id);
+            // $selectedHarga = $this->Productgroup_Model->getPositionHarga($allData->kanal_id, $id, $allData->position_id);
             
             $arrCpm = array();
             foreach ($allCpm as $cpm)
                   $arrCpm[] = $cpm->position_id;
             
             $data["all_data"] = $allData;
-            $data["all_cpm"] = $arrCpm;
-            $data["all_kanal"] = $allKanal;
-            $data["all_rubrik"] = $allRubrik;
-            $data["selected_rubrik"] = $selectedRubrik;
+            // $data["all_cpm"] = $arrCpm;
+            // $data["all_kanal"] = $allKanal;
+            // $data["all_rubrik"] = $allRubrik;
+            // $data["selected_rubrik"] = $selectedRubrik;
             $data["all_position"] = $allPosition;
             $data["selected_position"] = $selectedPosition;
-            $data["all_harga"] = $allHarga;
-            $data["selected_harga"] = $selectedHarga;
+            // $data["all_harga"] = $allHarga;
+            // $data["selected_harga"] = $selectedHarga;
             $data["update"] = $this->_access["update"];
 
             $this->load->view("master/productgroup/update", $data);
