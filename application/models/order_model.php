@@ -1161,14 +1161,14 @@ class Order_Model extends CI_Model {
             }
       }
 	  
-      public function insertOrderProduction($no_paket, $production_id, $quantity, $harga, $harga_total, $keterangan) {
+      public function insertOrderProduction($no_paket, $production_id, $quantity, $keterangan) {
             try {
 					$data = array(
 						"no_paket" => $no_paket,
 						"production_id" => $production_id,
 						"quantity" => $quantity,
-						"harga" => $harga,
-						"harga_total" => $harga_total,
+						// "harga" => $harga,
+						// "harga_total" => $harga_total,
 						"keterangan" => $keterangan,
 					);
 
@@ -1247,7 +1247,7 @@ class Order_Model extends CI_Model {
 	  
       public function getProduction($no_paket) {
             try {
-                  $this->db->select("production_id, quantity, harga, harga_total, keterangan");
+                  $this->db->select("production_id, quantity, keterangan");
                   $this->db->from("tbl_order_production");
                   $this->db->where("no_paket", $no_paket);
                   $query = $this->db->get();
@@ -1289,7 +1289,7 @@ class Order_Model extends CI_Model {
 	  
       public function getSingleProduction($id) {
             try {
-                  $this->db->select("id, nama");
+                  $this->db->select("id, nama, harga");
                   $this->db->from("tbl_production");
                   $this->db->where("active", "Y");
                   $this->db->where("id", $id);

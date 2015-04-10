@@ -253,9 +253,9 @@
                   <tr>
                         <th>Production</th>
                         <th>Quantity</th>
+                        <th>Keterangan</th>
                         <th>Harga</th>
                         <th>Harga Total</th>
-                        <th>Keterangan</th>
                   </tr>
             </thead>
             <tbody>
@@ -268,13 +268,13 @@
                                     <?php echo $production["quantity"]; ?>
                               </td>
                               <td align='center'>
+                                    <?php echo $production["keterangan"]; ?>
+                              </td>
+                              <td align='center'>
                                     <?php echo number_format($production["harga"],0,",","."); ?>
                               </td>
                               <td align='center'>
                                     <?php echo number_format($production['harga_total'],0,",","."); ?>
-                              </td>
-                              <td align='center'>
-                                    <?php echo $production["keterangan"]; ?>
                               </td>
                         </tr>
                         <?php endforeach; ?>
@@ -304,8 +304,8 @@
                   <tr>
                         <th>Event</th>
                         <th>Periode</th>
-                        <th>Harga</th>
                         <th>Keterangan</th>
+                        <th>Harga</th>
                   </tr>
             </thead>
             <tbody>
@@ -320,10 +320,10 @@
                                     <?php echo format_date($event["end_date"], TRUE); ?>
                               </td>
                               <td align='center'>
-                                    <?php echo number_format($event["biaya"],0,",","."); ?>
+                                    <?php echo $event["keterangan"]; ?>
                               </td>
                               <td align='center'>
-                                    <?php echo $event["keterangan"]; ?>
+                                    <?php echo number_format($event["biaya"],0,",","."); ?>
                               </td>
                         </tr>
                         <?php endforeach; ?>

@@ -136,8 +136,8 @@ class Order extends CI_Controller {
             $prod = $this->Order_Model->getSingleProduction($production->production_id);
 			$arrProduction[$m]["production"] = $prod->nama;
 			$arrProduction[$m]["quantity"] = $production->quantity;
-			$arrProduction[$m]["harga"] = $production->harga;
-			$arrProduction[$m]["harga_total"] = $production->harga_total;
+			$arrProduction[$m]["harga"] = $prod->harga;
+			$arrProduction[$m]["harga_total"] = (int)$production->quantity * (float)$prod->harga;
 			$arrProduction[$m]["keterangan"] = $production->keterangan;
 			$m += 1;
 		}
@@ -816,13 +816,11 @@ class Order extends CI_Controller {
 					for ($m = 0; $m < count($selectProduction); $m++) {
 						$production_id = $selectProduction[$m]["value"];
 						$quantity = $txtQty[$m]["value"];
-						$hargaProd = str_replace(".", "",$txtHargaProd[$m]["value"]);
-						// $hargaProd = str_replace(".", "", $hargaProd);
-						$hargaProdTotal = str_replace(".", "",$txtHargaProdTotal[$m]["value"]);
-						// $hargaProdTotal = str_replace(".", "", $hargaProdTotal);
+						// $hargaProd = str_replace(".", "",$txtHargaProd[$m]["value"]);
+						// $hargaProdTotal = str_replace(".", "",$txtHargaProdTotal[$m]["value"]);
 						$keterangan = $txtInfoProd[$m]["value"];
 						
-						$insertProd = $this->Order_Model->insertOrderProduction($no_paket, $production_id, $quantity, $hargaProd, $hargaProdTotal, $keterangan);
+						$insertProd = $this->Order_Model->insertOrderProduction($no_paket, $production_id, $quantity, $keterangan);
 						if ($insertProd !== true)
 							throw new Exception($insertProd);
 					}					
