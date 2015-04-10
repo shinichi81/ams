@@ -31,11 +31,6 @@
                   <td>:</td>
                   <td><?php echo $all_data->budget; ?></td>
             </tr>
-            <tr>
-                  <td>Diskon</td>
-                  <td>:</td>
-                  <td><?php echo $all_data->diskon; ?></td>
-            </tr>
 <!--
             <tr>
                   <td>Benefit</td>
@@ -198,10 +193,10 @@
                                     <?php echo $detail->misc_info; ?>
                               </td>
                               <td align='center'>
-                                    <?php echo number_format($harga[$n]->harga,0,",","."); ?>
+                                    <?php echo number_format($detail->harga,0,",","."); ?>
                               </td>
                               <td align='center'>
-                                    <?php $mulai = date_create($detail->start_date); $habis = date_create($detail->end_date); $hari = date_diff($mulai, $habis); $hari = $hari->days + 1; $total = $hari * $harga[$n]->harga; echo number_format($total,0,",",".");?>
+                                    <?php $mulai = date_create($detail->start_date); $habis = date_create($detail->end_date); $hari = date_diff($mulai, $habis); $hari = $hari->days + 1; $total = $hari * $detail->harga; echo number_format($total,0,",",".");?>
                               </td>
                         </tr>
                         <?php
@@ -211,7 +206,41 @@
             </tbody>
       </table>
 
-      <?php if (count($all_production) > 0): ?>
+      <table class="noborder">
+            <tr>
+                  <td width="150px">Harga Paket Gross</td>
+                  <td width="20px">:</td>
+				  <td><?= "Rp. " . number_format($all_data->paket_gross,0,",",".");?></td>
+            </tr>
+            <tr>
+                  <td>Diskon</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->diskon . " %"; ?></td>
+            </tr>
+			<tr>
+				  <td>Diskon (Nominal)</td>
+				  <td>:</td>
+				  <td><?= "Rp. " . number_format($all_data->diskon_nominal,0,",",".");?></td>
+			</tr>
+            <tr>
+                  <td>Additional Diskon</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->additional_diskon . " %"; ?></td>
+            </tr>
+			<tr>
+				  <td>Additional Diskon (Nominal)</td>
+				  <td>:</td>
+				  <td><?= "Rp. " . number_format($all_data->additional_diskon_nominal,0,",",".");?></td>
+			</tr>
+            <tr>
+                  <td>Total Harga Paket</td>
+                  <td>:</td>
+                  <td><?php echo "Rp. " . number_format($all_data->paket_total, 0, ",", ".");?></td>
+            </tr>
+      </table>
+	  <br />
+      
+	  <?php if (count($all_production) > 0): ?>
       <table class="noborder">
             <tr>
                   <td width="150px"><strong>PRODUCTION</strong></td>
@@ -251,13 +280,76 @@
                         <?php endforeach; ?>
             </tbody>
       </table>
-      <?php endif; ?>
-	  
+
       <table class="noborder">
             <tr>
-                  <td width="150px">Total Harga</td>
+                  <td width="150px">Total Harga Produksi</td>
                   <td width="20px">:</td>
-                  <td><?php echo "Rp. " . number_format($all_data->harga_sistem, 0, ",", ".");?></td>
+                  <td><?php echo "Rp. " . number_format($all_data->produksi_total, 0, ",", ".");?></td>
+            </tr>
+      </table>
+	  <br />
+      <?php endif; ?>
+	  
+      <?php if (count($all_event) > 0): ?>
+      <table class="noborder">
+            <tr>
+                  <td width="150px"><strong>EVENT</strong></td>
+                  <td width="20px">&nbsp;</td>
+                  <td>&nbsp;</td>
+            </tr>
+      </table>
+      <table>
+            <thead>
+                  <tr>
+                        <th>Event</th>
+                        <th>Periode</th>
+                        <th>Harga</th>
+                        <th>Keterangan</th>
+                  </tr>
+            </thead>
+            <tbody>
+                  <?php foreach ($all_event as $event): ?>
+                        <tr class='remove'>
+                              <td align='center'>
+                                    <?php echo $event["event"]; ?>
+                              </td>
+                              <td align='center'>
+                                    <?php echo format_date($event["start_date"], TRUE); ?>
+                                    -
+                                    <?php echo format_date($event["end_date"], TRUE); ?>
+                              </td>
+                              <td align='center'>
+                                    <?php echo number_format($event["biaya"],0,",","."); ?>
+                              </td>
+                              <td align='center'>
+                                    <?php echo $event["keterangan"]; ?>
+                              </td>
+                        </tr>
+                        <?php endforeach; ?>
+            </tbody>
+      </table>
+
+      <table class="noborder">
+            <tr>
+                  <td width="150px">Total Harga Event</td>
+                  <td width="20px">:</td>
+                  <td><?php echo "Rp. " . number_format($all_data->event_total, 0, ",", ".");?></td>
+            </tr>
+      </table>
+	  <br />
+      <?php endif; ?>
+
+      <table class="noborder">
+            <tr>
+                  <td width="150px">Pajak</td>
+                  <td width="20px">:</td>
+                  <td><?php echo "Rp. " . number_format($all_data->pajak, 0, ",", ".");?></td>
+            </tr>
+            <tr>
+                  <td>Total Harga</td>
+                  <td>:</td>
+                  <td><?php echo "Rp. " . number_format($all_data->total, 0, ",", ".");?></td>
             </tr>
             <tr>
                   <td>Conflict Brand</td>

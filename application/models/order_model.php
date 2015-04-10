@@ -44,13 +44,14 @@ class Order_Model extends CI_Model {
 
       public function get($no_paket) {
             try {
-                  $this->db->select("a.no_paket, a.no_paket_user, a.request_date, a.ae_id, e.name sales, a.agency_id, c.name agency, a.client_id, b.name client, a.approve, a.done, a.budget, a.diskon, a.benefit, a.is_restrict, a.industrycat_id, a.industry_id, a.progress, a.misc_info, a.misc_info_event, a.misc_info_production_cost, a.no_reference");
+                  $this->db->select("a.no_paket, a.no_paket_user, a.request_date, a.ae_id, e.name sales, a.agency_id, c.name agency, a.client_id, b.name client, a.approve, a.done, a.budget, a.diskon, a.benefit, a.is_restrict, a.industrycat_id, a.industry_id, a.progress, a.misc_info, a.misc_info_event, a.misc_info_production_cost, a.no_reference, f.paket_sistem, f.paket_gross, f.diskon_nominal, f.additional_diskon, f.additional_diskon_nominal, f.paket_total, f.produksi_total, f.event_total, f.pajak, f.total");
                   $this->db->select("IFNULL(a.no_paket_user, '-') no_paket_user, IFNULL(d.name, '-') industry", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_client b", "a.client_id = b.id", "left");
                   $this->db->join("tbl_agency c", "a.agency_id = c.id", "left");
                   $this->db->join("tbl_industry d", "a.industry_id = d.id", "left");
                   $this->db->join("tbl_user e", "a.ae_id = e.username");
+                  $this->db->join("tbl_order_harga f", "a.no_paket = f.no_paket");
                   $this->db->where("a.no_paket", $no_paket);
                   //$this->db->where("a.approve", "N");
                   $this->db->where("a.active_status <>", "N");
@@ -71,11 +72,11 @@ class Order_Model extends CI_Model {
 
       public function getDetail($no_paket) {
             try {
-                  $this->db->select("a.ads_id, a.kanal_id, a.product_group_id, a.position_id, a.misc_info, a.cpm_quota");
+                  $this->db->select("a.ads_id, a.kanal_id, a.product_group_id, a.position_id, a.misc_info, a.cpm_quota, b.harga");
                   $this->db->select("date_format(a.start_date, '%Y-%m-%d') start_date", FALSE);
                   $this->db->select("date_format(a.end_date, '%Y-%m-%d') end_date", FALSE);
                   $this->db->from("tbl_order_paket_ads a");
-                  // $this->db->join("tbl_product_group b", "a.product_group_id = b.id");
+                  $this->db->join("tbl_product_group_harga b", "a.kanal_id = b.id_kanal AND a.product_group_id = b.id_product AND a.position_id = b.id_position", "left");
                   $this->db->where("a.no_paket", $no_paket);
                   $query = $this->db->get();
 
@@ -836,7 +837,7 @@ class Order_Model extends CI_Model {
             }
       }
 
-      public function insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $no_reference, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id) {
+      public function insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $campaign, $diskon, $benefit, $is_restrict, $industry_id, $no_reference, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id) {
             try {
                   $progress = 0;
                   $progress_date = null;
@@ -859,6 +860,7 @@ class Order_Model extends CI_Model {
                             "agency_id" => $agency_id,
                             "client_id" => $client_id,
                             "budget" => $budget,
+                            "campaign" => $campaign,
                             "diskon" => $diskon,
                             "benefit" => $benefit,
                             "misc_info" => $misc_info,
@@ -879,6 +881,7 @@ class Order_Model extends CI_Model {
                             "agency_id" => $agency_id,
                             "client_id" => $client_id,
                             "budget" => $budget,
+                            "campaign" => $campaign,
                             "diskon" => $diskon,
                             "benefit" => $benefit,
                             "misc_info" => $misc_info,
@@ -1305,7 +1308,7 @@ class Order_Model extends CI_Model {
             }
       }
 	  
-	  public function insertOrderHarga() {
+	  public function insertOrderHarga($no_paket, $paket_sistem, $paket_gross, $diskon_nominal, $additional_diskon, $additional_diskon_nominal, $paket_total, $produksi_total, $event_total, $pajak, $total) {
 			try {
 					$data = array(
 						"no_paket" => $no_paket,

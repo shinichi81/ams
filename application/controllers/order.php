@@ -126,7 +126,6 @@ class Order extends CI_Controller {
             $arrKanal[$n] = $this->Order_Model->getKanal($detail->kanal_id);
             $arrProductGroup[$n] = $this->Order_Model->getProductGroup($detail->product_group_id);
             $arrPosition[$n] = $this->Order_Model->getPosition($detail->position_id);
-			$harga[$n] = $this->Order_Model->getHarga($detail->position_id);
 
             $n += 1;
         }
@@ -141,6 +140,17 @@ class Order extends CI_Controller {
 			$arrProduction[$m]["harga_total"] = $production->harga_total;
 			$arrProduction[$m]["keterangan"] = $production->keterangan;
 			$m += 1;
+		}
+
+		$arrEvent = array();
+		$n = 0;
+		foreach ($allEvent as $event) {
+			$arrEvent[$n]["event"] = $event->event;
+			$arrEvent[$n]["start_date"] = $event->start_date;
+			$arrEvent[$n]["end_date"] = $event->end_date;
+			$arrEvent[$n]["biaya"] = $event->biaya;
+			$arrEvent[$n]["keterangan"] = $event->keterangan;
+			$n += 1;
 		}
 
         /* s: untuk menampilkan data brandcomm jika ada */
@@ -173,6 +183,7 @@ class Order extends CI_Controller {
         $data["read"] = $this->_access["read"];
         $data["name_cat_industry"] = $nameCatIndustry->industry_name;
         $data["all_production"] = $arrProduction;
+        $data["all_event"] = $arrEvent;
 
         $this->load->view("order/show", $data);
     }
@@ -550,42 +561,43 @@ class Order extends CI_Controller {
         $agency_id = $arrParam[2];
         $client_id = $arrParam[3];
         $budget = $arrParam[4];
-        $diskon = $arrParam[5];
-        $benefit = $arrParam[6];
-        $selectAds = $arrParam[7];
-        $selectKanal = $arrParam[8];
-        $selectProductGroup = $arrParam[9];
-        $selectPosition = $arrParam[10];
-        $txtStartDate = $arrParam[11];
-        $txtEndDate = $arrParam[12];
-        $isRestrict = $arrParam[13];
-        $industry_id = $arrParam[14];
-        $miscInfo = $arrParam[15];
-        $miscInfoPaket = $arrParam[16];
-        $miscInfoEvent = "";
-        $miscInfoProductionCost = "";
-        $cpmQuota = $arrParam[19];
-        $industrycat_id = $arrParam[20];
-        $harga_sistem = $arrParam[21];
-        $harga_gross = $arrParam[22];
-        $disc_nominal = $arrParam[23];
-        $additional_disc = $arrParam[24];
-        $additional_disc_nominal = $arrParam[25];
-        $selectProduction = $arrParam[26];
-        $txtQty = $arrParam[27];
-        $txtHargaProd = $arrParam[28];
-        $txtHargaProdTotal = $arrParam[29];
-        $txtInfoProd = $arrParam[30];
-        $txtEvent = $arrParam[31];
-        $txtStartDateEvent = $arrParam[32];
-        $txtEndDateEvent = $arrParam[33];
-        $txtHargaEvent = $arrParam[34];
-        $txtInfoEvent = $arrParam[35];
-        $total_harga = $arrParam[36];
-        $total_production = $arrParam[37];
-        $total_event = $arrParam[38];
-        $pajak = $arrParam[39];
-        $total_semua = $arrParam[40];
+        $campaign = $arrParam[5];
+        $diskon = $arrParam[6];
+        $benefit = $arrParam[7];
+        $selectAds = $arrParam[8];
+        $selectKanal = $arrParam[9];
+        $selectProductGroup = $arrParam[10];
+        $selectPosition = $arrParam[11];
+        $txtStartDate = $arrParam[12];
+        $txtEndDate = $arrParam[13];
+        $isRestrict = $arrParam[14];
+        $industry_id = $arrParam[15];
+        $miscInfo = $arrParam[16];
+        $miscInfoPaket = $arrParam[17];
+        $miscInfoEvent = $arrParam[18];
+        $miscInfoProductionCost = $arrParam[19];
+        $cpmQuota = $arrParam[20];
+        $industrycat_id = $arrParam[21];
+        $harga_sistem = $arrParam[22];
+        $harga_gross = $arrParam[23];
+        $disc_nominal = $arrParam[24];
+        $additional_disc = $arrParam[25];
+        $additional_disc_nominal = $arrParam[26];
+        $selectProduction = $arrParam[27];
+        $txtQty = $arrParam[28];
+        $txtHargaProd = $arrParam[29];
+        $txtHargaProdTotal = $arrParam[30];
+        $txtInfoProd = $arrParam[31];
+        $txtEvent = $arrParam[32];
+        $txtStartDateEvent = $arrParam[33];
+        $txtEndDateEvent = $arrParam[34];
+        $txtHargaEvent = $arrParam[35];
+        $txtInfoEvent = $arrParam[36];
+        $total_harga = $arrParam[37];
+        $total_production = $arrParam[38];
+        $total_event = $arrParam[39];
+        $pajak = $arrParam[40];
+        $total_semua = $arrParam[41];
         $date = true;
         $validNo = true;
         $tempIdInUse = "";
@@ -731,7 +743,7 @@ class Order extends CI_Controller {
             $date = false;
         }
 
-        if (($packet_type == "N" and empty($no)) or empty($agency_id) or empty($client_id) or empty($diskon) or empty($selectAds) or $tempIdConflict <> "" or $tempIdInUse <> "" or $tempIdCpmQuotaEmpty <> "" or $tempIdCpmQuota <> "" or $tempIdDateWrong <> "" or !$validNo or empty($industrycat_id) or empty($industry_id)) {
+        if (($packet_type == "N" and empty($no)) or empty($agency_id) or empty($client_id) or empty($selectAds) or $tempIdConflict <> "" or $tempIdInUse <> "" or $tempIdCpmQuotaEmpty <> "" or $tempIdCpmQuota <> "" or $tempIdDateWrong <> "" or !$validNo or empty($industrycat_id) or empty($industry_id)) {
             $data["status"] = false;
             $data["error"] = array();
             $data["error"]["tot_row"] = count($selectAds);
@@ -743,8 +755,10 @@ class Order extends CI_Controller {
                 array_push($data["error"], "txtAgency");
             if (empty($client_id))
                 array_push($data["error"], "txtClient");
-            if (empty($diskon))
-                array_push($data["error"], "txtDiskon");
+            if (empty($campaign))
+                array_push($data["error"], "txtCampaign");
+            // if (empty($diskon))
+                // array_push($data["error"], "txtDiskon");
             /* if (!$date)
               array_push($data["error"], "txtDate"); */
             if (empty($selectAds))
@@ -779,7 +793,7 @@ class Order extends CI_Controller {
 
             $this->Transaction_Model->transaction_start();
             try {
-                $insert = $this->Order_Model->insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $isRestrict, $industry_id, $no, $miscInfo, $miscInfoEvent, $miscInfoProductionCost, $industrycat_id, $harga_sistem, $harga_gross, $disc_nominal, $harga_disc, $pajak, $total_harga);
+                $insert = $this->Order_Model->insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $campaign, $diskon, $benefit, $isRestrict, $industry_id, $no, $miscInfo, $miscInfoEvent, $miscInfoProductionCost, $industrycat_id);
                 if ($insert !== true)
                     throw new Exception($insert);
 
@@ -802,10 +816,10 @@ class Order extends CI_Controller {
 					for ($m = 0; $m < count($selectProduction); $m++) {
 						$production_id = $selectProduction[$m]["value"];
 						$quantity = $txtQty[$m]["value"];
-						$hargaProd = $txtHargaProd[$m]["value"];
-						$hargaProd = str_replace(".", "", $hargaProd);
-						$hargaProdTotal = $txtHargaProdTotal[$m]["value"];
-						$hargaProdTotal = str_replace(".", "", $hargaProdTotal);
+						$hargaProd = str_replace(".", "",$txtHargaProd[$m]["value"]);
+						// $hargaProd = str_replace(".", "", $hargaProd);
+						$hargaProdTotal = str_replace(".", "",$txtHargaProdTotal[$m]["value"]);
+						// $hargaProdTotal = str_replace(".", "", $hargaProdTotal);
 						$keterangan = $txtInfoProd[$m]["value"];
 						
 						$insertProd = $this->Order_Model->insertOrderProduction($no_paket, $production_id, $quantity, $hargaProd, $hargaProdTotal, $keterangan);
