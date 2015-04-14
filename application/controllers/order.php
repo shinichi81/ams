@@ -1096,9 +1096,9 @@ class Order extends CI_Controller {
                 if ($update !== true)
                     throw new Exception($update);
 
-                $update = $this->Order_Model->updateOrderHarga($no_paket, $paket_sistem, $paket_gross, $diskon_nominal, $additional_diskon, $additional_diskon_nominal, $paket_total, $produksi_total, $event_total, $pajak, $total);
-                if ($update !== true)
-                    throw new Exception($update);
+                $updateHarga = $this->Order_Model->updateOrderHarga($no_paket, $harga_sistem, $harga_gross, $disc_nominal, $additional_disc, $additional_disc_nominal, $total_harga, $total_production, $total_event, $pajak, $total_semua);
+                if ($updateHarga !== true)
+                    throw new Exception($updateHarga);
 				
                 // delete semua paket ads berdasarkan no paketnya
                 $update = $this->Order_Model->deleteOrderPaketAds($no_paket);
