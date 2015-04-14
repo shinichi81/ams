@@ -236,7 +236,7 @@
 				  </div>
 				  <br />
                   <label for="hargaGross">Harga Paket Gross : </label> 
-                  <input name="hargaGross" id="hargaGross" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo number_format($all_data->paket_gross,0,",","."); ?>" />
+                  <input name="hargaGross" id="hargaGross" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo $all_data->paket_gross; ?>" />
                   <br>
                   <label for="diskon">Diskon : </label> 
                   <input name="txtDiskon" id="txtDiskon" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo $all_data->diskon; ?>" />
@@ -646,6 +646,9 @@
 							gantiHarga();
 							// hitungTotal();
 						}
+
+						$("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtEndDate]").prop('disabled', false);
+						$("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtEndDate]").val(start);
 				  });
 
                   $("input[name=txtEndDate]").die('change').live('change', function(event, index) {
@@ -778,6 +781,15 @@
                               "	</td>"+
                               "</tr>");
 						hitungTotal();
+				  });
+
+                  $("input[name=txtStartDateEvent]").die('change').live('change', function(event, index) {
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+
+                        var start = $("#addmeEvent tr").eq(index).children().next().find("input[name=txtStartDateEvent]").val();
+						$("#addmeEvent tr").eq(index).children().next().find("input[name=txtEndDateEvent]").prop('disabled', false);
+						$("#addmeEvent tr").eq(index).children().next().find("input[name=txtEndDateEvent]").val(start);
 				  });
 
                   $("#btnHapusEvent").die('click').live('click', function() {

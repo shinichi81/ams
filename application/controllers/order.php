@@ -583,6 +583,7 @@ class Order extends CI_Controller {
         $miscInfoProductionCost = $arrParam[19];
         $cpmQuota = $arrParam[20];
         $industrycat_id = $arrParam[21];
+		//TAMBAHAN WILLY
         $harga_sistem = $arrParam[22];
         $harga_gross = $arrParam[23];
         $disc_nominal = $arrParam[24];
@@ -603,6 +604,7 @@ class Order extends CI_Controller {
         $total_event = $arrParam[39];
         $pajak = $arrParam[40];
         $total_semua = $arrParam[41];
+		//END TAMBAHAN
         $date = true;
         $validNo = true;
         $tempIdInUse = "";
@@ -893,12 +895,29 @@ class Order extends CI_Controller {
         $hdStartDate = $arrParam[19];
         $hdEndDate = $arrParam[20];
         $industrycat_id = $arrParam[21];
+		//TAMBAHAN WILLY
         $harga_sistem = $arrParam[22];
         $harga_gross = $arrParam[23];
         $disc_nominal = $arrParam[24];
-        $harga_disc = $arrParam[25];
-        $pajak = $arrParam[26];
-        $total_harga = $arrParam[27];
+        $additional_disc = $arrParam[25];
+        $additional_disc_nominal = $arrParam[26];
+        $selectProduction = $arrParam[27];
+        $txtQty = $arrParam[28];
+        $txtHargaProd = $arrParam[29];
+        $txtHargaProdTotal = $arrParam[30];
+        $txtInfoProd = $arrParam[31];
+        $txtEvent = $arrParam[32];
+        $txtStartDateEvent = $arrParam[33];
+        $txtEndDateEvent = $arrParam[34];
+        $txtHargaEvent = $arrParam[35];
+        $txtInfoEvent = $arrParam[36];
+        $total_harga = $arrParam[37];
+        $total_production = $arrParam[38];
+        $total_event = $arrParam[39];
+        $pajak = $arrParam[40];
+        $total_semua = $arrParam[41];
+		$campaign = $arrParam[42];
+		//END TAMBAHAN
         $date = true;
         $tempIdInUse = "";
         $tempIdConflict = "";
@@ -1073,10 +1092,14 @@ class Order extends CI_Controller {
         } else {
             $this->Transaction_Model->transaction_start();
             try {
-                $update = $this->Order_Model->updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $isRestrict, $industry_id, $miscInfo, $miscInfoEvent, $miscInfoProductionCost, $industrycat_id, $harga_sistem, $harga_gross, $disc_nominal, $harga_disc, $pajak, $total_harga);
+                $update = $this->Order_Model->updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $isRestrict, $industry_id, $miscInfo, $miscInfoEvent, $miscInfoProductionCost, $industrycat_id, $campaign);
                 if ($update !== true)
                     throw new Exception($update);
 
+                $update = $this->Order_Model->updateOrderHarga($no_paket, $paket_sistem, $paket_gross, $diskon_nominal, $additional_diskon, $additional_diskon_nominal, $paket_total, $produksi_total, $event_total, $pajak, $total);
+                if ($update !== true)
+                    throw new Exception($update);
+				
                 // delete semua paket ads berdasarkan no paketnya
                 $update = $this->Order_Model->deleteOrderPaketAds($no_paket);
                 if ($update !== true)

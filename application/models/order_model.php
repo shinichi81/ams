@@ -949,7 +949,7 @@ class Order_Model extends CI_Model {
             }
       }
 
-      public function updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id) {
+      public function updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id, $campaign) {
             try {
                   if ($is_restrict == "true") {
                         $data = array(
@@ -957,6 +957,7 @@ class Order_Model extends CI_Model {
                             "agency_id" => $agency_id,
                             "client_id" => $client_id,
                             "budget" => $budget,
+                            "campaign" => $campaign,
                             "diskon" => $diskon,
                             "benefit" => $benefit,
                             "misc_info" => $misc_info,
@@ -977,10 +978,10 @@ class Order_Model extends CI_Model {
                             "agency_id" => $agency_id,
                             "client_id" => $client_id,
                             "budget" => $budget,
+                            "campaign" => $campaign,
                             "diskon" => $diskon,
                             "benefit" => $benefit,
                             "misc_info" => $misc_info,
-                            "harga_sistem" => $harga_sistem,
                             "misc_info_event" => $misc_info_event,
                             "misc_info_production_cost" => $misc_info_production_cost,
                             "is_restrict" => "N",
@@ -1326,6 +1327,36 @@ class Order_Model extends CI_Model {
 					);
 
                   $query = $this->db->insert("tbl_order_harga", $data);
+
+                  if (!$query)
+                        throw new Exception();
+
+                  return true;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+	  }
+	  
+	  public function updateOrderHarga($no_paket, $paket_sistem, $paket_gross, $diskon_nominal, $additional_diskon, $additional_diskon_nominal, $paket_total, $produksi_total, $event_total, $pajak, $total) {
+			try {
+					$data = array(
+						"paket_sistem" => $paket_sistem,
+						"paket_gross" => $paket_gross,
+						"diskon_nominal" => $diskon_nominal,
+						"additional_diskon" => $additional_diskon,
+						"additional_diskon_nominal" => $additional_diskon_nominal,
+						"paket_total" => $paket_total,
+						"produksi_total" => $produksi_total,
+						"event_total" => $event_total,
+						"pajak" => $pajak,
+						"total" => $total,
+					);
+
+                  $this->db->where("no_paket", $no_paket);
+                  $query = $this->db->update("tbl_order_harga", $data);
 
                   if (!$query)
                         throw new Exception();

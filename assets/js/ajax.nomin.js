@@ -386,6 +386,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var txtAgency = $("#selectAgency").val();
                   var txtClient = $("#selectClient").val();
                   var txtBudget = $("#txtBudget").val();
+                  var txtCampaign = $("#txtCampaign").val();
                   var txtDiskon = $("#txtDiskon").val();
                   var txtBenefit = "";	
                   var txtMiscInfo = "";		
@@ -406,15 +407,32 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var selectIndustriCat = $("#selectIndustryCat").val();
 				  
 				  //TAMBAHAN WILLY
-                  var hargaSistem = $("#total").val();
+                  var hargaSistem = $("#total").val().split('.').join("");
                   var hargaGross = $("#hargaGross").val();
-                  var diskonNominal = $("#diskonNominal").val();
-                  var hargaDiskon = $("#hargaDiskon").val();
-                  var pajak = $("#pajak").val();
-                  var totalHarga = $("#totalHarga").val();
+                  var diskonNominal = $("#diskonNominal").val().split('.').join("");
+				  var addDiskon = $("#txtAddDiskon").val();
+				  var addDiskonNominal = $("#addDiskonNominal").val().split('.').join("");				  
+
+                  var selectProduction = ($("select[name=selectProduction]").length > 0) ? $("select[name=selectProduction]").serializeArray() : "";
+                  var txtQty = ($("input[name=txtQty]").length > 0) ? $("input[name=txtQty]").serializeArray() : "";
+                  var txtHargaProd = ($("input[name=txtHargaProd]").length > 0) ? $("input[name=txtHargaProd]").serializeArray() : "";
+                  var txtHargaProdTotal = ($("input[name=txtHargaProdTotal]").length > 0) ? $("input[name=txtHargaProdTotal]").serializeArray() : "";
+                  var txtInfoProd = ($("textarea[name=txtInfoProd]").length > 0) ? $("textarea[name=txtInfoProd]").serializeArray() : "";
+				  
+				  var txtEvent = ($("input[name=txtEvent]").length > 0) ? $("input[name=txtEvent]").serializeArray() : "";
+				  var txtStartDateEvent = ($("input[name=txtStartDateEvent]").length > 0) ? $("input[name=txtStartDateEvent]").serializeArray() : "";
+				  var txtEndDateEvent = ($("input[name=txtEndDateEvent]").length > 0) ? $("input[name=txtEndDateEvent]").serializeArray() : "";
+				  var txtHargaEvent = ($("input[name=txtHargaEvent]").length > 0) ? $("input[name=txtHargaEvent]").serializeArray() : "";
+                  var txtInfoEvent = ($("textarea[name=txtInfoEvent]").length > 0) ? $("textarea[name=txtInfoEvent]").serializeArray() : "";
+
+                  var totalHarga = $("#totalHarga").val().split('.').join("");
+                  var totalProduction = $("#totalProduction").val().split('.').join("");
+                  var totalEvent = $("#totalEvent").val().split('.').join("");
+                  var pajak = $("#pajak").val().split('.').join("");
+                  var totalSemua = $("#akhir").val().split('.').join("");
 				  // END TAMBAHAN
 
-                  var arrParam = new Array(txtNoPaket, txtAgency, txtClient, txtBudget, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, hdStartDate, hdEndDate, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, pajak, totalHarga);
+                  var arrParam = new Array(txtNoPaket, txtAgency, txtClient, txtBudget, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, hdStartDate, hdEndDate, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, addDiskon, addDiskonNominal, selectProduction, txtQty, txtHargaProd, txtHargaProdTotal, txtInfoProd, txtEvent, txtStartDateEvent, txtEndDateEvent, txtHargaEvent, txtInfoEvent, totalHarga, totalProduction, totalEvent, pajak, totalSemua, txtCampaign);
             } else if (todo == "progress") {
                   var hdNoPaket = $("#hdNoPaket").val();
                   var txtPercent = $("#percent").text();			
