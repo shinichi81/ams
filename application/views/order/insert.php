@@ -296,7 +296,7 @@
                               "	<td align='center'>"+
                               "		<input name='txtStartDate' class='txtStartDate' type='text' style='width:70px;' readonly='readonly' onmousedown='$(this).datepicker({dateFormat: \"yy-mm-dd\", minDate: new Date(<?php echo date("Y"); ?>, <?php echo date("n") - 1; ?>, <?php echo date("j"); ?>)});' />"+
                               "		-"+
-                              "		<input name='txtEndDate' class='txtEndDate' type='text' style='width:70px;' readonly='readonly' onmousedown='$(this).datepicker({dateFormat: \"yy-mm-dd\", minDate: new Date(<?php echo date("Y"); ?>, <?php echo date("n") - 1; ?>, <?php echo date("j"); ?>)});' />"+
+                              "		<input name='txtEndDate' class='txtEndDate' type='text' style='width:70px;' readonly='readonly' onmousedown='$(this).datepicker({dateFormat: \"yy-mm-dd\", minDate: new Date(<?php echo date("Y"); ?>, <?php echo date("n") - 1; ?>, <?php echo date("j"); ?>)});' disabled />"+
                               "	</td>"+
                               "	<td align='center'>"+
 							  "		<div id='harga'>"+
@@ -545,6 +545,9 @@
 							gantiHarga();
 							// hitungTotal();
 						}
+
+						$("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtEndDate]").prop('disabled', false);
+						$("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtEndDate]").val(start);
 				  });
 
                   $("input[name=txtEndDate]").die('change').live('change', function(event, index) {
@@ -600,7 +603,6 @@
                               "	</td>"+
                               "	<td align='center'>"+
                               "		<button type='button' name='btnHapusProduction' id='btnHapusProduction' title='Hapus' class='btn'><img src='<?php echo image_url("icons/delete.gif"); ?>' alt='Hapus' /></button>"+
-                              "		<div class='error' id='errConflict'></div>"+
                               "	</td>"+
                               "</tr>");
 							  
@@ -663,7 +665,7 @@
                               "	<td align='center'>"+
                               "		<input name='txtStartDateEvent' class='txtStartDate' type='text' style='width:70px;' readonly='readonly' onmousedown='$(this).datepicker({dateFormat: \"yy-mm-dd\", minDate: new Date(<?php echo date("Y"); ?>, <?php echo date("n") - 1; ?>, <?php echo date("j"); ?>)});' />"+
                               "		-"+
-                              "		<input name='txtEndDateEvent' class='txtEndDate' type='text' style='width:70px;' readonly='readonly' onmousedown='$(this).datepicker({dateFormat: \"yy-mm-dd\", minDate: new Date(<?php echo date("Y"); ?>, <?php echo date("n") - 1; ?>, <?php echo date("j"); ?>)});' />"+
+                              "		<input name='txtEndDateEvent' class='txtEndDate' type='text' style='width:70px;' readonly='readonly' onmousedown='$(this).datepicker({dateFormat: \"yy-mm-dd\", minDate: new Date(<?php echo date("Y"); ?>, <?php echo date("n") - 1; ?>, <?php echo date("j"); ?>)});' disabled />"+
                               "	</td>"+
                               "	<td align='center'>"+
 							  "		<input name='txtHargaEvent' id='txtHargaEvent' type='text' style='width: 90px;' value='0'  />"+
@@ -673,10 +675,18 @@
                               "	</td>"+
                               "	<td align='center'>"+
                               "		<button type='button' name='btnHapusEvent' id='btnHapusEvent' title='Hapus' class='btn'><img src='<?php echo image_url("icons/delete.gif"); ?>' alt='Hapus' /></button>"+
-                              "		<div class='error' id='errConflict'></div>"+
                               "	</td>"+
                               "</tr>");
 						hitungTotal();
+				  });
+
+                  $("input[name=txtStartDateEvent]").die('change').live('change', function(event, index) {
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+
+                        var start = $("#addmeEvent tr").eq(index).children().next().find("input[name=txtStartDateEvent]").val();
+						$("#addmeEvent tr").eq(index).children().next().find("input[name=txtEndDateEvent]").prop('disabled', false);
+						$("#addmeEvent tr").eq(index).children().next().find("input[name=txtEndDateEvent]").val(start);
 				  });
 
                   $("#btnHapusEvent").die('click').live('click', function() {

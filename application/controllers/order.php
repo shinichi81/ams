@@ -251,6 +251,8 @@ class Order extends CI_Controller {
 
         $allData = $this->Order_Model->get($no_paket);
         $allDetail = $this->Order_Model->getDetail($no_paket);
+        $allDetailProd = $this->Order_Model->getDetailProd($no_paket);
+        $allDetailEvent = $this->Order_Model->getDetailEvent($no_paket);
         //$allIndustry = $this->Order_Model->getAllIndustry();
         $allIndustryCat = $this->Order_Model->getAllIndustryCat();
         $allDataIndustry = $this->Order_Model->getAllIndustryCatId($allData->industrycat_id);
@@ -258,7 +260,7 @@ class Order extends CI_Controller {
         $allKanal = $this->Order_Model->getAllKanal();
         $allAgency = $this->Order_Model->getAgency();
         $allClient = $this->Order_Model->getClient();
-		$harga = $this->Order_Model->getHarga(1,1,1);
+		$addHarga = $this->Order_Model->getHarga(1,1,1);
         $allProduction = $this->Order_Model->getAllProd();
 		$hargaProd = $this->Order_Model->getHargaProd(1);
         $allIndustry = array();
@@ -278,7 +280,8 @@ class Order extends CI_Controller {
         }
 
         // list untuk tambah paket
-        $allProductGroup = $this->Order_Model->getAllProductGroup($allKanal[0]->id);
+        $allProductGroup = $this->Order_Model->getAllProductGroup();
+        // $allProductGroup = $this->Order_Model->getAllProductGroup($allKanal[0]->id);
         $allPosition = $this->Order_Model->getAllPosition($allProductGroup[0]->position_id);
 
         /* s: UNTUK MENDAPATKAN DEFAULT CPM POSITION */
@@ -338,6 +341,8 @@ class Order extends CI_Controller {
 
         $data["all_data"] = $allData;
         $data["all_detail"] = $allDetail;
+        $data["all_detail_prod"] = $allDetailProd;
+        $data["all_detail_event"] = $allDetailEvent;
         $data["all_data_brandcomm"] = $allDataBrandcomm;
         $data["all_detail_brandcomm"] = $allDetailBrandcomm;
         $data["all_industry"] = $allIndustry;
@@ -352,7 +357,7 @@ class Order extends CI_Controller {
         $data["arr_position"] = $arrPosition;
         $data["all_cpm_position"] = $arrCpmPosition;
         $data["all_default_cpm_position"] = $arrDefaultCpmPosition;
-        $data["harga"] = $harga;
+        $data["harga"] = $addHarga;
         $data["all_production"] = $allProduction;
         $data["harga_production"] = $hargaProd;
         $data["update"] = $this->_access["update"];
@@ -1140,7 +1145,7 @@ class Order extends CI_Controller {
 
         $data = "";
         foreach ($allProductGroup as $productgroup)
-            $data .= "<option value='" . $productgroup->id . "'>" . $productgroup->name . "</option>";
+            $data .= "<option value='" . $productgroup->id . "'>" . preg_replace('/[^A-Za-z0-9\-]/', '', $productgroup->name) . "</option>";
 
         echo $data;
         die;

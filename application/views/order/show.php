@@ -31,6 +31,11 @@
                   <td>:</td>
                   <td><?php echo $all_data->budget; ?></td>
             </tr>
+            <tr>
+                  <td>Campaign</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->campaign; ?></td>
+            </tr>
 <!--
             <tr>
                   <td>Benefit</td>

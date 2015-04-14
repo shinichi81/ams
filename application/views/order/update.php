@@ -39,8 +39,7 @@
                                     <option value="<?php echo $client->id; ?>" <?php echo $selected; ?>><?php echo $client->name; ?></option>
                               <?php endforeach; ?>
                         </select>
-                  </div>
-                  <div style="float: left;">
+						<br />
                         <label for="budget">Budget : </label> 
                         <input name="txtBudget" id="txtBudget" type="text" value="<?php echo $all_data->budget; ?>" />
 						<br />
@@ -113,7 +112,7 @@
                         <tbody id="addme">
                               <?php
                               $n = 0;
-							  $jumlah = 0;
+							  // $jumlah = 0;
                               foreach ($all_detail as $detail):
                                     ?>
 									<?php 
@@ -164,7 +163,7 @@
                                                             if ($detail->product_group_id == $productgroup->id)
                                                                   $selected = "selected='selected'";
                                                             ?>
-                                                            <option value='<?php echo $productgroup->id; ?>' <?php echo $selected; ?> <?php echo $disabled; ?>><?php echo $productgroup->name; ?></option>
+                                                            <option value='<?php echo $productgroup->id; ?>' <?php echo $selected; ?> <?php echo $disabled; ?>><?php echo preg_replace('/[^A-Za-z0-9\-]/', '', $productgroup->name); ?></option>
                                                             <?php
                                                       endforeach;
                                                       ?>
@@ -209,12 +208,12 @@
                                           </td>
 										  <td align='center'>
 												<div id="harga">
-													<input name="txtHarga" id="txtHarga" type="text" style="width: 70px;" value="<?= number_format($harga->harga,0,",",".");// $jumlah = $jumlah + $harga->harga;?>" readonly />
+													<input name="txtHarga" id="txtHarga" type="text" style="width: 70px;" value="<?= number_format($detail->harga,0,",",".");// $jumlah = $jumlah + $harga->harga;?>" readonly />
 												</div>
 										  </td>
 										  <td align='center'>
 												<div id="hargaTotal">
-													<input name="txtHargaTotal" id="txtHargaTotal" type="text" style="width: 70px;" value="<?= number_format($harga->harga,0,",",".");// $jumlah = $jumlah + $harga->harga;?>" readonly />
+													<input name="txtHargaTotal" id="txtHargaTotal" type="text" style="width: 70px;" value="<?= number_format(($detail->harga * $detail->periode),0,",",".");// $jumlah = $jumlah + $harga->harga;?>" readonly />
 												</div>
 										  </td>
                                           <td align='center'>
@@ -233,23 +232,23 @@
                   </table>
 				  <div style="float:right; margin-right:50px;">
 					<label>Harga Sistem :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-					<input name="total" id="total" style="width:100px;" type="text" value="<?php echo $all_data->harga_sistem; ?>" />
+					<input name="total" id="total" style="width:100px;" type="text" value="<?php echo $all_data->paket_sistem; ?>" />
 				  </div>
 				  <br />
                   <label for="hargaGross">Harga Paket Gross : </label> 
-                  <input name="hargaGross" id="hargaGross" type="text" value="<?php echo $all_data->harga_gross; ?>" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" />
+                  <input name="hargaGross" id="hargaGross" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo number_format($all_data->paket_gross,0,",","."); ?>" />
                   <br>
                   <label for="diskon">Diskon : </label> 
-                  <input name="txtDiskon" id="txtDiskon" type="text" value="<?php echo $all_data->diskon; ?>" readonly />
+                  <input name="txtDiskon" id="txtDiskon" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo $all_data->diskon; ?>" />
 				  <br />
 				  <label for="additionalDiskon">Additional Diskon : </label> 
-				  <input name="txtAddDiskon" id="txtAddDiskon" type="text" value="<?php echo $all_data->additional_diskon; ?>" readonly />
+				  <input name="txtAddDiskon" id="txtAddDiskon" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo $all_data->additional_diskon; ?>" />
                   <br>
                   <label for="diskonNominal">Diskon (Nominal) : </label> 
-                  <input name="diskonNominal" id="diskonNominal" type="text" value="0" readonly />
+                  <input name="diskonNominal" id="diskonNominal" type="text" value="<?php echo number_format($all_data->diskon_nominal,0,",","."); ?>" readonly />
                   <br>
                   <label for="addDiskonNominal">Additional Diskon (Nominal) : </label> 
-                  <input name="addDiskonNominal" id="addDiskonNominal" type="text" value="0" readonly />
+                  <input name="addDiskonNominal" id="addDiskonNominal" type="text" value="<?php echo number_format($all_data->additional_diskon_nominal,0,",","."); ?>" readonly />
             </fieldset>
             <fieldset id="production">
                   <legend>Production Cost</legend>
@@ -264,6 +263,46 @@
                         <th>&nbsp;</th>
                         </thead>
                         <tbody id="addmeProduction">			
+                              <?php
+								  foreach ($all_detail_prod as $detailProd):
+                              ?>
+							<tr class='remove'>
+								<td align='center'>
+									<select name='selectProduction' id='selectProduction'>
+										<?php
+											foreach ($all_production as $production):
+												$selected = "";
+												if ($detailProd->production_id == $production->id)
+													$selected = "selected='selected'";
+										?>
+										<option value='<?php echo $production->id; ?>' <?php echo $selected; ?>><?php echo $production->nama; ?></option>
+										<?php endforeach; ?>
+									</select>
+								</td>
+								<td align='center'>
+									<input type='number' name='txtQty' id='txtQty' value='<?= $detailProd->quantity ?>' style='width:50px;' />
+								</td>
+								<td align='center'>
+									<div id='harga'>
+										<input name='txtHargaProd' id='txtHarga' type='text' readonly='readonly' style='width: 90px;' value='<?= number_format($detailProd->harga,0,",","."); ?>' />
+									</div>
+								</td>
+								<td align='center'>
+									<div id='hargaTotal'>
+										<input name='txtHargaProdTotal' id='txtHargaTotal' type='text' readonly='readonly' style='width: 90px;' value='<?= number_format($detailProd->quantity * $detailProd->harga,0,",","."); ?>' />
+									</div>
+								</td>
+								<td align='center'>
+									<textarea name='txtInfoProd' id='txtInfoProd' style='height: 30px; width: 130px;'><?php echo $detailProd->keterangan; ?></textarea>
+								</td>
+								<td align='center'>
+									<button type='button' name='btnHapusProduction' id='btnHapusProduction' title='Hapus' class='btn'><img src='<?php echo image_url("icons/delete.gif"); ?>' alt='Hapus' /></button>
+									<div class='error' id='errConflict'></div>
+								</td>
+							</tr>
+								<?php
+										endforeach;
+									?>
                         </tbody>
                   </table>
             </fieldset>
@@ -278,26 +317,51 @@
                         <th>Keterangan</th>
                         <th>&nbsp;</th>
                         </thead>
-                        <tbody id="addmeEvent">			
+                        <tbody id="addmeEvent">
+							<?php
+								foreach ($all_detail_event as $detailEvent):
+							?>
+							<tr class="remove">
+								<td align="center">
+									<input name='txtEvent' id='txtEvent' type='text' style='width:150px;' value='<?= $detailEvent->event ?>' />
+								</td>
+								<td align="center">
+									<input name='txtStartDate' class='txtStartDate' type='text' readonly='readonly' style='width:70px;' value="<?php echo $detailEvent->start_date; ?>"/>
+									-
+									<input name='txtEndDate' class='txtEndDate' type='text' readonly='readonly' style='width:70px;' value="<?php echo $detailEvent->end_date; ?>"/>
+								</td>
+								<td align="center">
+							  		<input name='txtHargaEvent' id='txtHargaEvent' type='text' style='width: 90px;' value='<?= $detailEvent->biaya; ?>'  />
+								</td>
+								<td align="center">
+                              		<textarea name='txtInfoEvent' id='txtInfoEvent' style='height: 30px; width: 130px;'><?= $detailEvent->keterangan; ?></textarea>
+								</td>
+								<td align="center">
+                              		<button type='button' name='btnHapusEvent' id='btnHapusEvent' title='Hapus' class='btn'><img src='<?php echo image_url("icons/delete.gif"); ?>' alt='Hapus' /></button>
+								</td>
+							</tr>
+							<?php
+								endforeach;
+							?>
                         </tbody>
                   </table>
             </fieldset>
 			<fieldset id="totalSemua">
 					<legend>Total Biaya</legend>
 					<label>Total Harga Paket :</label> 
-					<input name="totalHarga" id="totalHarga" type="text" value="0" readonly />
+					<input name="totalHarga" id="totalHarga" type="text" value="<?= $all_data->paket_total; ?>" readonly />
 					<br>
 					<label>Total Harga Produksi :</label>
-					<input name="totalProduction" id="totalProduction" type="text" value="0" readonly />
+					<input name="totalProduction" id="totalProduction" type="text" value="<?= $all_data->produksi_total; ?>" readonly />
 					<br>
 					<label>Total Harga Event :</label>
-					<input name="totalEvent" id="totalEvent" type="text" value="0" readonly />					
+					<input name="totalEvent" id="totalEvent" type="text" value="<?= $all_data->event_total; ?>" readonly />
 					<br>
 					<label>PPN :</label>
-					<input name="pajak" id="pajak" type="text" value="0" />
+					<input name="pajak" id="pajak" type="text" value="<?= number_format($all_data->pajak,0,",","."); ?>" />
 					<br>
 					<label>Total Biaya Keseluruhan :</label>
-					<input name="totalSemua" id="akhir" type="text" value="0" />
+					<input name="totalSemua" id="akhir" type="text" value="<?= number_format($all_data->total,0,",","."); ?>" />
 			</fieldset>
             <fieldset id="conflict">
                   <legend>Conflict Brand</legend>
@@ -411,7 +475,7 @@
                               "	<td align='center'>"+
                               "		<select name='selectProductGroup' id='selectProductGroup'>"+
                               "			<?php foreach ($all_productgroup as $productgroup): ?>"+
-                                    "			<option value='<?php echo $productgroup->id; ?>'><?php echo $productgroup->name; ?></option>"+
+                                    "			<option value='<?php echo $productgroup->id; ?>'><?php echo preg_replace('/[^A-Za-z0-9\-]/', '', $productgroup->name); ?></option>"+
                                     "			<?php endforeach; ?>"+
                               "		</select>"+
                               "	</td>"+
@@ -449,8 +513,10 @@
                               "		<div class='error' id='errConflict'></div>"+
                               "	</td>"+
                               "</tr>");
-						// simpan = simpan + <?= $harga->harga; ?>;
-						document.getElementById('total').value = simpan;
+						simpan = simpan + <?= $harga->harga; ?>;
+						document.getElementById('total').value = simpan.formatMoney(0);
+						document.getElementById('hargaGross').value = simpan;
+						gantiHarga();
                   });
 
 				// gunakan fungsi live untuk membind event 'click' ke #btnHapus
@@ -525,6 +591,88 @@
                               $("#addme tr").eq(index).children().next().next().next().next().find("#show_cpm").hide();
                         }
                   });
+				  
+				var DateDiff = {
+
+					inDays: function(d1, d2) {
+						var t2 = d2.getTime();
+						var t1 = d1.getTime();
+
+						return parseInt((t2-t1)/(24*3600*1000));
+					},
+
+					inWeeks: function(d1, d2) {
+						var t2 = d2.getTime();
+						var t1 = d1.getTime();
+
+						return parseInt((t2-t1)/(24*3600*1000*7));
+					},
+
+					inMonths: function(d1, d2) {
+						var d1Y = d1.getFullYear();
+						var d2Y = d2.getFullYear();
+						var d1M = d1.getMonth();
+						var d2M = d2.getMonth();
+
+						return (d2M+12*d2Y)-(d1M+12*d1Y);
+					},
+
+					inYears: function(d1, d2) {
+						return d2.getFullYear()-d1.getFullYear();
+					}
+				}
+
+                  $("input[name=txtStartDate]").die('change').live('change', function(event, index) {
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+
+                        var start = $("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtStartDate]").val();
+                        var end = $("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtEndDate]").val();
+						
+						if (start != "" && end!= "") {
+							var d1 = new Date(start);
+							var d2 = new Date(end);
+							
+							var harga = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHarga").val();
+							harga = harga.split('.').join("");
+							harga = harga * (DateDiff.inDays(d1, d2) + 1);
+							var hargaTotal = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
+							hargaTotal = hargaTotal.split('.').join("");
+							simpan = simpan - hargaTotal;
+							$("#addme tr").eq(index).children().next().next().next().next().next().next().find("#txtHargaTotal").val(harga.formatMoney(0));
+							simpan = simpan + harga;
+							document.getElementById('total').value = simpan.formatMoney(0);							
+							document.getElementById('hargaGross').value = simpan;
+							gantiHarga();
+							// hitungTotal();
+						}
+				  });
+
+                  $("input[name=txtEndDate]").die('change').live('change', function(event, index) {
+                        if (index == undefined)
+                              var index = $(this).parents(".remove").prevAll().length;
+
+                        var start = $("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtStartDate]").val();
+                        var end = $("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtEndDate]").val();
+						
+						if (start != "" && end!= "") {
+							var d1 = new Date(start);
+							var d2 = new Date(end);
+							
+							var harga = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHarga").val();
+							harga = harga.split('.').join("");
+							harga = harga * (DateDiff.inDays(d1, d2) + 1);
+							var hargaTotal = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
+							hargaTotal = hargaTotal.split('.').join("");
+							simpan = simpan - hargaTotal;
+							$("#addme tr").eq(index).children().next().next().next().next().next().next().find("#txtHargaTotal").val(harga.formatMoney(0));
+							simpan = simpan + harga;
+							document.getElementById('total').value = simpan.formatMoney(0);							
+							document.getElementById('hargaGross').value = simpan;
+							gantiHarga();
+							// hitungTotal();
+						}
+				  });
 
                   $("#btnTambahProduction").click(function() {
                         $("#addmeProduction").append("<tr class='remove'>"+
