@@ -708,7 +708,7 @@
                               "	</td>"+
                               "</tr>");
 							  
-						simpanProd = simpanProd + 0;
+						simpanProd = simpanProd + <?= $harga_production->harga; ?>;
 						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
 						hitungTotal();
 				  });

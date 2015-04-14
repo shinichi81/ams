@@ -433,7 +433,6 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
 				  // END TAMBAHAN
 
                   var arrParam = new Array(txtNoPaket, txtAgency, txtClient, txtBudget, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, hdStartDate, hdEndDate, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, addDiskon, addDiskonNominal, selectProduction, txtQty, txtHargaProd, txtHargaProdTotal, txtInfoProd, txtEvent, txtStartDateEvent, txtEndDateEvent, txtHargaEvent, txtInfoEvent, totalHarga, totalProduction, totalEvent, pajak, totalSemua, txtCampaign);
-				  alert(arrParam);
             } else if (todo == "progress") {
                   var hdNoPaket = $("#hdNoPaket").val();
                   var txtPercent = $("#percent").text();			

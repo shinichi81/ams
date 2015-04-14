@@ -1096,12 +1096,23 @@ class Order extends CI_Controller {
                 if ($update !== true)
                     throw new Exception($update);
 
-                $updateHarga = $this->Order_Model->updateOrderHarga($no_paket, $harga_sistem, $harga_gross, $disc_nominal, $additional_disc, $additional_disc_nominal, $total_harga, $total_production, $total_event, $pajak, $total_semua);
-                if ($updateHarga !== true)
-                    throw new Exception($updateHarga);
+				//update detail harga sesuai no paket nya
+                $update = $this->Order_Model->updateOrderHarga($no_paket, $harga_sistem, $harga_gross, $disc_nominal, $additional_disc, $additional_disc_nominal, $total_harga, $total_production, $total_event, $pajak, $total_semua);
+                if ($update !== true)
+                    throw new Exception($update);
 				
                 // delete semua paket ads berdasarkan no paketnya
                 $update = $this->Order_Model->deleteOrderPaketAds($no_paket);
+                if ($update !== true)
+                    throw new Exception($update);
+
+                //delete semua production berdasarkan no paketnya
+                $update = $this->Order_Model->deleteOrderProduction($no_paket);
+                if ($update !== true)
+                    throw new Exception($update);
+
+                //delete semua event berdasarkan no paketnya
+                $update = $this->Order_Model->deleteOrderEvent($no_paket);
                 if ($update !== true)
                     throw new Exception($update);
 
@@ -1120,6 +1131,34 @@ class Order extends CI_Controller {
                     if ($update !== true)
                         throw new Exception($update);
                 }
+				
+				if (count($selectProduction) > 0) {
+					for ($m = 0; $m < count($selectProduction); $m++) {
+						$production_id = $selectProduction[$m]["value"];
+						$quantity = $txtQty[$m]["value"];
+						// $hargaProd = str_replace(".", "",$txtHargaProd[$m]["value"]);
+						// $hargaProdTotal = str_replace(".", "",$txtHargaProdTotal[$m]["value"]);
+						$keterangan = $txtInfoProd[$m]["value"];
+						
+						$insertProd = $this->Order_Model->insertOrderProduction($no_paket, $production_id, $quantity, $keterangan);
+						if ($insertProd !== true)
+							throw new Exception($insertProd);
+					}					
+				}
+				
+				if (count($txtEvent) > 0) {
+					for ($o = 0; $o < count($txtEvent); $o++) {
+						$event = $txtEvent[$o]["value"];
+						$event_start = $txtStartDateEvent[$o]["value"];
+						$event_end = $txtEndDateEvent[$o]["value"];
+						$hargaEvent = $txtHargaEvent[$o]["value"];
+						$infoEvent = $txtInfoEvent[$o]["value"];
+						
+						$insertEvent = $this->Order_Model->insertOrderEvent($no_paket, $event, $event_start, $event_end, $hargaEvent, $infoEvent);
+						if ($insertEvent !== true)
+							throw new Exception($insertEvent);
+					}
+				}
             } catch (Exception $e) {
                 $update = $e->getMessage();
             }
