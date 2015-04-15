@@ -4,8 +4,8 @@
             <th width="40px"><a href="#">No</a></th>
         	<th><a href="#">Tanggal Request</a></th>
         	<th><a href="#">No Paket</a></th>
-        	<th><a href="#">Agency</a></th>
-        	<th><a href="#">Client</a></th>
+        	<th><a href="#">Perusahaan</a></th>
+        	<th><a href="#">Brand</a></th>
         	<th><a href="#">No PO</a></th>
         	<th><a href="#">No SO</a></th>
             <th width="80px">&nbsp;</th>
@@ -17,7 +17,7 @@
 		foreach ($all_data as $data): ?>
 		<tr class="a-center">
         	<td><?php echo $no; ?></td>
-        	<td><?php echo format_date($data->request_date); ?></td>
+        	<td><?php echo format_date($data->request_date, TRUE); ?></td>
         	<td><?php echo $data->no_paket; ?></td>
         	<td><?php echo $data->brand; ?></td>
         	<td><?php echo $data->company; ?></td>

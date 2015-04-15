@@ -38,7 +38,7 @@ class PO_Model extends CI_Model {
       public function get($no_paket) {
             try {
                   // $this->db->select("a.no_paket, a.harga_sistem, a.harga_gross, a.disc_nominal, a.harga_disc, a.pajak, a.diskon, a.total_harga, a.no_so, a.no_invoice, a.request_date, b.name AS brand, c.name AS company, d.name AS sales");
-                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS brand, c.name AS company, d.name AS sales");
+                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS company, c.name AS brand, d.name AS sales, f.bukti_tayang, f.report, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total");
                   $this->db->select("IFNULL(f.no_po, e.no_po) AS no_po", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_agency b", "a.agency_id = b.id");
@@ -46,6 +46,7 @@ class PO_Model extends CI_Model {
                   $this->db->join("tbl_user d", "a.ae_id = d.username");
                   $this->db->join("tbl_order_paket_ads e", "e.no_paket = a.no_paket");
                   $this->db->join("tbl_invoice f", "f.no_paket = a.no_paket", "left");
+                  $this->db->join("tbl_order_harga g", "g.no_paket = a.no_paket", "left");
                   $this->db->where("a.no_paket", $no_paket);
                   $this->db->where("a.approve", "Y");
                   $query = $this->db->get();
@@ -65,11 +66,13 @@ class PO_Model extends CI_Model {
       
 	  public function getDetail($no_paket) {
             try {
-                  $this->db->select("id, ads_id, kanal_id, product_group_id, position_id, misc_info, cpm_quota, request");
+                  $this->db->select("a.ads_id, a.kanal_id, a.product_group_id, a.position_id, a.misc_info, a.cpm_quota, a.request, b.harga");
                   $this->db->select("date_format(start_date, '%Y-%m-%d') start_date", FALSE);
                   $this->db->select("date_format(end_date, '%Y-%m-%d') end_date", FALSE);
-                  $this->db->from("tbl_order_paket_ads");
-                  $this->db->where("no_paket", $no_paket);
+                  $this->db->select("datediff(end_date, start_date) + 1 periode", FALSE);
+                  $this->db->from("tbl_order_paket_ads a");
+                  $this->db->join("tbl_product_group_harga b", "a.kanal_id = b.id_kanal AND a.product_group_id = b.id_product AND a.position_id = b.id_position", "left");
+                  $this->db->where("a.no_paket", $no_paket);
                   $query = $this->db->get();
 
                   if (!$query)
@@ -191,12 +194,13 @@ class PO_Model extends CI_Model {
             }
       }
 
-      public function update($no_paket, $no_po, $no_so) {
+      public function update($no_paket, $no_po, $no_so, $bukti_tayang) {
             try {
                   $data = array(
 					  "no_paket" => $no_paket,
                       "no_po" => $no_po,
                       "no_so" => $no_so,
+                      "bukti_tayang" => $bukti_tayang,
                       // "update_user" => $this->session->userdata("username"),
                   );
 				  

@@ -758,6 +758,8 @@ class Order extends CI_Controller {
                 array_push($data["error"], "txtNo");
             /* if (empty($no_paket))
               array_push($data["error"], "txtNoPaket"); */
+			if ($isRestrict == "Y" and empty($industrycat_id))
+				array_push($data["error"], "selectIndustryCat");
             if (empty($agency_id))
                 array_push($data["error"], "txtAgency");
             if (empty($client_id))
@@ -819,7 +821,7 @@ class Order extends CI_Controller {
                         throw new Exception($insert);
                 }
 				
-				if (count($selectProduction) > 0) {
+				// if (count($selectProduction) > 0) {
 					for ($m = 0; $m < count($selectProduction); $m++) {
 						$production_id = $selectProduction[$m]["value"];
 						$quantity = $txtQty[$m]["value"];
@@ -831,9 +833,9 @@ class Order extends CI_Controller {
 						if ($insertProd !== true)
 							throw new Exception($insertProd);
 					}					
-				}
+				// }
 				
-				if (count($txtEvent) > 0) {
+				// if (count($txtEvent) > 0) {
 					for ($o = 0; $o < count($txtEvent); $o++) {
 						$event = $txtEvent[$o]["value"];
 						$event_start = $txtStartDateEvent[$o]["value"];
@@ -845,7 +847,7 @@ class Order extends CI_Controller {
 						if ($insertEvent !== true)
 							throw new Exception($insertEvent);
 					}
-				}
+				// }
 				
 				$insertHarga = $this->Order_Model->insertOrderHarga($no_paket, $harga_sistem, $harga_gross, $disc_nominal, $additional_disc, $additional_disc_nominal, $total_harga, $total_production, $total_event, $pajak, $total_semua);
                 if ($insertHarga !== true)

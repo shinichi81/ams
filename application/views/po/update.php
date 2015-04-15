@@ -1,7 +1,7 @@
 <?php if ($update == "Y"): ?>
       <h3 id="adduser">FORM UPDATE</h3>
       <form id="form" enctype="multipart/form-data" action="<?php echo site_url("po/do_upload"); ?>">
-            <fieldset id="personal">
+            <fieldset id="offer_position">
                   <legend>Data</legend>
                   <label for="noPO">No PO : </label> 
                   <input name="noPO" id="noPO" type="text" value="<?php echo $all_data->no_po; ?>" />
@@ -11,21 +11,16 @@
                   <br>
 				  <label for="bukti">Bukti Tayang : </label> 
 				  <input name="bukti" id="bukti" type="file" />
-				  <input type="submit" name="uploadBukti" id="uploadBukti" value="Upload Picture">
-				  <div class="progress">
-					<div class="bar"></div >
-					<div class="percent">0%</div >
-				  </div>
 				  <div id="statusBukti"></div>
 				  <br>
 				  <label for="report">Report : </label> 
 				  <input name="report" id="report" type="file" />
-				  <input type="submit" name="uploadReport" id="uploadReport" value="Upload File Excel">
+				  <div id="statusReport"></div>
+				  <input type="submit" name="upload" id="upload" value="Upload">
 				  <div class="progress">
 					<div class="bar"></div >
 					<div class="percent">0%</div >
 				  </div>
-				  <div id="statusReport"></div>
                   <input name="hdId" id="hdId" type="hidden" value="<?php echo $all_data->no_paket; ?>" />
             </fieldset>
             <div class="ajax-loader" style="display: none;">&nbsp;</div>
@@ -35,6 +30,7 @@
             </div>
       </form>
 
+<?php echo js("jquery.form.js"); ?>
       <script type="text/javascript">
 		$(document).ready(function() {
 			/* s: UNTUK PROSES UPLOAD GAMBAR */
@@ -58,6 +54,7 @@
 					status.html(xhr.responseText);
 				}
 			});
+
 			/* e: UNTUK PROSES UPLOAD GAMBAR */
 		});
       </script>

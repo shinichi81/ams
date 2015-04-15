@@ -110,17 +110,13 @@ class PO extends CI_Controller {
             $arrParam = $this->input->post("arrParam");
             $no_paket = $arrParam[0];
             $no_po = $arrParam[1];
-            $hargaSistem = $arrParam[2];
-            $hargaGross = $arrParam[3];
-            $diskonNominal = $arrParam[4];
-            $hargaDiskon = $arrParam[5];
-            $pajak = $arrParam[6];
-            $totalHarga = $arrParam[7];
-            $no_so = $arrParam[8];
+            $no_so = $arrParam[2];
+            // $bukti = $arrParam[3];
+			$bukti = image_path("upload/".$arrParam[3]);
 
             $this->Transaction_Model->transaction_start();
                   
-			$update = $this->PO_Model->update($no_paket, $no_po, $hargaSistem, $hargaGross, $diskonNominal, $hargaDiskon, $pajak, $totalHarga, $no_so);
+			$update = $this->PO_Model->update($no_paket, $no_po, $no_so, $bukti);
 
 			$this->Transaction_Model->transaction_complete();
                   
@@ -152,7 +148,7 @@ class PO extends CI_Controller {
 			
 			$config["upload_path"] = $dirPath;
 			$config["allowed_types"] = "gif|jpg|png";
-			$config["max_size"] = "1024";
+			$config["max_size"] = "2048";
 			$config["overwrite"] = FALSE;
 			
 			$this->upload->initialize($config);
@@ -166,5 +162,5 @@ class PO extends CI_Controller {
 			
 			echo $filename;
 			die;
-			}
+	  }
 }

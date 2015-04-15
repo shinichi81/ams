@@ -347,8 +347,13 @@
 
       <table class="noborder">
             <tr>
-                  <td width="150px">Pajak</td>
+                  <td width="150px">Harga (sebelum pajak)</td>
                   <td width="20px">:</td>
+                  <td><?php echo "Rp. " . number_format($all_data->paket_total + $all_data->produksi_total + $all_data->event_total , 0, ",", ".");?></td>
+            </tr>
+            <tr>
+                  <td>Pajak</td>
+                  <td>:</td>
                   <td><?php echo "Rp. " . number_format($all_data->pajak, 0, ",", ".");?></td>
             </tr>
             <tr>

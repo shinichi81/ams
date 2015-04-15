@@ -678,9 +678,11 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var no_po = $("#noPO").val();
                   var no_so = $("#noSO").val();
                   var bukti = $("#statusBukti").text();
-                  var report = $("#statusReport").text();
+                  // var report = $("#statusReport").text();
+                  var report = "";
                         
                   var arrParam = new Array(no_paket, no_po, no_so, bukti, report);
+				  alert(arrParam);
             } else if (todo == "delete") {
             }
       } else if (obj == "production") {
@@ -1132,8 +1134,8 @@ function injectError(obj, error) {
             $("#errPaket").text("");
             //$("#errTxtNoPaket").text("");
             $("#errTxtNo").text("");
-            $("#errSelectIndustryCat").text("* required");
-            $("#errSelectIndustry").text("* required");
+            $("#errSelectIndustryCat").text("");
+            $("#errSelectIndustry").text("");
             for (var n=0; n<error["tot_row"]; n++)
                   $("#addme tr").eq(n).children().children("#errConflict").text("");
 		
@@ -1179,6 +1181,8 @@ function injectError(obj, error) {
                         for (var n in idDateWrong)				
                               $("#addme tr").eq(idDateWrong[n]).children().children("#errConflict").text("* wrong date range");
                   }
+                  if (error[index] == "selectIndustryCat")
+                        $("#errSelectIndustryCat").text("* required");
             }
       } else if (obj == "orderspace" || obj == "expired_space") {
             //$("#errNoSpace").text("");
