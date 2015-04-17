@@ -14,7 +14,7 @@ class PO_Model extends CI_Model {
                   $this->db->join("tbl_order_paket_ads e", "e.no_paket = a.no_paket");
                   $this->db->join("tbl_invoice f", "f.no_paket = a.no_paket", "left");
                   $this->db->where("a.approve", "Y");
-                  // $this->db->where("f.no_po is NULL");
+                  $this->db->where("f.no_po is NULL OR f.alasan is NOT NULL");
 				  if ($orderBy <> "ALL") {
 						$this->db->like("a.no_paket", $orderBy);
                   }
@@ -38,7 +38,7 @@ class PO_Model extends CI_Model {
       public function get($no_paket) {
             try {
                   // $this->db->select("a.no_paket, a.harga_sistem, a.harga_gross, a.disc_nominal, a.harga_disc, a.pajak, a.diskon, a.total_harga, a.no_so, a.no_invoice, a.request_date, b.name AS brand, c.name AS company, d.name AS sales");
-                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS company, c.name AS brand, d.name AS sales, f.bukti_tayang, f.report, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total");
+                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS company, c.name AS brand, d.name AS sales, f.bukti_tayang, f.report, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total, f.approve_manager, f.alasan, a.is_restrict");
                   $this->db->select("IFNULL(f.no_po, e.no_po) AS no_po", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_agency b", "a.agency_id = b.id");
@@ -66,12 +66,11 @@ class PO_Model extends CI_Model {
       
 	  public function getDetail($no_paket) {
             try {
-                  $this->db->select("a.ads_id, a.kanal_id, a.product_group_id, a.position_id, a.misc_info, a.cpm_quota, a.request, b.harga");
-                  $this->db->select("date_format(start_date, '%Y-%m-%d') start_date", FALSE);
-                  $this->db->select("date_format(end_date, '%Y-%m-%d') end_date", FALSE);
+                  $this->db->select("a.ads_id, a.kanal_id, a.product_group_id, a.position_id, a.misc_info, a.cpm_quota");
+                  $this->db->select("date_format(a.start_date, '%Y-%m-%d') start_date", FALSE);
+                  $this->db->select("date_format(a.end_date, '%Y-%m-%d') end_date", FALSE);
                   $this->db->select("datediff(end_date, start_date) + 1 periode", FALSE);
                   $this->db->from("tbl_order_paket_ads a");
-                  $this->db->join("tbl_product_group_harga b", "a.kanal_id = b.id_kanal AND a.product_group_id = b.id_product AND a.position_id = b.id_position", "left");
                   $this->db->where("a.no_paket", $no_paket);
                   $query = $this->db->get();
 
@@ -112,7 +111,7 @@ class PO_Model extends CI_Model {
       public function getKanal($id) {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_kanal");
+                  $this->db->from("tbl_kanal_new");
                   $this->db->where("active_status", "Y");
                   $this->db->where("id", $id);
                   $query = $this->db->get();
@@ -133,7 +132,7 @@ class PO_Model extends CI_Model {
       public function getProductGroup($id) {
             try {
                   $this->db->select("id, name, position_id");
-                  $this->db->from("tbl_product_group");
+                  $this->db->from("tbl_product_group_new");
                   $this->db->where("id", $id);
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();
@@ -154,9 +153,31 @@ class PO_Model extends CI_Model {
       public function getPosition($id) {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_position");
+                  $this->db->from("tbl_position_new");
                   $this->db->where("active_status", "Y");
                   $this->db->where("id", $id);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->row();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+
+      public function getHarga($kanal, $product, $position) {
+            try {
+                  $this->db->select("harga");
+                  $this->db->from("tbl_product_group_harga");
+                  $this->db->where("id_kanal", $kanal);
+                  $this->db->where("id_product", $product);
+                  $this->db->where("id_position", $position);
                   $query = $this->db->get();
 
                   if (!$query)
@@ -201,12 +222,21 @@ class PO_Model extends CI_Model {
                       "no_po" => $no_po,
                       "no_so" => $no_so,
                       "bukti_tayang" => $bukti_tayang,
+                      "alasan" => NULL,
                       // "update_user" => $this->session->userdata("username"),
                   );
-				  
-                  // $this->db->where("no_paket", $no_paket);
-                  // $query = $this->db->update("tbl_order_paket", $data);
-				  $query = $this->db->insert("tbl_invoice", $data);
+					$this->db->where('no_paket',$no_paket);
+					$q = $this->db->get('tbl_invoice');
+
+					if ( $q->num_rows() > 0 ) 
+					{
+						$this->db->where('no_paket',$no_paket);
+						$query = $this->db->update('tbl_invoice',$data);
+					} else {
+						// $this->db->set('user_id', $id);
+						$query = $this->db->insert('tbl_invoice',$data);
+					}				  
+				  // $query = $this->db->insert("tbl_invoice", $data);
 
                   if (!$query)
                         throw new Exception();

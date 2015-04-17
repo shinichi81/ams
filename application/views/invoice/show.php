@@ -21,43 +21,6 @@
                   <td>:</td>
                   <td><?php echo $all_data->no_po; ?></td>
             </tr>
-<!--
-            <tr>
-                  <td>Harga Total Sistem</td>
-                  <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->harga_sistem, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Harga Paket Gross</td>
-                  <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->harga_gross, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Diskon</td>
-                  <td>:</td>
-                  <td><?php //echo $all_data->diskon; ?></td>
-            </tr>
-            <tr>
-                  <td>Diskon (Nominal)</td>
-                  <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->disc_nominal, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Harga setelah Diskon</td>
-                  <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->harga_disc, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Ppn / Pph</td>
-                  <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->pajak, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Total Harga</td>
-                  <td>:</td>
-                  <td><?php //echo "Rp. " . number_format($all_data->total_harga, 0, ",", "."); ?></td>
-            </tr>
--->
             <tr>
                   <td>No SO</td>
                   <td>:</td>
@@ -96,6 +59,8 @@
             <th>CPM Quota</th>
             <th>Periode</th>
             <th>Keterangan</th>
+            <th>Harga / hari</th>
+			<th>Harga Total</th>
       </thead>
       <tbody>
             <?php foreach ($all_detail as $detail): ?>
@@ -123,9 +88,49 @@
                         <td align='center'>
                               <?php echo $detail["misc_info"]; ?>
                         </td>
+                        <td align='center'>
+                              <?php echo number_format($detail["harga"],0,",","."); ?>
+                        </td>
+                        <td align='center'>
+                              <?php echo number_format($detail["total"] ,0,",",".");?>
+                        </td>
                   </tr>
             <?php endforeach; ?>
       </tbody>
       </table>
+	  <br />
+      <table class="noborder">
+            <tr>
+                  <td width="150px">Harga Paket Gross</td>
+                  <td width="20px">:</td>
+				  <td><?= "Rp. " . number_format($all_data->paket_gross,0,",",".");?></td>
+            </tr>
+            <tr>
+                  <td>Diskon (%)</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->diskon; ?></td>
+            </tr>
+			<tr>
+				  <td>Diskon (Nominal)</td>
+				  <td>:</td>
+				  <td><?= "Rp. " . number_format($all_data->diskon_nominal,0,",",".");?></td>
+			</tr>
+            <tr>
+                  <td>Additional Diskon (%)</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->additional_diskon; ?></td>
+            </tr>
+			<tr>
+				  <td>Additional Diskon (Nominal)</td>
+				  <td>:</td>
+				  <td><?= "Rp. " . number_format($all_data->additional_diskon_nominal,0,",",".");?></td>
+			</tr>
+            <tr>
+                  <td>Total Harga Paket</td>
+                  <td>:</td>
+                  <td><?php echo "Rp. " . number_format($all_data->paket_total, 0, ",", ".");?></td>
+            </tr>
+      </table>
+	  <br />      
       </p>
 <?php endif; ?>

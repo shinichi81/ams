@@ -32,16 +32,6 @@
                   <td><?php echo $all_data->diskon; ?></td>
             </tr>
             <tr>
-                  <td>Benefit</td>
-                  <td>:</td>
-                  <td><?php echo $all_data->benefit; ?></td>
-            </tr>
-            <tr>
-                  <td>Keterangan</td>
-                  <td>:</td>
-                  <td><?php echo $all_data->misc_info; ?></td>
-            </tr>
-            <tr>
                   <td>AE / Sales</td>
                   <td>:</td>
                   <td><?php echo $all_data->sales; ?></td>
@@ -50,16 +40,6 @@
                   <td>Done</td>
                   <td>:</td>
                   <td><?php echo ($all_data->done == "Y") ? "Ya" : "Belum"; ?></td>
-            </tr>
-            <tr>
-                  <td>Event</td>
-                  <td>:</td>
-                  <td><?php echo $all_data->misc_info_event; ?></td>
-            </tr>
-            <tr>
-                  <td>Production Cost</td>
-                  <td>:</td>
-                  <td><?php echo $all_data->misc_info_production_cost; ?></td>
             </tr>
       </table>
 
@@ -149,6 +129,8 @@
             <th>CPM Quota</th>
             <th>Periode</th>
             <th>Keterangan</th>
+            <th>Harga / hari</th>
+			<th>Harga Total</th>
       </thead>
       <tbody>
             <?php foreach ($all_detail as $detail): ?>
@@ -175,6 +157,12 @@
                         </td>
                         <td align='center'>
                               <?php echo $detail["misc_info"]; ?>
+                        </td>
+                        <td align='center'>
+                              <?php echo number_format($detail["harga"],0,",","."); ?>
+                        </td>
+                        <td align='center'>
+                              <?php echo number_format($detail["total"] ,0,",",".");?>
                         </td>
                   </tr>
             <?php endforeach; ?>

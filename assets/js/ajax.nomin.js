@@ -677,7 +677,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var no_paket = $("#hdId").val();
                   var no_po = $("#noPO").val();
                   var no_so = $("#noSO").val();
-                  var bukti = $("#statusBukti").text();
+                  var bukti = $("#status").text();
                   // var report = $("#statusReport").text();
                   var report = "";
                         
@@ -720,8 +720,9 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
             } else if (todo == "update") {
                   var no_paket = $("#hdId").val();
                   var approve_manager = $("input[name=rdbApprove]:checked").val();
+                  var alasan = $("#alasan").val();
                         
-                  var arrParam = new Array(no_paket, approve_manager);
+                  var arrParam = new Array(no_paket, approve_manager, alasan);
             } else if (todo == "delete") {
             }
       }

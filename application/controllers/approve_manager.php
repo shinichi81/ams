@@ -38,6 +38,8 @@ class Approve_Manager extends CI_Controller {
                   $kanal = $this->Approve_Manager_Model->getKanal($detail->kanal_id);
                   $productgroup = $this->Approve_Manager_Model->getProductgroup($detail->product_group_id);
                   $position = $this->Approve_Manager_Model->getPosition($detail->position_id);
+                  $harga = $this->Approve_Manager_Model->getHarga($detail->kanal_id,$detail->product_group_id,$detail->position_id);
+				  $hari = date_diff(date_create($detail->start_date), date_create($detail->end_date));
 
                   $result[$n]["ads"] = $ads->name;
                   $result[$n]["kanal"] = $kanal->name;
@@ -47,14 +49,14 @@ class Approve_Manager extends CI_Controller {
                   $result[$n]["start_date"] = $detail->start_date;
                   $result[$n]["end_date"] = $detail->end_date;
                   $result[$n]["misc_info"] = $detail->misc_info;
+                  $result[$n]["harga"] = $harga->harga;
+                  $result[$n]["total"] = ($hari->days + 1) * $harga->harga;
 
                   $n += 1;
             }
 
-            $arrDetail = $result;
-
             $data["all_data"] = $allData;
-            $data["all_detail"] = $arrDetail;
+            $data["all_detail"] = $result;
             $data["read"] = $this->_access["read"];
 
             $this->load->view("approve_manager/show", $data);
@@ -112,10 +114,11 @@ class Approve_Manager extends CI_Controller {
             $arrParam = $this->input->post("arrParam");
             $no_paket = $arrParam[0];
             $approve_manager = $arrParam[1];
+            $alasan = $arrParam[2];
 
             $this->Transaction_Model->transaction_start();
                   
-			$update = $this->Approve_Manager_Model->update($no_paket, $approve_manager);
+			$update = $this->Approve_Manager_Model->update($no_paket, $approve_manager, $alasan);
 
 			$this->Transaction_Model->transaction_complete();
                   

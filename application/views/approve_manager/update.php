@@ -12,7 +12,12 @@
                   <label>Approve : </label> 
                   <input name="rdbApprove" type="radio" value="Y" checked="checked" /> Ya&nbsp;&nbsp;&nbsp;
                   <input name="rdbApprove" type="radio" value="N" /> Tidak
-                  <input name="hdId" id="hdId" type="hidden" value="<?php echo $all_data->no_paket; ?>" />
+				  <br />
+				  <div id="divAlasan">
+					  <label for="alasan">Keterangan : </label>
+					  <textarea name="alasan" id="alasan" style="height: 50px; width: 180px;"></textarea>
+                  </div>
+				  <input name="hdId" id="hdId" type="hidden" value="<?php echo $all_data->no_paket; ?>" />
             </fieldset>
             <div class="ajax-loader" style="display: none;">&nbsp;</div>
             <div align="center">
@@ -23,6 +28,16 @@
 
       <script type="text/javascript">
             $(document).ready(function() {
+				$("#divAlasan").hide();
+				$('input:radio[name="rdbApprove"]').change(
+					function(){
+						if ($(this).val() == 'Y') {
+							$("#divAlasan").hide();
+						}
+						else {
+							$("#divAlasan").show();
+						}
+					});
 			});				
       </script>
 <?php endif; ?>

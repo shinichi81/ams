@@ -14,6 +14,7 @@ class PO extends CI_Controller {
             parent::__construct();
             check_session(); // jika session habis, redirect ke logout
             $this->load->model(array("PO_Model", "Transaction_Model"));
+			$this->load->helper(array('form', 'url'));
             $this->_access = get_access("PO");
             auth($this->_access); // autentikasi menu apakah bisa diakses atau tidak
       }
@@ -38,6 +39,8 @@ class PO extends CI_Controller {
                   $kanal = $this->PO_Model->getKanal($detail->kanal_id);
                   $productgroup = $this->PO_Model->getProductgroup($detail->product_group_id);
                   $position = $this->PO_Model->getPosition($detail->position_id);
+                  $harga = $this->PO_Model->getHarga($detail->kanal_id,$detail->product_group_id,$detail->position_id);
+				  $hari = date_diff(date_create($detail->start_date), date_create($detail->end_date));
 
                   $arrDetail[$n]["ads"] = $ads->name;
                   $arrDetail[$n]["kanal"] = $kanal->name;
@@ -47,6 +50,8 @@ class PO extends CI_Controller {
                   $arrDetail[$n]["start_date"] = $detail->start_date;
                   $arrDetail[$n]["end_date"] = $detail->end_date;
                   $arrDetail[$n]["misc_info"] = $detail->misc_info;
+                  $arrDetail[$n]["harga"] = $harga->harga;
+                  $arrDetail[$n]["total"] = ($hari->days + 1) * $harga->harga;
 
                   $n += 1;
             }
@@ -142,25 +147,44 @@ class PO extends CI_Controller {
       }
 	  
 	  public function do_upload() {
+        if($this->input->post('upload')){
 			$this->load->library("upload");
 			
 			$dirPath = "./assets/images/upload/";
 			
 			$config["upload_path"] = $dirPath;
-			$config["allowed_types"] = "gif|jpg|png";
+			$config["allowed_types"] = "gif|jpg|jpeg|png";
 			$config["max_size"] = "2048";
 			$config["overwrite"] = FALSE;
+			$config["remove_spaces"] = TRUE;
 			
 			$this->upload->initialize($config);
 			
-			if (!$this->upload->do_upload())
-				return false;
+			if($this->upload->do_multi_upload("bukti")){
+                
+                $data['upload_data'] = $this->upload->get_multi_upload_data();
+                
+                echo '<p class = "bg-success">' . count($data['upload_data']) . 'File(s) successfully uploaded.</p>';
+                
+            } else {    
+                // Output the errors
+                $errors = array('error' => $this->upload->display_errors('<p class = "bg-danger">', '</p>'));               
+            
+                foreach($errors as $k => $error){
+                    echo $error;
+                }
+                
+            }
+			
+			// if (!$this->upload->do_upload())
+				// return false;
 			
 			// untuk mendapatkan filename setelah diupload
-			$arrRespond = $this->upload->data();
-			$filename = $arrRespond["file_name"];
+			// $arrRespond = $this->upload->data();
+			// $filename = $arrRespond["file_name"];
 			
-			echo $filename;
-			die;
+			// echo $filename;
+			// die;
+		}
 	  }
 }

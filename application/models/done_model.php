@@ -133,7 +133,7 @@ class Done_Model extends CI_Model {
       public function getKanal($id) {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_kanal");
+                  $this->db->from("tbl_kanal_new");
                   $this->db->where("active_status", "Y");
                   $this->db->where("id", $id);
                   $query = $this->db->get();
@@ -154,7 +154,7 @@ class Done_Model extends CI_Model {
       public function getProductGroup($id) {
             try {
                   $this->db->select("id, name, position_id");
-                  $this->db->from("tbl_product_group");
+                  $this->db->from("tbl_product_group_new");
                   $this->db->where("id", $id);
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();
@@ -175,7 +175,7 @@ class Done_Model extends CI_Model {
       public function getPosition($id) {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_position");
+                  $this->db->from("tbl_position_new");
                   $this->db->where("active_status", "Y");
                   $this->db->where("id", $id);
                   $query = $this->db->get();
