@@ -15,19 +15,10 @@
                         <br>
                         <label for="client">Client : </label> 
                         <input name="txtClient" id="txtClient" type="text" disabled="disabled" value="<?php echo $all_data->client; ?>" />
-                  </div>
-                  <div style="float: left;">
+						<br />
                         <label for="budget">Budget : </label> 
                         <input name="txtBudget" id="txtBudget" type="text" disabled="disabled" value="<?php echo $all_data->budget; ?>" />
                         <br>
-                        <label for="diskon">Diskon : </label> 
-                        <input name="txtDiskon" id="txtDiskon" type="text" disabled="disabled" value="<?php echo $all_data->diskon; ?>" />
-                        <br>
-                        <label for="benefit">Benefit : </label> 
-                        <input name="txtBenefit" id="txtBenefit" type="text" disabled="disabled" value="<?php echo $all_data->benefit; ?>" />
-                        <br>
-                        <label for="benefit">Keterangan : </label>
-                        <textarea name="txtMiscInfo" id="txtMiscInfo" disabled="disabled" style="height: 80px; width: 250px;"><?php echo $all_data->misc_info; ?></textarea>
                   </div>
             </fieldset>
             <?php if (count($all_data_brandcomm) > 0): ?>
@@ -84,6 +75,8 @@
                         <th>CPM Quota</th>
                         <th>Periode</th>
                         <th>Keterangan</th>
+						<th>Harga / hari</th>
+						<th>Harga Total</th>
                         </thead>
                         <tbody id="addme">
                               <?php foreach ($all_detail as $detail): ?>
@@ -111,11 +104,149 @@
                                           <td align='center'>
                                                 <?php echo $detail["misc_info"]; ?>
                                           </td>
+										<td align='center'>
+											  <?php echo number_format($detail["harga"],0,",","."); ?>
+										</td>
+										<td align='center'>
+											  <?php echo number_format($detail["total"] ,0,",",".");?>
+										</td>
                                     </tr>
                               <?php endforeach; ?>
                         </tbody>
                   </table>
+      <table class="noborder">
+            <tr>
+                  <td width="150px">Harga Paket Gross</td>
+                  <td width="20px">:</td>
+				  <td><?= "Rp. " . number_format($all_data->paket_gross,0,",",".");?></td>
+            </tr>
+            <tr>
+                  <td>Diskon</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->diskon . " %"; ?></td>
+            </tr>
+			<tr>
+				  <td>Diskon (Nominal)</td>
+				  <td>:</td>
+				  <td><?= "Rp. " . number_format($all_data->diskon_nominal,0,",",".");?></td>
+			</tr>
+            <tr>
+                  <td>Additional Diskon</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->additional_diskon . " %"; ?></td>
+            </tr>
+			<tr>
+				  <td>Additional Diskon (Nominal)</td>
+				  <td>:</td>
+				  <td><?= "Rp. " . number_format($all_data->additional_diskon_nominal,0,",",".");?></td>
+			</tr>
+            <tr>
+                  <td>Total Harga Paket</td>
+                  <td>:</td>
+                  <td><?php echo "Rp. " . number_format($all_data->paket_total, 0, ",", ".");?></td>
+            </tr>
+      </table>				  
             </fieldset>
+	  <?php if (count($all_production) > 0): ?>
+			<fieldset id="production">
+                  <legend>Production</legend>
+				  <table>
+						<thead>
+									<th>Production</th>
+									<th>Quantity</th>
+									<th>Keterangan</th>
+									<th>Harga</th>
+									<th>Harga Total</th>
+						</thead>
+						<tbody>
+							  <?php foreach ($all_production as $production): ?>
+									<tr class='remove'>
+										  <td align='center'>
+												<?php echo $production["production"]; ?>
+										  </td>
+										  <td align='center'>
+												<?php echo $production["quantity"]; ?>
+										  </td>
+										  <td align='center'>
+												<?php echo $production["keterangan"]; ?>
+										  </td>
+										  <td align='center'>
+												<?php echo number_format($production["harga"],0,",","."); ?>
+										  </td>
+										  <td align='center'>
+												<?php echo number_format($production['harga_total'],0,",","."); ?>
+										  </td>
+									</tr>
+									<?php endforeach; ?>
+						</tbody>
+				  </table>
+
+				  <table class="noborder">
+						<tr>
+							  <td width="150px">Total Harga Produksi</td>
+							  <td width="20px">:</td>
+							  <td><?php echo "Rp. " . number_format($all_data->produksi_total, 0, ",", ".");?></td>
+						</tr>
+				  </table>
+				  <br />
+			</fieldset>
+      <?php endif; ?>
+	  <?php if (count($all_event) > 0): ?>
+            <fieldset id="event">
+                  <legend>Event</legend>
+				<table>
+						<thead>
+							  <tr>
+									<th>Event</th>
+									<th>Periode</th>
+									<th>Keterangan</th>
+									<th>Harga</th>
+							  </tr>
+						</thead>
+						<tbody>
+							  <?php foreach ($all_event as $event): ?>
+									<tr class='remove'>
+										  <td align='center'>
+												<?php echo $event["event"]; ?>
+										  </td>
+										  <td align='center'>
+												<?php echo format_date($event["start_date"], TRUE); ?>
+												-
+												<?php echo format_date($event["end_date"], TRUE); ?>
+										  </td>
+										  <td align='center'>
+												<?php echo $event["keterangan"]; ?>
+										  </td>
+										  <td align='center'>
+												<?php echo number_format($event["biaya"],0,",","."); ?>
+										  </td>
+									</tr>
+									<?php endforeach; ?>
+						</tbody>
+				  </table>
+
+				  <table class="noborder">
+						<tr>
+							  <td width="150px">Total Harga Event</td>
+							  <td width="20px">:</td>
+							  <td><?php echo "Rp. " . number_format($all_data->event_total, 0, ",", ".");?></td>
+						</tr>
+				  </table>
+			</fieldset>
+      <?php endif; ?>
+			<fieldset id="biaya">
+				<legend>Biaya</legend>
+				<label>Harga (sebelum pajak) :</label>
+				<?php echo "Rp. " . number_format($all_data->paket_total + $all_data->produksi_total + $all_data->event_total , 0, ",", ".");?>
+				<p>
+				<label>Pajak :</label>
+				<?php echo "Rp. " . number_format($all_data->pajak , 0, ",", ".");?>
+				</p>
+				<p>
+				<label>Total :</label>
+				<?php echo "Rp. " . number_format($all_data->total , 0, ",", ".");?>
+				</p>
+			</fieldset>
             <fieldset id="conflict">
                   <legend>Conflict Brand</legend>
                   <label for="conflictbrand">Conflict Brand : </label> 

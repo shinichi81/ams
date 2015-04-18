@@ -30,6 +30,8 @@ class Done extends CI_Controller {
 
             $allData = $this->Done_Model->get($no_paket);
             $allDetail = $this->Done_Model->getDetail($no_paket);
+			$allProduction = $this->Done_Model->getProduction($no_paket);
+			$allEvent = $this->Done_Model->getEvent($no_paket);
 			$nameCatIndustry = $this->Done_Model->getNameCatIndustry($allData->industrycat_id);
 
             $n = 0;
@@ -39,6 +41,8 @@ class Done extends CI_Controller {
                   $kanal = $this->Done_Model->getKanal($detail->kanal_id);
                   $productgroup = $this->Done_Model->getProductgroup($detail->product_group_id);
                   $position = $this->Done_Model->getPosition($detail->position_id);
+                  $harga = $this->Done_Model->getHarga($detail->kanal_id,$detail->product_group_id,$detail->position_id);
+				  $hari = date_diff(date_create($detail->start_date), date_create($detail->end_date));
 
                   $result[$n]["ads"] = $ads->name;
                   $result[$n]["kanal"] = $kanal->name;
@@ -49,9 +53,34 @@ class Done extends CI_Controller {
                   $result[$n]["end_date"] = $detail->end_date;
                   $result[$n]["misc_info"] = $detail->misc_info;
                   $result[$n]["approve"] = $detail->approve;
+                  $result[$n]["harga"] = $harga->harga;
+                  $result[$n]["total"] = ($hari->days + 1) * $harga->harga;
 
                   $n += 1;
             }
+
+		$arrProduction = array();
+		$m = 0;
+		foreach ($allProduction as $production) {
+            $prod = $this->Done_Model->getSingleProduction($production->production_id);
+			$arrProduction[$m]["production"] = $prod->nama;
+			$arrProduction[$m]["quantity"] = $production->quantity;
+			$arrProduction[$m]["harga"] = $prod->harga;
+			$arrProduction[$m]["harga_total"] = (int)$production->quantity * (float)$prod->harga;
+			$arrProduction[$m]["keterangan"] = $production->keterangan;
+			$m += 1;
+		}
+
+		$arrEvent = array();
+		$n = 0;
+		foreach ($allEvent as $event) {
+			$arrEvent[$n]["event"] = $event->event;
+			$arrEvent[$n]["start_date"] = $event->start_date;
+			$arrEvent[$n]["end_date"] = $event->end_date;
+			$arrEvent[$n]["biaya"] = $event->biaya;
+			$arrEvent[$n]["keterangan"] = $event->keterangan;
+			$n += 1;
+		}
 
             $arrDetail = $result;
 
@@ -78,6 +107,8 @@ class Done extends CI_Controller {
             $data["all_data_brandcomm"] = $allDataBrandcomm;
             $data["all_detail_brandcomm"] = $allDetailBrandcomm;
 			$data["name_cat_industry"] = $nameCatIndustry->industry_name;
+        $data["all_production"] = $arrProduction;
+        $data["all_event"] = $arrEvent;
             $data["read"] = $this->_access["read"];
 
             $this->load->view("done/show", $data);
@@ -92,6 +123,8 @@ class Done extends CI_Controller {
 
             $allData = $this->Done_Model->get($no_paket);
             $allDetail = $this->Done_Model->getDetail($no_paket);
+			$allProduction = $this->Done_Model->getProduction($no_paket);
+			$allEvent = $this->Done_Model->getEvent($no_paket);
 			$nameCatIndustry = $this->Done_Model->getNameCatIndustry($allData->industrycat_id);
 
             $n = 0;
@@ -101,6 +134,8 @@ class Done extends CI_Controller {
                   $kanal = $this->Done_Model->getKanal($detail->kanal_id);
                   $productgroup = $this->Done_Model->getProductgroup($detail->product_group_id);
                   $position = $this->Done_Model->getPosition($detail->position_id);
+                  $harga = $this->Done_Model->getHarga($detail->kanal_id,$detail->product_group_id,$detail->position_id);
+				  $hari = date_diff(date_create($detail->start_date), date_create($detail->end_date));
 
                   $result[$n]["id"] = $detail->id;
                   $result[$n]["ads"] = $ads->name;
@@ -112,9 +147,34 @@ class Done extends CI_Controller {
                   $result[$n]["end_date"] = $detail->end_date;
                   $result[$n]["approve"] = $detail->approve;
                   $result[$n]["misc_info"] = $detail->misc_info;
+                  $result[$n]["harga"] = $harga->harga;
+                  $result[$n]["total"] = ($hari->days + 1) * $harga->harga;
 
                   $n += 1;
             }
+
+		$arrProduction = array();
+		$m = 0;
+		foreach ($allProduction as $production) {
+            $prod = $this->Done_Model->getSingleProduction($production->production_id);
+			$arrProduction[$m]["production"] = $prod->nama;
+			$arrProduction[$m]["quantity"] = $production->quantity;
+			$arrProduction[$m]["harga"] = $prod->harga;
+			$arrProduction[$m]["harga_total"] = (int)$production->quantity * (float)$prod->harga;
+			$arrProduction[$m]["keterangan"] = $production->keterangan;
+			$m += 1;
+		}
+
+		$arrEvent = array();
+		$n = 0;
+		foreach ($allEvent as $event) {
+			$arrEvent[$n]["event"] = $event->event;
+			$arrEvent[$n]["start_date"] = $event->start_date;
+			$arrEvent[$n]["end_date"] = $event->end_date;
+			$arrEvent[$n]["biaya"] = $event->biaya;
+			$arrEvent[$n]["keterangan"] = $event->keterangan;
+			$n += 1;
+		}
 
             $arrDetail = $result;
 
@@ -141,6 +201,8 @@ class Done extends CI_Controller {
             $data["all_data_brandcomm"] = $allDataBrandcomm;
             $data["all_detail_brandcomm"] = $allDetailBrandcomm;
 			$data["name_cat_industry"] = $nameCatIndustry->industry_name;
+        $data["all_production"] = $arrProduction;
+        $data["all_event"] = $arrEvent;
             $data["update"] = $this->_access["update"];
 
             $this->load->view("done/update", $data);

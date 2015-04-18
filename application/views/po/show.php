@@ -12,7 +12,7 @@
 	  <?php endif; ?>
       <table class="noborder">
             <tr>
-                  <td width="150px">No Paket</td>
+                  <td width="110px">No Paket</td>
                   <td width="20px">:</td>
                   <td><?php echo $all_data->no_paket; ?></td>
             </tr>
@@ -31,43 +31,6 @@
                   <td>:</td>
                   <td><?php echo $all_data->no_po; ?></td>
             </tr>
-<!--
-            <tr>
-                  <td>Harga Total Sistem</td>
-                  <td>:</td>
-                  <td><?php echo "Rp. " . number_format($all_data->harga_sistem, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Harga Paket Gross</td>
-                  <td>:</td>
-                  <td><?php echo "Rp. " . number_format($all_data->harga_gross, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Diskon</td>
-                  <td>:</td>
-                  <td><?php echo $all_data->diskon; ?></td>
-            </tr>
-            <tr>
-                  <td>Diskon (Nominal)</td>
-                  <td>:</td>
-                  <td><?php echo "Rp. " . number_format($all_data->disc_nominal, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Harga setelah Diskon</td>
-                  <td>:</td>
-                  <td><?php echo "Rp. " . number_format($all_data->harga_disc, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Ppn / Pph</td>
-                  <td>:</td>
-                  <td><?php echo "Rp. " . number_format($all_data->pajak, 0, ",", "."); ?></td>
-            </tr>
-            <tr>
-                  <td>Total Harga</td>
-                  <td>:</td>
-                  <td><?php echo "Rp. " . number_format($all_data->total_harga, 0, ",", "."); ?></td>
-            </tr>
--->
             <tr>
                   <td>No SO</td>
                   <td>:</td>
@@ -79,7 +42,7 @@
                   <td><?php echo $all_data->sales; ?></td>
             </tr>
       </table>
-	  
+	  <br />
       <table class="noborder">
             <tr>
                   <td width="110px"><strong>PAKET</strong></td>
@@ -135,7 +98,6 @@
             <?php endforeach; ?>
       </tbody>
       </table>
-	  <br />
       <table class="noborder">
             <tr>
                   <td width="150px">Harga Paket Gross</td>

@@ -37,13 +37,14 @@ class Done_Model extends CI_Model {
 
       public function get($no_paket) {
             try {
-                  $this->db->select("a.no_paket, a.no_paket_user, d.name sales, a.agency_id, c.name agency, a.client_id, b.name client, a.done, a.budget, a.diskon, a.benefit, a.misc_info, a.misc_info_event, a.misc_info_production_cost, a.is_restrict, a.industrycat_id, a.no_reference");
+                  $this->db->select("a.no_paket, a.no_paket_user, d.name sales, a.agency_id, c.name agency, a.client_id, b.name client, a.done, a.budget, a.diskon, a.benefit, a.misc_info, a.misc_info_event, a.misc_info_production_cost, a.is_restrict, a.industrycat_id, a.no_reference, f.paket_sistem, f.paket_gross, f.diskon_nominal, f.additional_diskon, f.additional_diskon_nominal, f.paket_total, f.produksi_total, f.event_total, f.pajak, f.total");
                   $this->db->select("IFNULL(e.name, '-') industry", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_client b", "a.client_id = b.id", "left");
                   $this->db->join("tbl_agency c", "a.agency_id = c.id", "left");
                   $this->db->join("tbl_user d", "a.ae_id = d.username");
                   $this->db->join("tbl_industry e", "a.industry_id = e.id", "left");
+                  $this->db->join("tbl_order_harga f", "a.no_paket = f.no_paket");
                   $this->db->where("a.no_paket", $no_paket);
                   $this->db->where("a.active_status", "Y");
                   $query = $this->db->get();
@@ -193,6 +194,91 @@ class Done_Model extends CI_Model {
             }
       }
 
+      public function getHarga($kanal, $product, $position) {
+            try {
+                  $this->db->select("harga");
+                  $this->db->from("tbl_product_group_harga");
+                  $this->db->where("id_kanal", $kanal);
+                  $this->db->where("id_product", $product);
+                  $this->db->where("id_position", $position);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->row();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+
+      public function getProduction($no_paket) {
+            try {
+                  $this->db->select("production_id, quantity, keterangan");
+                  $this->db->from("tbl_order_production");
+                  $this->db->where("no_paket", $no_paket);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+	  
+      public function getSingleProduction($id) {
+            try {
+                  $this->db->select("id, nama, harga");
+                  $this->db->from("tbl_production");
+                  $this->db->where("active", "Y");
+                  $this->db->where("id", $id);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->row();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+	  
+      public function getEvent($no_paket) {
+            try {
+                  $this->db->select("event, biaya, keterangan");
+                  $this->db->select("date_format(start_date, '%Y-%m-%d') start_date", FALSE);
+                  $this->db->select("date_format(end_date, '%Y-%m-%d') end_date", FALSE);
+                  $this->db->from("tbl_order_event");
+                  $this->db->where("no_paket", $no_paket);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+	  
       public function update($no_paket, $no_paket_user) {
             try {
                   $data = array(
