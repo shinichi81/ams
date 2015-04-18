@@ -30,6 +30,8 @@ class Approve extends CI_Controller {
 
             $allData = $this->Approve_Model->get($no_paket);
             $allDetail = $this->Approve_Model->getDetail($no_paket);
+			$allProduction = $this->Approve_Model->getProduction($no_paket);
+			$allEvent = $this->Approve_Model->getEvent($no_paket);
 
             $n = 0;
             $result = array();
@@ -38,6 +40,8 @@ class Approve extends CI_Controller {
                   $kanal = $this->Approve_Model->getKanal($detail->kanal_id);
                   $productgroup = $this->Approve_Model->getProductgroup($detail->product_group_id);
                   $position = $this->Approve_Model->getPosition($detail->position_id);
+                  $harga = $this->Approve_Model->getHarga($detail->kanal_id,$detail->product_group_id,$detail->position_id);
+				  $hari = date_diff(date_create($detail->start_date), date_create($detail->end_date));
 
                   $result[$n]["ads"] = $ads->name;
                   $result[$n]["kanal"] = $kanal->name;
@@ -49,9 +53,34 @@ class Approve extends CI_Controller {
                   $result[$n]["misc_info"] = $detail->misc_info;
                   $result[$n]["approve"] = $detail->approve;
                   $result[$n]["no_po"] = $detail->no_po;
+                  $result[$n]["harga"] = $harga->harga;
+                  $result[$n]["total"] = ($hari->days + 1) * $harga->harga;
 
                   $n += 1;
             }
+
+		$arrProduction = array();
+		$m = 0;
+		foreach ($allProduction as $production) {
+            $prod = $this->Approve_Model->getSingleProduction($production->production_id);
+			$arrProduction[$m]["production"] = $prod->nama;
+			$arrProduction[$m]["quantity"] = $production->quantity;
+			$arrProduction[$m]["harga"] = $prod->harga;
+			$arrProduction[$m]["harga_total"] = (int)$production->quantity * (float)$prod->harga;
+			$arrProduction[$m]["keterangan"] = $production->keterangan;
+			$m += 1;
+		}
+
+		$arrEvent = array();
+		$n = 0;
+		foreach ($allEvent as $event) {
+			$arrEvent[$n]["event"] = $event->event;
+			$arrEvent[$n]["start_date"] = $event->start_date;
+			$arrEvent[$n]["end_date"] = $event->end_date;
+			$arrEvent[$n]["biaya"] = $event->biaya;
+			$arrEvent[$n]["keterangan"] = $event->keterangan;
+			$n += 1;
+		}
 
             $arrDetail = $result;
 
@@ -77,6 +106,8 @@ class Approve extends CI_Controller {
             $data["all_detail"] = $arrDetail;
             $data["all_data_brandcomm"] = $allDataBrandcomm;
             $data["all_detail_brandcomm"] = $allDetailBrandcomm;
+        $data["all_production"] = $arrProduction;
+        $data["all_event"] = $arrEvent;
             $data["read"] = $this->_access["read"];
 
             $this->load->view("approve/show", $data);
@@ -92,6 +123,8 @@ class Approve extends CI_Controller {
             $allData = $this->Approve_Model->get($no_paket);
             $allDetail = $this->Approve_Model->getDetail($no_paket);
 			$nameCatIndustry = $this->Approve_Model->getNameCatIndustry($allData->industrycat_id);
+			$allProduction = $this->Approve_Model->getProduction($no_paket);
+			$allEvent = $this->Approve_Model->getEvent($no_paket);
 
             $n = 0;
             $result = array();
@@ -100,6 +133,8 @@ class Approve extends CI_Controller {
                   $kanal = $this->Approve_Model->getKanal($detail->kanal_id);
                   $productgroup = $this->Approve_Model->getProductgroup($detail->product_group_id);
                   $position = $this->Approve_Model->getPosition($detail->position_id);
+                  $harga = $this->Approve_Model->getHarga($detail->kanal_id,$detail->product_group_id,$detail->position_id);
+				  $hari = date_diff(date_create($detail->start_date), date_create($detail->end_date));
 
                   $result[$n]["id"] = $detail->id;
                   $result[$n]["ads"] = $ads->name;
@@ -113,9 +148,34 @@ class Approve extends CI_Controller {
                   $result[$n]["misc_info"] = $detail->misc_info;
                   $result[$n]["no_po"] = $detail->no_po;
                   $result[$n]["request"] = $detail->request;
+                  $result[$n]["harga"] = $harga->harga;
+                  $result[$n]["total"] = ($hari->days + 1) * $harga->harga;
 
                   $n += 1;
             }
+
+		$arrProduction = array();
+		$m = 0;
+		foreach ($allProduction as $production) {
+            $prod = $this->Approve_Model->getSingleProduction($production->production_id);
+			$arrProduction[$m]["production"] = $prod->nama;
+			$arrProduction[$m]["quantity"] = $production->quantity;
+			$arrProduction[$m]["harga"] = $prod->harga;
+			$arrProduction[$m]["harga_total"] = (int)$production->quantity * (float)$prod->harga;
+			$arrProduction[$m]["keterangan"] = $production->keterangan;
+			$m += 1;
+		}
+
+		$arrEvent = array();
+		$n = 0;
+		foreach ($allEvent as $event) {
+			$arrEvent[$n]["event"] = $event->event;
+			$arrEvent[$n]["start_date"] = $event->start_date;
+			$arrEvent[$n]["end_date"] = $event->end_date;
+			$arrEvent[$n]["biaya"] = $event->biaya;
+			$arrEvent[$n]["keterangan"] = $event->keterangan;
+			$n += 1;
+		}
 
             $arrDetail = $result;
 
@@ -142,6 +202,8 @@ class Approve extends CI_Controller {
             $data["all_data_brandcomm"] = $allDataBrandcomm;
             $data["all_detail_brandcomm"] = $allDetailBrandcomm;
 			$data["name_cat_industry"] = $nameCatIndustry->industry_name;
+        $data["all_production"] = $arrProduction;
+        $data["all_event"] = $arrEvent;
             $data["update"] = $this->_access["update"];
 
             $this->load->view("approve/update", $data);
