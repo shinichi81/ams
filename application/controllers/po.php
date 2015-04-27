@@ -58,8 +58,33 @@ class PO extends CI_Controller {
                   $n += 1;
             }
 
+		$arrProduction = array();
+		$m = 0;
+		foreach ($allProduction as $production) {
+            $prod = $this->PO_Model->getSingleProduction($production->production_id);
+			$arrProduction[$m]["production"] = $prod->nama;
+			$arrProduction[$m]["quantity"] = $production->quantity;
+			$arrProduction[$m]["harga"] = $prod->harga;
+			$arrProduction[$m]["harga_total"] = (int)$production->quantity * (float)$prod->harga;
+			$arrProduction[$m]["keterangan"] = $production->keterangan;
+			$m += 1;
+		}
+
+		$arrEvent = array();
+		$n = 0;
+		foreach ($allEvent as $event) {
+			$arrEvent[$n]["event"] = $event->event;
+			$arrEvent[$n]["start_date"] = $event->start_date;
+			$arrEvent[$n]["end_date"] = $event->end_date;
+			$arrEvent[$n]["biaya"] = $event->biaya;
+			$arrEvent[$n]["keterangan"] = $event->keterangan;
+			$n += 1;
+		}
+
             $data["all_data"] = $allData;
             $data["all_detail"] = $arrDetail;
+        $data["all_production"] = $arrProduction;
+        $data["all_event"] = $arrEvent;
             $data["read"] = $this->_access["read"];
 
             $this->load->view("po/show", $data);

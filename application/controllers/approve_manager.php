@@ -82,6 +82,8 @@ class Approve_Manager extends CI_Controller {
 
 			$data["all_data"] = $allData;
             $data["all_detail"] = $result;
+        $data["all_production"] = $arrProduction;
+        $data["all_event"] = $arrEvent;
             $data["read"] = $this->_access["read"];
 
             $this->load->view("approve_manager/show", $data);
