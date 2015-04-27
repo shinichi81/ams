@@ -153,38 +153,37 @@ class PO extends CI_Controller {
 			$dirPath = "./assets/images/upload/";
 			
 			$config["upload_path"] = $dirPath;
-			$config["allowed_types"] = "gif|jpg|jpeg|png";
-			$config["max_size"] = "2048";
+			$config["allowed_types"] = "jpg|jpeg|png";
+			$config["max_size"] = "1024";
 			$config["overwrite"] = FALSE;
 			$config["remove_spaces"] = TRUE;
 			
 			$this->upload->initialize($config);
 			
-			if($this->upload->do_multi_upload("bukti")){
+			// if($this->upload->do_multi_upload("bukti")){
                 
-                $data['upload_data'] = $this->upload->get_multi_upload_data();
+                // $data['upload_data'] = $this->upload->get_multi_upload_data();
                 
-                echo '<p class = "bg-success">' . count($data['upload_data']) . 'File(s) successfully uploaded.</p>';
+                // echo '<p class = "bg-success">' . count($data['upload_data']) . 'File(s) successfully uploaded.</p>';
                 
-            } else {    
-                // Output the errors
-                $errors = array('error' => $this->upload->display_errors('<p class = "bg-danger">', '</p>'));               
+            // } else {    
+                // $errors = array('error' => $this->upload->display_errors('<p class = "bg-danger">', '</p>'));               
             
-                foreach($errors as $k => $error){
-                    echo $error;
-                }
+                // foreach($errors as $k => $error){
+                    // echo $error;
+                // }
                 
-            }
+            // }
 			
-			// if (!$this->upload->do_upload())
-				// return false;
+			if (!$this->upload->do_upload())
+				return false;
 			
 			// untuk mendapatkan filename setelah diupload
-			// $arrRespond = $this->upload->data();
-			// $filename = $arrRespond["file_name"];
+			$arrRespond = $this->upload->data();
+			$filename = $arrRespond["file_name"];
 			
-			// echo $filename;
-			// die;
+			echo $filename;
+			die;
 		}
 	  }
 }

@@ -140,4 +140,10 @@ class Invoice extends CI_Controller {
             echo json_encode($data);
             die;
       }
+	  
+	  public function semua() {
+            $allData = $this->Invoice_Model->getAll(1, 100);			
+            $data["all_data"] = $allData;
+            $this->load->view("invoice/content", $data);
+	  }
 }

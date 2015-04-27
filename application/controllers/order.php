@@ -604,6 +604,8 @@ class Order extends CI_Controller {
         $total_event = $arrParam[39];
         $pajak = $arrParam[40];
         $total_semua = $arrParam[41];
+        $jumlahItemProduction = $arrParam[42];
+        $jumlahItemEvent = $arrParam[43];
 		//END TAMBAHAN
         $date = true;
         $validNo = true;
@@ -750,7 +752,7 @@ class Order extends CI_Controller {
             $date = false;
         }
 
-        if (($packet_type == "N" and empty($no)) or empty($agency_id) or empty($client_id) or empty($selectAds) or $tempIdConflict <> "" or $tempIdInUse <> "" or $tempIdCpmQuotaEmpty <> "" or $tempIdCpmQuota <> "" or $tempIdDateWrong <> "" or !$validNo or empty($industrycat_id) or empty($industry_id)) {
+        if (($packet_type == "N" and empty($no)) or empty($agency_id) or empty($client_id) or empty($selectAds) or $tempIdConflict <> "" or $tempIdInUse <> "" or $tempIdCpmQuotaEmpty <> "" or $tempIdCpmQuota <> "" or $tempIdDateWrong <> "" or !$validNo or $isRestrict == "Y") {
             $data["status"] = false;
             $data["error"] = array();
             $data["error"]["tot_row"] = count($selectAds);
@@ -821,33 +823,27 @@ class Order extends CI_Controller {
                         throw new Exception($insert);
                 }
 				
-				// if (count($selectProduction) > 0) {
-					for ($m = 0; $m < count($selectProduction); $m++) {
-						$production_id = $selectProduction[$m]["value"];
-						$quantity = $txtQty[$m]["value"];
-						// $hargaProd = str_replace(".", "",$txtHargaProd[$m]["value"]);
-						// $hargaProdTotal = str_replace(".", "",$txtHargaProdTotal[$m]["value"]);
-						$keterangan = $txtInfoProd[$m]["value"];
-						
-						$insertProd = $this->Order_Model->insertOrderProduction($no_paket, $production_id, $quantity, $keterangan);
-						if ($insertProd !== true)
-							throw new Exception($insertProd);
-					}					
-				// }
-				
-				// if (count($txtEvent) > 0) {
-					for ($o = 0; $o < count($txtEvent); $o++) {
-						$event = $txtEvent[$o]["value"];
-						$event_start = $txtStartDateEvent[$o]["value"];
-						$event_end = $txtEndDateEvent[$o]["value"];
-						$hargaEvent = $txtHargaEvent[$o]["value"];
-						$infoEvent = $txtInfoEvent[$o]["value"];
-						
-						$insertEvent = $this->Order_Model->insertOrderEvent($no_paket, $event, $event_start, $event_end, $hargaEvent, $infoEvent);
-						if ($insertEvent !== true)
-							throw new Exception($insertEvent);
-					}
-				// }
+				for ($m = 0; $m < $jumlahItemProduction; $m++) {
+					$production_id = $selectProduction[$m]["value"];
+					$quantity = $txtQty[$m]["value"];
+					$keterangan = $txtInfoProd[$m]["value"];
+					
+					$insertProd = $this->Order_Model->insertOrderProduction($no_paket, $production_id, $quantity, $keterangan);
+					if ($insertProd !== true)
+						throw new Exception($insertProd);
+				}					
+			
+				for ($o = 0; $o < $jumlahItemEvent; $o++) {
+					$event = $txtEvent[$o]["value"];
+					$event_start = $txtStartDateEvent[$o]["value"];
+					$event_end = $txtEndDateEvent[$o]["value"];
+					$hargaEvent = $txtHargaEvent[$o]["value"];
+					$infoEvent = $txtInfoEvent[$o]["value"];
+					
+					$insertEvent = $this->Order_Model->insertOrderEvent($no_paket, $event, $event_start, $event_end, $hargaEvent, $infoEvent);
+					if ($insertEvent !== true)
+						throw new Exception($insertEvent);
+				}
 				
 				$insertHarga = $this->Order_Model->insertOrderHarga($no_paket, $harga_sistem, $harga_gross, $disc_nominal, $additional_disc, $additional_disc_nominal, $total_harga, $total_production, $total_event, $pajak, $total_semua);
                 if ($insertHarga !== true)

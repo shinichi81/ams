@@ -113,6 +113,7 @@
             <fieldset id="production">
                   <legend>Production Cost</legend>
                   <button type="button" name="btnTambahProduction" id="btnTambahProduction" title="Tambah" class="btn"><img src="<?php echo image_url("icons/add.png"); ?>" alt="Tambah" /></button>
+				  <input type="hidden" id="jumlahItemProduction" value="0" />
                   <table>
                         <thead>
                         <th>Production</th>
@@ -129,6 +130,7 @@
             <fieldset id="event">
                   <legend>Event</legend>
                   <button type="button" name="btnTambahEvent" id="btnTambahEvent" title="Tambah" class="btn"><img src="<?php echo image_url("icons/add.png"); ?>" alt="Tambah" /></button>
+				  <input type="hidden" id="jumlahItemEvent" value="0" />
                   <table>
                         <thead>
                         <th>Event</th>
@@ -609,6 +611,7 @@
 						simpanProd = simpanProd + <?= $harga_production->harga; ?>;
 						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
 						hitungTotal();
+						document.getElementById('jumlahItemProduction').value = parseInt(document.getElementById('jumlahItemProduction').value) + 1;
 				  });
 
                   $("#btnHapusProduction").die('click').live('click', function() {
@@ -678,6 +681,7 @@
                               "	</td>"+
                               "</tr>");
 						hitungTotal();
+						document.getElementById('jumlahItemEvent').value = parseInt(document.getElementById('jumlahItemEvent').value) + 1;
 				  });
 
                   $("input[name=txtStartDateEvent]").die('change').live('change', function(event, index) {

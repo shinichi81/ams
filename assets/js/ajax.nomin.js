@@ -377,9 +377,12 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var totalEvent = $("#totalEvent").val().split('.').join("");
                   var pajak = $("#pajak").val().split('.').join("");
                   var totalSemua = $("#akhir").val().split('.').join("");
+                  
+				  var jumlahItemProduction = $("#jumlahItemProduction").val();
+				  var jumlahItemEvent = $("#jumlahItemEvent").val();
 				  //END TAMBAHAN
                         				  
-                  var arrParam = new Array(selectPacketType, txtNo, txtAgency, txtClient, txtBudget, txtCampaign, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, addDiskon, addDiskonNominal, selectProduction, txtQty, txtHargaProd, txtHargaProdTotal, txtInfoProd, txtEvent, txtStartDateEvent, txtEndDateEvent, txtHargaEvent, txtInfoEvent, totalHarga, totalProduction, totalEvent, pajak, totalSemua);
+                  var arrParam = new Array(selectPacketType, txtNo, txtAgency, txtClient, txtBudget, txtCampaign, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, addDiskon, addDiskonNominal, selectProduction, txtQty, txtHargaProd, txtHargaProdTotal, txtInfoProd, txtEvent, txtStartDateEvent, txtEndDateEvent, txtHargaEvent, txtInfoEvent, totalHarga, totalProduction, totalEvent, pajak, totalSemua,jumlahItemProduction,jumlahItemEvent);
 				  // alert(arrParam);
             } else if (todo == "update") {
                   var txtNoPaket = $("#txtNoPaket").val();
@@ -1153,6 +1156,8 @@ function injectError(obj, error) {
                         $("#errTxtClient").text("* required");
                   // if (error[index] == "txtDiskon")
                         // $("#errTxtDiskon").text("* required");
+                  if (error[index] == "selectIndustryCat")
+                        $("#errSelectIndustryCat").text("* required");
                   if (error[index] == "txtCampaign")
                         $("#errTxtCampaign").text("* required");
                   if (error[index] == "txtDate")
@@ -1182,8 +1187,6 @@ function injectError(obj, error) {
                         for (var n in idDateWrong)				
                               $("#addme tr").eq(idDateWrong[n]).children().children("#errConflict").text("* wrong date range");
                   }
-                  if (error[index] == "selectIndustryCat")
-                        $("#errSelectIndustryCat").text("* required");
             }
       } else if (obj == "orderspace" || obj == "expired_space") {
             //$("#errNoSpace").text("");
