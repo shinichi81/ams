@@ -133,19 +133,19 @@
 	  <br />      
 	  <table class="noborder">
 			<tr>
-					<td width="110px"><strong>Bukti Tayang</strong></td>
+					<td width="110px"><strong>Bukti Tayang & Report</strong></td>
 			</tr>
 			<tr>
-					<td><img src="<?php echo $all_data->bukti_tayang; ?>" alt="" /></td>
-			</tr>
-	  </table>
-	  <br />
-	  <table class="noborder">
-			<tr>
-					<td width="110px"><strong>Report</strong></td>
-			</tr>
-			<tr>
-					<td><a href="<?php echo $all_data->report; ?>"><?php echo $all_data->report; ?></a> <-- klik untuk mengunduh <i>file</i></td>
+					<td>
+					<?php 
+						$gambar = explode(',',$all_data->bukti_tayang);
+						for($i=0; $i<count($gambar); $i++) {
+					?>
+						<a href="http://localhost/ams/assets/images/upload/<?= $gambar[$i]; ?>"><?= $gambar[$i]; ?></a><br />
+					<?php
+						}
+					?>
+					</td>
 			</tr>
 	  </table>
 	  <br />

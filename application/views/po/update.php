@@ -9,12 +9,9 @@
                   <label for="noSO">No SO : </label> 
                   <input name="noSO" id="noSO" type="text" value="<?php echo $all_data->no_so; ?>" />
                   <br>
-				  <label for="bukti">Bukti Tayang : </label> 
-				  <input name="bukti[]" id="bukti" type="file" multiple />
+				  <label for="bukti">Bukti Tayang & Report : </label> 
+				  <input name="userfile[]" id="userfile" type="file" multiple />
 				  <br>
-				  <label for="report">Report : </label> 
-				  <input name="report" id="report" type="file" multiple />
-				  <br />
 				  <label for="upload"></label>
 				  <input type="submit" name="upload" id="upload" value="Upload">
 				  <br />
@@ -22,9 +19,7 @@
 					<div class="bar"></div >
 					<div class="percent">0%</div >
 				  </div>
-				  <div id="statusBukti"></div>
-				  <br />
-				  <div id="statusReport"></div>
+				  <div id="status"></div>
                   <input name="hdId" id="hdId" type="hidden" value="<?php echo $all_data->no_paket; ?>" />
             </fieldset>
             <div class="ajax-loader" style="display: none;">&nbsp;</div>
@@ -40,8 +35,7 @@
 			/* s: UNTUK PROSES UPLOAD GAMBAR */
 			var bar = $(".bar");
 			var percent = $(".percent");
-			var statusBukti = $("#statusBukti");
-			var statusReport = $("#statusReport");
+			var status = $("#status");
 			   
 			$("form").ajaxForm({
 				beforeSend: function() {
@@ -57,9 +51,7 @@
 					percent.html(percentVal);
 				},
 				complete: function(xhr) {
-					// statusBukti.html(xhr.responseText);
-                    $("#statusBukti").html(xhr.responseText);
-					// xhr.responseText itu nama filenya
+                    status.html(xhr.responseText);
 				}
 			});
 

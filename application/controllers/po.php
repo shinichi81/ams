@@ -31,6 +31,8 @@ class PO extends CI_Controller {
 
             $allData = $this->PO_Model->get($no_paket);
             $allDetail = $this->PO_Model->getDetail($no_paket);
+        $allProduction = $this->PO_Model->getProduction($no_paket);
+        $allEvent = $this->PO_Model->getEvent($no_paket);
 
             $n = 0;
             $arrDetail = array();
@@ -116,12 +118,12 @@ class PO extends CI_Controller {
             $no_paket = $arrParam[0];
             $no_po = $arrParam[1];
             $no_so = $arrParam[2];
-            // $bukti = $arrParam[3];
-			$bukti = image_path("upload/".$arrParam[3]);
+            $bukti_report = $arrParam[3];
+			// $bukti = image_path("upload/".$arrParam[3]);
 
             $this->Transaction_Model->transaction_start();
                   
-			$update = $this->PO_Model->update($no_paket, $no_po, $no_so, $bukti);
+			$update = $this->PO_Model->update($no_paket, $no_po, $no_so, $bukti_report);
 
 			$this->Transaction_Model->transaction_complete();
                   
@@ -146,44 +148,62 @@ class PO extends CI_Controller {
             die;
       }
 	  
-	  public function do_upload() {
-        if($this->input->post('upload')){
-			$this->load->library("upload");
+	  // public function do_upload() {
+        // if($this->input->post('upload')){
+			// $this->load->library("upload");
 			
-			$dirPath = "./assets/images/upload/";
+			// $dirPath = "./assets/images/upload/";
 			
-			$config["upload_path"] = $dirPath;
-			$config["allowed_types"] = "jpg|jpeg|png";
-			$config["max_size"] = "1024";
-			$config["overwrite"] = FALSE;
-			$config["remove_spaces"] = TRUE;
+			// $config["upload_path"] = $dirPath;
+			// $config["allowed_types"] = "jpg|jpeg|png";
+			// $config["max_size"] = "1024";
+			// $config["overwrite"] = FALSE;
+			// $config["remove_spaces"] = TRUE;
 			
-			$this->upload->initialize($config);
-			
-			// if($this->upload->do_multi_upload("bukti")){
-                
-                // $data['upload_data'] = $this->upload->get_multi_upload_data();
-                
-                // echo '<p class = "bg-success">' . count($data['upload_data']) . 'File(s) successfully uploaded.</p>';
-                
-            // } else {    
-                // $errors = array('error' => $this->upload->display_errors('<p class = "bg-danger">', '</p>'));               
-            
-                // foreach($errors as $k => $error){
-                    // echo $error;
-                // }
-                
-            // }
-			
-			if (!$this->upload->do_upload())
-				return false;
+			// $this->upload->initialize($config);
+						
+			// if (!$this->upload->do_upload())
+				// return false;
 			
 			// untuk mendapatkan filename setelah diupload
+			// $arrRespond = $this->upload->data();
+			// $filename = $arrRespond["file_name"];
+			
+			// echo $filename;
+			// die;
+		// }
+	  // }
+	function do_upload() {
+		$this->load->library('upload');
+
+		$files = $_FILES;
+		$cpt = count($_FILES['userfile']['name']);
+		for($i=0; $i<$cpt; $i++) {
+			$_FILES['userfile']['name']= $files['userfile']['name'][$i];
+			$_FILES['userfile']['type']= $files['userfile']['type'][$i];
+			$_FILES['userfile']['tmp_name']= $files['userfile']['tmp_name'][$i];
+			$_FILES['userfile']['error']= $files['userfile']['error'][$i];
+			$_FILES['userfile']['size']= $files['userfile']['size'][$i];    
+
+			$this->upload->initialize($this->set_upload_options());
+			$this->upload->do_upload();
+
 			$arrRespond = $this->upload->data();
 			$filename = $arrRespond["file_name"];
 			
-			echo $filename;
-			die;
+			echo $filename.",<br />";
 		}
-	  }
+		die;
+	}
+	
+	private function set_upload_options() {   
+	//  upload an image options
+		$config = array();
+		$config['upload_path'] = "./assets/images/upload/";
+		$config['allowed_types'] = 'gif|jpg|jpeg|png|xls|xlsx|doc|docx|pdf';
+		$config['max_size']      = '2048';
+		$config['overwrite']     = FALSE;
+		$config["remove_spaces"] = TRUE;
+		return $config;
+	}
 }

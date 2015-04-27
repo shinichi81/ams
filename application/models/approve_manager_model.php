@@ -40,7 +40,7 @@ class Approve_Manager_Model extends CI_Model {
       public function get($no_paket) {
             try {
                   // $this->db->select("a.no_paket, a.harga_sistem, a.harga_gross, a.disc_nominal, a.harga_disc, a.pajak, a.diskon, a.total_harga, a.no_so, a.request_date, b.name AS brand, c.name AS company, d.name AS sales");
-                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS brand, c.name AS company, d.name AS sales, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total");
+                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS brand, c.name AS company, d.name AS sales, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total, f.bukti_report");
                   $this->db->select("IFNULL(f.no_po, e.no_po) AS no_po", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_agency b", "a.agency_id = b.id");
@@ -240,5 +240,67 @@ class Approve_Manager_Model extends CI_Model {
 
                   return error_message($errNo);
             }
-      }      
+      }
+      public function getProduction($no_paket) {
+            try {
+                  $this->db->select("production_id, quantity, keterangan");
+                  $this->db->from("tbl_order_production");
+                  $this->db->where("no_paket", $no_paket);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+	  
+      public function getEvent($no_paket) {
+            try {
+                  $this->db->select("event, biaya, keterangan");
+                  $this->db->select("date_format(start_date, '%Y-%m-%d') start_date", FALSE);
+                  $this->db->select("date_format(end_date, '%Y-%m-%d') end_date", FALSE);
+                  $this->db->from("tbl_order_event");
+                  $this->db->where("no_paket", $no_paket);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+	  
+      public function getSingleProduction($id) {
+            try {
+                  $this->db->select("id, nama, harga");
+                  $this->db->from("tbl_production");
+                  $this->db->where("active", "Y");
+                  $this->db->where("id", $id);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->row();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
 }

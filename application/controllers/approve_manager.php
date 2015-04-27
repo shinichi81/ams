@@ -30,6 +30,8 @@ class Approve_Manager extends CI_Controller {
 
             $allData = $this->Approve_Manager_Model->get($no_paket);
             $allDetail = $this->Approve_Manager_Model->getDetail($no_paket);
+        $allProduction = $this->Approve_Manager_Model->getProduction($no_paket);
+        $allEvent = $this->Approve_Manager_Model->getEvent($no_paket);
 
             $n = 0;
             $result = array();
@@ -55,7 +57,30 @@ class Approve_Manager extends CI_Controller {
                   $n += 1;
             }
 
-            $data["all_data"] = $allData;
+		$arrProduction = array();
+		$m = 0;
+		foreach ($allProduction as $production) {
+            $prod = $this->Approve_Manager_Model->getSingleProduction($production->production_id);
+			$arrProduction[$m]["production"] = $prod->nama;
+			$arrProduction[$m]["quantity"] = $production->quantity;
+			$arrProduction[$m]["harga"] = $prod->harga;
+			$arrProduction[$m]["harga_total"] = (int)$production->quantity * (float)$prod->harga;
+			$arrProduction[$m]["keterangan"] = $production->keterangan;
+			$m += 1;
+		}
+
+		$arrEvent = array();
+		$n = 0;
+		foreach ($allEvent as $event) {
+			$arrEvent[$n]["event"] = $event->event;
+			$arrEvent[$n]["start_date"] = $event->start_date;
+			$arrEvent[$n]["end_date"] = $event->end_date;
+			$arrEvent[$n]["biaya"] = $event->biaya;
+			$arrEvent[$n]["keterangan"] = $event->keterangan;
+			$n += 1;
+		}
+
+			$data["all_data"] = $allData;
             $data["all_detail"] = $result;
             $data["read"] = $this->_access["read"];
 
