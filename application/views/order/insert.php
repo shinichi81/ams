@@ -57,7 +57,7 @@
                         </select>
 						<br />
                         <label for="budget">Budget : </label> 
-                        <input name="txtBudget" id="txtBudget" type="text" />
+                        <input name="txtBudget" id="txtBudget" type="text" onkeyup="format(this);" />
                         <br>
                         <label for="campaign">Campaign : </label> 
                         <input name="txtCampaign" id="txtCampaign" type="text" /> <span class="error" id="errTxtCampaign"></span>
@@ -208,6 +208,19 @@
       </form>
 
       <script type="text/javascript">
+function format(input)
+{
+    var nStr = input.value + '';
+    nStr = nStr.replace( /\,/g, "");
+    var x = nStr.split( '.' );
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while ( rgx.test(x1) ) {
+        x1 = x1.replace( rgx, '$1' + ',' + '$2' );
+    }
+    input.value = x1 + x2;
+}
 			//loadListOption3('<?php echo site_url("order/get_industrycat"); ?>', 'selectIndustryCat', 'selectIndustry');
 			
 			Number.prototype.formatMoney = function(c, d, t){
