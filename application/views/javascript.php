@@ -328,6 +328,29 @@ if ($this->uri->segment(1) == "order") {
 					});
 				});
 			</script>";
+} else if ($this->uri->segment(1) == "master_unit") {
+      echo "	<script type='text/javascript'>
+				loadContent('" . site_url("master_unit/content") . "');
+				loadForm('" . site_url("master_unit/insert_page") . "');
+				
+				$(document).ready(function() {
+					$('#selectPage').live('change', function() {
+						loadContent('" . site_url("master_unit/content") . "');
+					});
+					$('#selectOrderBy').live('change', function() {
+						if ($(this).val() == 'nopaket')
+							$('#txtSearch').show();
+						else {
+							$('#txtSearch').hide();
+							loadContent('" . site_url("master_unit/content") . "', 'orderby');
+						}
+					});
+					$('#txtSearch').live('keypress', function(e) {
+						if (e.keyCode == 13 || e.charCode == 13)
+							loadContent('" . site_url("master_unit/content") . "', 'orderby');
+					});
+				});
+			</script>";
 } else if ($this->uri->segment(1) == "master_agency") {
       echo "	<script type='text/javascript'>
 				loadContent('" . site_url("master_agency/content") . "');

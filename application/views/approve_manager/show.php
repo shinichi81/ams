@@ -132,7 +132,7 @@
 						$gambar = explode(',',$all_data->bukti_report);
 						for($i=0; $i<count($gambar); $i++) {
 					?>
-						<a href="http://localhost/ams/assets/images/upload/<?= $gambar[$i]; ?>"><?= $gambar[$i]; ?></a><br />
+						<a href="<?=base_url();?>assets/images/upload/<?= $gambar[$i]; ?>"><?= $gambar[$i]; ?></a><br />
 					<?php
 						}
 					?>

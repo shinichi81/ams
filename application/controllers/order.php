@@ -198,6 +198,7 @@ class Order extends CI_Controller {
         $allProductGroup = $this->Order_Model->getAllProductGroup();
         $allPosition = $this->Order_Model->getAllPosition($allProductGroup[0]->position_id);
         $allAgency = $this->Order_Model->getAgency();
+        $allUnit = $this->Order_Model->getUnit();
         $allClient = $this->Order_Model->getClient();
 		$harga = $this->Order_Model->getHarga(1,1,1);
         $allProduction = $this->Order_Model->getAllProd();
@@ -235,6 +236,7 @@ class Order extends CI_Controller {
         $data["all_productgroup"] = $allProductGroup;
         $data["all_position"] = $allPosition;
         $data["all_agency"] = $allAgency;
+        $data["all_unit"] = $allUnit;
         $data["all_client"] = $allClient;
         $data["all_default_cpm_position"] = $arrDefaultCpmPosition;
         $data["harga"] = $harga;
@@ -259,6 +261,7 @@ class Order extends CI_Controller {
         $allAds = $this->Order_Model->getAllAds();
         $allKanal = $this->Order_Model->getAllKanal();
         $allAgency = $this->Order_Model->getAgency();
+        $allUnit = $this->Order_Model->getUnit();
         $allClient = $this->Order_Model->getClient();
 		$addHarga = $this->Order_Model->getHarga(1,1,1);
         $allProduction = $this->Order_Model->getAllProd();
@@ -351,6 +354,7 @@ class Order extends CI_Controller {
         $data["all_kanal"] = $allKanal;
         $data["all_productgroup"] = $allProductGroup;
         $data["all_position"] = $allPosition;
+        $data["all_unit"] = $allUnit;
         $data["all_agency"] = $allAgency;
         $data["all_client"] = $allClient;
         $data["arr_productgroup"] = $arrProductGroup;
@@ -606,6 +610,7 @@ class Order extends CI_Controller {
         $total_semua = $arrParam[41];
         $jumlahItemProduction = $arrParam[42];
         $jumlahItemEvent = $arrParam[43];
+        $unit_id = $arrParam[44];
 		//END TAMBAHAN
         $date = true;
         $validNo = true;
@@ -804,7 +809,7 @@ class Order extends CI_Controller {
 
             $this->Transaction_Model->transaction_start();
             try {
-                $insert = $this->Order_Model->insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $campaign, $diskon, $benefit, $isRestrict, $industry_id, $no, $miscInfo, $miscInfoEvent, $miscInfoProductionCost, $industrycat_id);
+                $insert = $this->Order_Model->insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $campaign, $diskon, $benefit, $isRestrict, $industry_id, $no, $miscInfo, $miscInfoEvent, $miscInfoProductionCost, $industrycat_id, $unit_id);
                 if ($insert !== true)
                     throw new Exception($insert);
 
@@ -915,6 +920,7 @@ class Order extends CI_Controller {
         $pajak = $arrParam[40];
         $total_semua = $arrParam[41];
 		$campaign = $arrParam[42];
+		$unit_id = $arrParam[43];
 		//END TAMBAHAN
         $date = true;
         $tempIdInUse = "";
@@ -1090,7 +1096,7 @@ class Order extends CI_Controller {
         } else {
             $this->Transaction_Model->transaction_start();
             try {
-                $update = $this->Order_Model->updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $isRestrict, $industry_id, $miscInfo, $miscInfoEvent, $miscInfoProductionCost, $industrycat_id, $campaign);
+                $update = $this->Order_Model->updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $isRestrict, $industry_id, $miscInfo, $miscInfoEvent, $miscInfoProductionCost, $industrycat_id, $campaign, $unit_id);
                 if ($update !== true)
                     throw new Exception($update);
 
@@ -1403,6 +1409,18 @@ class Order extends CI_Controller {
         $hargaProd = $this->Order_Model->getHargaProd($id);
 
         $data = '<input name="txtHargaTotal" id="txtHargaTotal" type="text" readonly="readonly" style="width: 90px;" value="' . number_format($hargaProd->harga,0,",",".") . '" />';
+
+        echo $data;
+        die;
+    }
+	
+    public function get_unit($agency_id) {
+        $allUnit = $this->Order_Model->getUnit($agency_id);
+
+        $data = "";
+        foreach ($allUnit as $unit) {
+            $data .= "<option value='" . $unit->id . "'>" . preg_replace('/[^A-Za-z0-9\-]/', '', $unit->name) . "</option>";
+        }
 
         echo $data;
         die;

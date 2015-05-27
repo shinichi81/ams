@@ -46,6 +46,9 @@
                         <label for="unit">Unit : </label> 
                         <select name="selectUnit" id="selectUnit" style="width: 150px;">
 								<option value="" disabled selected>-- Pilih Unit --</option>
+                              <?php foreach ($all_unit as $unit): ?>
+                                    <option value="<?php echo $unit->id; ?>"><?php echo $unit->name; ?></option>
+                              <?php endforeach; ?>
                         </select>
                         <br>
                         <label for="client">Brand : </label> 
@@ -732,6 +735,10 @@ function format(input)
 						document.getElementById('totalEvent').value = simpanEvent.formatMoney(0);
 						hitungTotal();
 				  });
+
+                  $("#selectAgency").die('change').live('change', function() {
+                        loadListOption3('<?php echo site_url("order/get_unit"); ?>', 'selectAgency', 'selectUnit');
+                  });
             });
 //END TAMBAHAN WILLY
       </script>

@@ -64,6 +64,15 @@
                   </tr>
                   <tr align="center">
                         <td>&nbsp;</td>
+                        <td>Unit</td>
+                        <td><input type="checkbox" disabled="disabled" <?php echo (isset($all_access["UNIT|C"])) ? "checked='checked'" : ""; ?> /></td>
+                        <td><input type="checkbox" disabled="disabled" <?php echo (isset($all_access["UNIT|R"])) ? "checked='checked'" : ""; ?> /></td>
+                        <td><input type="checkbox" disabled="disabled" <?php echo (isset($all_access["UNIT|U"])) ? "checked='checked'" : ""; ?> /></td>
+                        <td><input type="checkbox" disabled="disabled" <?php echo (isset($all_access["UNIT|D"])) ? "checked='checked'" : ""; ?> /></td>
+                        <td>&nbsp;</td>
+                  </tr>
+                  <tr align="center">
+                        <td>&nbsp;</td>
                         <td>Agency</td>
                         <td><input type="checkbox" disabled="disabled" <?php echo (isset($all_access["AGENCY|C"])) ? "checked='checked'" : ""; ?> /></td>
                         <td><input type="checkbox" disabled="disabled" <?php echo (isset($all_access["AGENCY|R"])) ? "checked='checked'" : ""; ?> /></td>

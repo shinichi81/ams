@@ -44,14 +44,15 @@ class Order_Model extends CI_Model {
 
       public function get($no_paket) {
             try {
-                  $this->db->select("a.no_paket, a.no_paket_user, a.request_date, a.ae_id, e.name sales, a.agency_id, c.name agency, a.client_id, b.name client, a.approve, a.done, a.budget, a.diskon, a.benefit, a.is_restrict, a.industrycat_id, a.industry_id, a.progress, a.misc_info, a.misc_info_event, a.misc_info_production_cost, a.no_reference, f.paket_sistem, f.paket_gross, f.diskon_nominal, f.additional_diskon, f.additional_diskon_nominal, f.paket_total, f.produksi_total, f.event_total, f.pajak, f.total, a.campaign");
+                  $this->db->select("a.no_paket, a.no_paket_user, a.request_date, a.ae_id, e.name sales, a.agency_id, c.name agency, a.client_id, b.name client, a.approve, a.done, a.budget, a.diskon, a.benefit, a.is_restrict, a.industrycat_id, a.industry_id, a.progress, a.misc_info, a.misc_info_event, a.misc_info_production_cost, a.no_reference, f.paket_sistem, f.paket_gross, f.diskon_nominal, f.additional_diskon, f.additional_diskon_nominal, f.paket_total, f.produksi_total, f.event_total, f.pajak, f.total, a.campaign, a.unit_id, g.name unit");
                   $this->db->select("IFNULL(a.no_paket_user, '-') no_paket_user, IFNULL(d.name, '-') industry", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_client b", "a.client_id = b.id", "left");
                   $this->db->join("tbl_agency c", "a.agency_id = c.id", "left");
                   $this->db->join("tbl_industry d", "a.industry_id = d.id", "left");
                   $this->db->join("tbl_user e", "a.ae_id = e.username");
-                  $this->db->join("tbl_order_harga f", "a.no_paket = f.no_paket");
+                  $this->db->join("tbl_order_harga f", "a.no_paket = f.no_paket", "left");
+                  $this->db->join("tbl_unit g", "a.unit_id = g.id", "left");
                   $this->db->where("a.no_paket", $no_paket);
                   //$this->db->where("a.approve", "N");
                   $this->db->where("a.active_status <>", "N");
@@ -651,6 +652,28 @@ class Order_Model extends CI_Model {
             }
       }
 
+      public function getUnit($agency_id = "") {
+            try {
+                  $this->db->select("id, name");
+                  $this->db->from("tbl_unit");
+                  $this->db->where("perusahaan_id", $agency_id);
+                  $this->db->where("active_status", "Y");
+                  $this->db->order_by("name", "asc");
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+
       public function getClient() {
             try {
                   $this->db->select("id, name");
@@ -838,7 +861,7 @@ class Order_Model extends CI_Model {
             }
       }
 
-      public function insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $campaign, $diskon, $benefit, $is_restrict, $industry_id, $no_reference, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id) {
+      public function insertOrderPaket($no_paket, $agency_id, $client_id, $budget, $campaign, $diskon, $benefit, $is_restrict, $industry_id, $no_reference, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id, $unit_id) {
             try {
                   $progress = 0;
                   $progress_date = null;
@@ -859,6 +882,7 @@ class Order_Model extends CI_Model {
                             "no_paket" => $no_paket,
                             "ae_id" => $this->session->userdata("username"),
                             "agency_id" => $agency_id,
+                            "unit_id" => $unit_id,
                             "client_id" => $client_id,
                             "budget" => $budget,
                             "campaign" => $campaign,
@@ -880,6 +904,7 @@ class Order_Model extends CI_Model {
                             "no_paket" => $no_paket,
                             "ae_id" => $this->session->userdata("username"),
                             "agency_id" => $agency_id,
+                            "unit_id" => $unit_id,
                             "client_id" => $client_id,
                             "budget" => $budget,
                             "campaign" => $campaign,
@@ -949,12 +974,13 @@ class Order_Model extends CI_Model {
             }
       }
 
-      public function updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id, $campaign) {
+      public function updateOrderPaket($no_paket, $agency_id, $client_id, $budget, $diskon, $benefit, $is_restrict, $industry_id, $misc_info, $misc_info_event, $misc_info_production_cost, $industrycat_id, $campaign, $unit_id) {
             try {
                   if ($is_restrict == "true") {
                         $data = array(
                             //"ae_id"						=>	$this->session->userdata("username"),
                             "agency_id" => $agency_id,
+                            "unit_id" => $unit_id,
                             "client_id" => $client_id,
                             "budget" => $budget,
                             "campaign" => $campaign,
@@ -976,6 +1002,7 @@ class Order_Model extends CI_Model {
                         $data = array(
                             //"ae_id"						=>	$this->session->userdata("username"),
                             "agency_id" => $agency_id,
+                            "unit_id" => $unit_id,
                             "client_id" => $client_id,
                             "budget" => $budget,
                             "campaign" => $campaign,

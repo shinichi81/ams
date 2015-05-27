@@ -26,6 +26,14 @@
                         <label for="unit">Unit : </label> 
                         <select name="selectUnit" id="selectUnit" style="width: 150px;">
 								<option value="" disabled selected>-- Pilih Unit --</option>
+                              <?php
+                              foreach ($all_unit as $unit):
+                                    $selected = "";
+                                    if ($all_data->unit_id == $unit->id)
+                                          $selected = "selected='selected'";
+                                    ?>
+                                    <option value="<?php echo $unit->id; ?>" <?php echo $selected; ?>><?php echo $unit->name; ?></option>
+                              <?php endforeach; ?>
                         </select>
                         <br>
                         <label for="client">Brand : </label> 

@@ -57,6 +57,15 @@
                               </tr>
                               <tr align="center">
                                     <td>&nbsp;</td>
+                                    <td>Unit</td>
+                                    <td><input type="checkbox" name="chkAccess" value="UNIT|C" /></td>
+                                    <td><input type="checkbox" name="chkAccess" value="UNIT|R" /></td>
+                                    <td><input type="checkbox" name="chkAccess" value="UNIT|U" /></td>
+                                    <td><input type="checkbox" name="chkAccess" value="UNIT|D" /></td>
+                                    <td>&nbsp;</td>
+                              </tr>
+                              <tr align="center">
+                                    <td>&nbsp;</td>
                                     <td>Agency</td>
                                     <td><input type="checkbox" name="chkAccess" value="AGENCY|C" /></td>
                                     <td><input type="checkbox" name="chkAccess" value="AGENCY|R" /></td>

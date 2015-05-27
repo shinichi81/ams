@@ -5,13 +5,14 @@ class Approve_Manager_Model extends CI_Model {
       public function getAll($startLimit, $endLimit, $orderBy = "ALL") {
             try {
 				  $this->db->distinct();
-                  $this->db->select("a.no_paket, f.no_po, f.no_so, a.request_date, b.name AS brand, c.name AS company");
+                  $this->db->select("a.no_paket, f.no_po, f.no_so, a.request_date, b.name AS brand, c.name AS company, g.name sales");
                   $this->db->select("IFNULL(f.no_po, e.no_po) AS no_po", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_agency b", "a.agency_id = b.id");
                   $this->db->join("tbl_client c", "a.client_id = c.id");
                   $this->db->join("tbl_order_paket_ads e", "e.no_paket = a.no_paket");
                   $this->db->join("tbl_invoice f", "f.no_paket = a.no_paket", "left");
+                  $this->db->join("tbl_user g", "a.ae_id = g.username");
                   $this->db->where("a.approve", "Y");
                   $this->db->where("f.approve_manager", "N");
                   $this->db->where("f.alasan is NULL");

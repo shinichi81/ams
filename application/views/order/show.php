@@ -19,7 +19,7 @@
             <tr>
                   <td>Unit</td>
                   <td>:</td>
-                  <td><?php echo "-"; ?></td>
+                  <td><?php echo $all_data->unit; ?></td>
             </tr>
             <tr>
                   <td>Brand</td>

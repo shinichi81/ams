@@ -8,6 +8,7 @@
         	<th><a href="#">Client</a></th>
         	<th><a href="#">No PO</a></th>
         	<th><a href="#">No SO</a></th>
+        	<th><a href="#">Nama AE</a></th>
             <th width="80px">&nbsp;</th>
         </tr>
 	</thead>
@@ -23,6 +24,7 @@
         	<td><?php echo $data->company; ?></td>
         	<td><?php echo $data->no_po; ?></td>
         	<td><?php echo $data->no_so; ?></td>
+        	<td><?php echo $data->sales; ?></td>
             <td>
             	<?php if ($read == "Y"): ?>
             	<a href="javascript:void(0);" onclick="loadShow('<?php echo site_url("approve_manager/show_page"); ?>', '<?php echo $data->no_paket; ?>')"><img src="<?php echo image_path("icons/user.png"); ?>" title="Show" width="16" height="16" /></a>
