@@ -10,6 +10,7 @@ class Master_Agency extends CI_Controller {
 		parent::__construct();
 		check_session(); // jika session habis, redirect ke logout
 		$this->load->model("Agency_Model");
+		$this->load->model("Unit_Model");
 		$this->_access = get_access("AGENCY");
 		auth($this->_access); // autentikasi menu apakah bisa diakses atau tidak
 	}
@@ -25,14 +26,19 @@ class Master_Agency extends CI_Controller {
 		$id = $this->input->post("id");
 		
 		$allData = $this->Agency_Model->get($id);
+		$allUnit = $this->Agency_Model->getAllUnit($allData->unit_id);
 		
 		$data["all_data"] = $allData;
+		$data["all_unit"] = $allUnit;
 		$data["read"] = $this->_access["read"];
 		
 		$this->load->view("master/agency/show", $data);
 	}
 	
 	public function insert_page() {
+		$allUnit = $this->Unit_Model->getAll();
+		$data["all_unit"] = $allUnit;
+		
 		$data["create"] = $this->_access["create"];
 		
 		$this->load->view("master/agency/insert", $data);
@@ -42,8 +48,13 @@ class Master_Agency extends CI_Controller {
 		$id = $this->input->post("id");
 		
 		$allData = $this->Agency_Model->get($id);
+		$allUnit = $this->Unit_Model->getAll();
+		// $allUnit = $this->Agency_Model->getAllUnit($allData->unit_id);
+		$selectedUnit = $this->Agency_Model->getSelectedUnit($allData->unit_id);
 		
 		$data["all_data"] = $allData;
+		$data["all_unit"] = $allUnit;
+		$data["selected_unit"] = $selectedUnit;
 		$data["update"] = $this->_access["update"];
 		
 		$this->load->view("master/agency/update", $data);
@@ -87,12 +98,13 @@ class Master_Agency extends CI_Controller {
 		$name = $arrParam[0];
 		$address = $arrParam[1];
 		$contact = $arrParam[2];
+		$unit = $arrParam[3];
 		
 		if (empty($name)) {
 			$data["status"] = false;
 			$data["error"] = true;
 		} else {
-			$insert = $this->Agency_Model->insert($name, $address, $contact);
+			$insert = $this->Agency_Model->insert($name, $address, $contact. $unit);
 			
 			$data["status"] = $insert;
 		}
@@ -110,12 +122,13 @@ class Master_Agency extends CI_Controller {
 		$name = $arrParam[1];
 		$address = $arrParam[2];
 		$contact = $arrParam[3];
+		$unit = $arrParam[4];
 		
 		if (empty($name)) {
 			$data["status"] = false;
 			$data["error"] = true;
 		} else {
-			$update = $this->Agency_Model->update($id, $name, $address, $contact);
+			$update = $this->Agency_Model->update($id, $name, $address, $contact, $unit);
 			
 			$data["status"] = $update;
 		}

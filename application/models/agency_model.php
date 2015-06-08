@@ -27,7 +27,7 @@ class Agency_Model extends CI_Model {
 	
 	public function get($id) {
 		try {
-			$this->db->select("id, name, address, contact");
+			$this->db->select("id, name, address, contact, unit_id");
 			$this->db->from("tbl_agency");
 			$this->db->where("id", $id);
 			$this->db->where("active_status", "Y");
@@ -67,12 +67,13 @@ class Agency_Model extends CI_Model {
 		}
 	}
 	
-	public function insert($name, $address, $contact) {
+	public function insert($name, $address, $contact, $unit) {
 		try {
 			$data = array(
 				"name"			=>	$name,
 				"address"		=>	$address,
 				"contact"		=>	$contact,
+				"unit_id"		=>	$unit,
 				"create_user"	=>	$this->session->userdata("username"),
 			);
 			
@@ -90,12 +91,13 @@ class Agency_Model extends CI_Model {
 		}
 	}
 	
-	public function update($id, $name, $address, $contact) {
+	public function update($id, $name, $address, $contact, $unit) {
 		try {
 			$data = array(
 				"name"			=>	$name,
 				"address"		=>	$address,
 				"contact"		=>	$contact,
+				"unit_id"		=>	$unit,
 				"update_user"	=>	$this->session->userdata("username"),
 			);
 			
@@ -135,4 +137,45 @@ class Agency_Model extends CI_Model {
 			return error_message($errNo);
 		}
 	}
+	
+      public function getAllUnit($id = "''") {
+            try {
+                  $this->db->select("id, name");
+                  $this->db->from("tbl_unit");
+                  $this->db->where("active_status", "Y");
+                  $this->db->where("id not in (" . $id . ")", NULL);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+      public function getSelectedUnit($id) {
+            try {
+                  $this->db->select("id, name");
+                  $this->db->from("tbl_unit");
+                  $this->db->where("active_status", "Y");
+                  $this->db->where("id in (" . $id . ")", NULL);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
 }

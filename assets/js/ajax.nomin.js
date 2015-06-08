@@ -83,13 +83,23 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var txtName = $("#txtName").val();
                   var txtAddress = $("#txtAddress").val();
                   var txtContact = $("#txtContact").val();
-                  var arrParam = new Array(txtName, txtAddress, txtContact);
+                  var txtUnit = "";
+                  $("select[name=selectUnitDestination] option").each(function() {
+                        txtUnit += $(this).val() +",";
+                  });
+                  txtUnit = txtUnit.substring(0, txtUnit.length-1); // untuk menghilangkan "," di belakang
+                  var arrParam = new Array(txtName, txtAddress, txtContact, txtUnit);
             } else if (todo == "update") {
                   var hdId = $("#hdId").val();
                   var txtName = $("#txtName").val();
                   var txtAddress = $("#txtAddress").val();
                   var txtContact = $("#txtContact").val();
-                  var arrParam = new Array(hdId, txtName, txtAddress, txtContact);
+                  var txtUnit = "";
+                  $("select[name=selectUnitDestination] option").each(function() {
+                        txtUnit += $(this).val() +",";
+                  });
+                  txtUnit = txtUnit.substring(0, txtUnit.length-1); // untuk menghilangkan "," di belakang
+                  var arrParam = new Array(hdId, txtName, txtAddress, txtContact, txtUnit);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
             }
