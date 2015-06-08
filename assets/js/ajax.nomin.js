@@ -69,18 +69,12 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
             }
       } else if (obj == "unit") {
             if (todo == "insert") {
-                  var selectAgency = $("#selectAgency").val();
                   var txtName = $("#txtName").val();
-                  var txtAddress = $("#txtAddress").val();
-                  var txtContact = $("#txtContact").val();
-                  var arrParam = new Array(selectAgency, txtName, txtAddress, txtContact);
+                  var arrParam = new Array(txtName);
             } else if (todo == "update") {
                   var hdId = $("#hdId").val();
-                  var selectAgency = $("#selectAgency").val();
                   var txtName = $("#txtName").val();
-                  var txtAddress = $("#txtAddress").val();
-                  var txtContact = $("#txtContact").val();
-                  var arrParam = new Array(hdId, selectAgency, txtName, txtAddress, txtContact);
+                  var arrParam = new Array(hdId, txtName);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
             }

@@ -33,8 +33,6 @@ class Master_Unit extends CI_Controller {
 	}
 	
 	public function insert_page() {
-        $allAgency = $this->Unit_Model->getAgency();
-        $data["all_agency"] = $allAgency;
 		$data["create"] = $this->_access["create"];
 		
 		$this->load->view("master/unit/insert", $data);
@@ -44,8 +42,6 @@ class Master_Unit extends CI_Controller {
 		$id = $this->input->post("id");
 		
 		$allData = $this->Unit_Model->get($id);
-        $allAgency = $this->Unit_Model->getAgency();
-        $data["all_agency"] = $allAgency;		
 		$data["all_data"] = $allData;
 		$data["update"] = $this->_access["update"];
 		
@@ -87,16 +83,13 @@ class Master_Unit extends CI_Controller {
 			redirect("dashboard", "refresh");
 		
 		$arrParam = $this->input->post("arrParam");
-		$perusahaan = $arrParam[0];
-		$name = $arrParam[1];
-		$address = $arrParam[2];
-		$contact = $arrParam[3];
+		$name = $arrParam[0];
 		
 		if (empty($name)) {
 			$data["status"] = false;
 			$data["error"] = true;
 		} else {
-			$insert = $this->Unit_Model->insert($name, $perusahaan, $address, $contact);
+			$insert = $this->Unit_Model->insert($name);
 			
 			$data["status"] = $insert;
 		}
@@ -111,16 +104,13 @@ class Master_Unit extends CI_Controller {
 			
 		$arrParam = $this->input->post("arrParam");
 		$id = $arrParam[0];
-		$perusahaan = $arrParam[1];
-		$name = $arrParam[2];
-		$address = $arrParam[3];
-		$contact = $arrParam[4];
+		$name = $arrParam[1];
 		
 		if (empty($name)) {
 			$data["status"] = false;
 			$data["error"] = true;
 		} else {
-			$update = $this->Unit_Model->update($id, $name, $perusahaan, $address, $contact);
+			$update = $this->Unit_Model->update($id, $name);
 			
 			$data["status"] = $update;
 		}
