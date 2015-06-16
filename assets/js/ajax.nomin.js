@@ -703,11 +703,12 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
             if (todo == "insert") {
             } else if (todo == "update") {
                   var no_paket = $("#hdId").val();
+                  var selectAgency = $("#selectAgency").val();
                   var no_po = $("#noPO").val();
                   var no_so = $("#noSO").val();
                   var bukti_report = $("#status").text();
                         
-                  var arrParam = new Array(no_paket, no_po, no_so, bukti_report);
+                  var arrParam = new Array(no_paket, selectAgency, no_po, no_so, bukti_report);
 				  // alert(arrParam);
             } else if (todo == "delete") {
             }
@@ -823,6 +824,8 @@ function loadContent(url, obj) {
       if (orderBy == undefined)
             orderBy = "ALL";
       else if (orderBy == "nopaket")
+            orderBy = $("#txtSearch").val();
+      else if (orderBy == "sales")
             orderBy = $("#txtSearch").val();
 	
       //url = url +"/"+page+"/"+orderBy;

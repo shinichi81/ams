@@ -7,14 +7,34 @@
                   <td><?php echo $all_data->no_paket; ?></td>
             </tr>
             <tr>
-                  <td>Agency</td>
+                  <td>No Paket User</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->no_paket_user; ?></td>
+            </tr>
+            <tr>
+                  <td>Perusahaan</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->company; ?></td>
+            </tr>
+            <tr>
+                  <td>Unit</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->unit; ?></td>
+            </tr>
+            <tr>
+                  <td>Brand</td>
                   <td>:</td>
                   <td><?php echo $all_data->brand; ?></td>
             </tr>
-            <tr>
-                  <td>Client</td>
+			<tr>
+                  <td>Budget</td>
                   <td>:</td>
-                  <td><?php echo $all_data->company; ?></td>
+                  <td><?php echo $all_data->budget; ?></td>
+            </tr>
+			<tr>
+                  <td>Campaign</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->campaign; ?></td>
             </tr>
             <tr>
                   <td>No PO</td>
@@ -32,7 +52,7 @@
                   <td><?php echo $all_data->sales; ?></td>
             </tr>
       </table>
-	  
+		<br>
       <table class="noborder">
             <tr>
                   <td width="110px"><strong>PAKET</strong></td>

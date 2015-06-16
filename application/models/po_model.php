@@ -38,7 +38,7 @@ class PO_Model extends CI_Model {
       public function get($no_paket) {
             try {
                   // $this->db->select("a.no_paket, a.harga_sistem, a.harga_gross, a.disc_nominal, a.harga_disc, a.pajak, a.diskon, a.total_harga, a.no_so, a.no_invoice, a.request_date, b.name AS brand, c.name AS company, d.name AS sales");
-                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS company, c.name AS brand, d.name AS sales, f.bukti_report, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total, f.approve_manager, f.alasan, a.is_restrict");
+                  $this->db->select("a.no_paket, a.no_paket_user, f.no_so, f.no_invoice, a.request_date, b.name AS company, c.name AS brand, d.name AS sales, f.bukti_report, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total, f.approve_manager, f.alasan, a.is_restrict, h.name as unit, a.budget, a.campaign, a.agency_id");
                   $this->db->select("IFNULL(f.no_po, e.no_po) AS no_po", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_agency b", "a.agency_id = b.id");
@@ -47,6 +47,7 @@ class PO_Model extends CI_Model {
                   $this->db->join("tbl_order_paket_ads e", "e.no_paket = a.no_paket");
                   $this->db->join("tbl_invoice f", "f.no_paket = a.no_paket", "left");
                   $this->db->join("tbl_order_harga g", "g.no_paket = a.no_paket", "left");
+                  $this->db->join("tbl_unit h", "a.unit_id = h.id", "left");
                   $this->db->where("a.no_paket", $no_paket);
                   $this->db->where("a.approve", "Y");
                   $query = $this->db->get();
@@ -249,6 +250,38 @@ class PO_Model extends CI_Model {
                   return error_message($errNo);
             }
       }      
+	  
+      public function updateAgency($no_paket, $agency_id) {
+            try {
+                  $data = array(
+					  "agency_id" => $agency_id,
+                      // "update_user" => $this->session->userdata("username"),
+                  );
+					$this->db->where('no_paket',$no_paket);
+					$q = $this->db->get('tbl_order_paket');
+
+					if ( $q->num_rows() > 0 ) 
+					{
+						$this->db->where('no_paket',$no_paket);
+						$query = $this->db->update('tbl_order_paket',$data);
+					} else {
+						// $this->db->set('user_id', $id);
+						$query = $this->db->insert('tbl_order_paket',$data);
+					}				  
+				  // $query = $this->db->insert("tbl_invoice", $data);
+
+                  if (!$query)
+                        throw new Exception();
+
+                  return true;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }      
+	  
       public function getProduction($no_paket) {
             try {
                   $this->db->select("production_id, quantity, keterangan");
@@ -303,6 +336,27 @@ class PO_Model extends CI_Model {
                         throw new Exception();
 
                   $result = $query->row();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+	  
+      public function getAgency() {
+            try {
+                  $this->db->select("id, name");
+                  $this->db->from("tbl_agency");
+                  $this->db->where("active_status", "Y");
+                  $this->db->order_by("name", "asc");
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
                   return $result;
             } catch (Exception $e) {
                   $errNo = $this->db->_error_number();

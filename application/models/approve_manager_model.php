@@ -19,7 +19,7 @@ class Approve_Manager_Model extends CI_Model {
 				  $this->db->where("f.no_po IS NOT NULL");
 				  $this->db->where("f.no_so IS NOT NULL");
 				  if ($orderBy <> "ALL") {
-						$this->db->like("a.no_paket", $orderBy);
+						$this->db->like("g.name", $orderBy);
                   }
                   $this->db->order_by("a.request_date", "desc");
                   $this->db->limit($endLimit, $startLimit);
@@ -41,7 +41,7 @@ class Approve_Manager_Model extends CI_Model {
       public function get($no_paket) {
             try {
                   // $this->db->select("a.no_paket, a.harga_sistem, a.harga_gross, a.disc_nominal, a.harga_disc, a.pajak, a.diskon, a.total_harga, a.no_so, a.request_date, b.name AS brand, c.name AS company, d.name AS sales");
-                  $this->db->select("a.no_paket, f.no_so, f.no_invoice, a.request_date, b.name AS brand, c.name AS company, d.name AS sales, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total, f.bukti_report");
+                  $this->db->select("a.no_paket, a.no_paket_user, f.no_so, f.no_invoice, a.request_date, b.name AS company, c.name AS brand, d.name AS sales, g.paket_gross, a.diskon, g.diskon_nominal, g.additional_diskon, g.additional_diskon_nominal, g.paket_total, g.produksi_total, g.event_total, g.pajak, g.total, f.bukti_report, h.name unit, a.budget, a.campaign");
                   $this->db->select("IFNULL(f.no_po, e.no_po) AS no_po", FALSE);
                   $this->db->from("tbl_order_paket a");
                   $this->db->join("tbl_agency b", "a.agency_id = b.id");
@@ -50,6 +50,7 @@ class Approve_Manager_Model extends CI_Model {
                   $this->db->join("tbl_order_paket_ads e", "e.no_paket = a.no_paket");
                   $this->db->join("tbl_invoice f", "f.no_paket = a.no_paket", "left");
                   $this->db->join("tbl_order_harga g", "g.no_paket = a.no_paket", "left");
+                  $this->db->join("tbl_unit h", "h.id = a.unit_id", "left");
                   $this->db->where("a.no_paket", $no_paket);
                   // $this->db->where("a.approve", "Y");
                   $query = $this->db->get();

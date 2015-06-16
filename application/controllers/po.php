@@ -98,8 +98,10 @@ class PO extends CI_Controller {
             $no_paket = $this->input->post("id");
 
             $allData = $this->PO_Model->get($no_paket);
+            $allAgency = $this->PO_Model->getAgency();
             
             $data["all_data"] = $allData;
+            $data["all_agency"] = $allAgency;
             $data["update"] = $this->_access["update"];
 
             $this->load->view("po/update", $data);
@@ -141,14 +143,16 @@ class PO extends CI_Controller {
 
             $arrParam = $this->input->post("arrParam");
             $no_paket = $arrParam[0];
-            $no_po = $arrParam[1];
-            $no_so = $arrParam[2];
-            $bukti_report = $arrParam[3];
+            $agency = $arrParam[1];
+            $no_po = $arrParam[2];
+            $no_so = $arrParam[3];
+            $bukti_report = $arrParam[4];
 			// $bukti = image_path("upload/".$arrParam[3]);
 
             $this->Transaction_Model->transaction_start();
                   
 			$update = $this->PO_Model->update($no_paket, $no_po, $no_so, $bukti_report);
+			$updateAgency = $this->PO_Model->updateAgency($no_paket, $agency);
 
 			$this->Transaction_Model->transaction_complete();
                   

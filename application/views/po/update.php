@@ -3,6 +3,31 @@
       <form id="form" enctype="multipart/form-data" action="<?php echo site_url("po/do_upload"); ?>">
             <fieldset id="offer_position">
                   <legend>Data</legend>
+                        <label for="nopaket">No Paket : </label> 
+                        <input name="txtNoPaket" id="txtNoPaket" type="text" disabled="disabled" value="<?php echo $all_data->no_paket; ?>" />
+                        <br>
+                        <label for="nopaketuser">No Paket User : </label> 
+                        <input name="txtNoPaketUser" id="txtNoPaketUser" type="text" disabled="disabled" value="<?php echo $all_data->no_paket_user; ?>" />
+                        <br>
+                        <label for="agency">Perusahaan : </label> 
+                        <select name="selectAgency" id="selectAgency" style="width: 150px;">
+                              <option value="-">-</option>
+                              <?php
+                              foreach ($all_agency as $agency):
+                                    $selected = "";
+                                    if ($all_data->agency_id == $agency->id)
+                                          $selected = "selected='selected'";
+                                    ?>
+                                    <option value="<?php echo $agency->id; ?>" <?php echo $selected; ?>><?php echo $agency->name; ?></option>
+                              <?php endforeach; ?>
+                        </select>
+                        <br>
+                        <label for="unit">Unit : </label> 
+                        <input name="txtUnit" id="txtUnit" type="text" disabled="disabled" value="<?php echo $all_data->unit; ?>" />
+                        <br>
+                        <label for="client">Brand : </label> 
+                        <input name="txtClient" id="txtClient" type="text" disabled="disabled" value="<?php echo $all_data->brand; ?>" />
+						<br />
                   <label for="noPO">No PO : </label> 
                   <input name="noPO" id="noPO" type="text" value="<?php echo $all_data->no_po; ?>" />
                   <br>

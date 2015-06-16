@@ -10,14 +10,20 @@
                         <label for="nopaketuser">No Paket User : </label> 
                         <input name="txtNoPaketUser" id="txtNoPaketUser" type="text" value="<?php echo $all_data->no_paket_user; ?>" /> <span class="error" id="errTxtNoPaketUser"></span>
                         <br>
-                        <label for="agency">Agency : </label> 
+                        <label for="agency">Perusahaan : </label> 
                         <input name="txtAgency" id="txtAgency" type="text" disabled="disabled" value="<?php echo $all_data->agency; ?>" />
                         <br>
-                        <label for="client">Client : </label> 
+                        <label for="unit">Unit : </label> 
+                        <input name="txtUnit" id="txtUnit" type="text" disabled="disabled" value="<?php echo $all_data->unit; ?>" />
+                        <br>
+                        <label for="client">Brand : </label> 
                         <input name="txtClient" id="txtClient" type="text" disabled="disabled" value="<?php echo $all_data->client; ?>" />
 						<br />
                         <label for="budget">Budget : </label> 
                         <input name="txtBudget" id="txtBudget" type="text" disabled="disabled" value="<?php echo $all_data->budget; ?>" />
+                        <br>
+                        <label for="campaign">Campaign : </label> 
+                        <input name="txtCampaign" id="txtCampaign" type="text" disabled="disabled" value="<?php echo $all_data->campaign; ?>" />
                         <br>
                   </div>
             </fieldset>

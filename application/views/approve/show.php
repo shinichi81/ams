@@ -12,12 +12,17 @@
                   <td><?php echo $all_data->no_paket_user; ?></td>
             </tr>
             <tr>
-                  <td>Agency</td>
+                  <td>Perusahaan</td>
                   <td>:</td>
                   <td><?php echo $all_data->agency; ?></td>
             </tr>
             <tr>
-                  <td>Client</td>
+                  <td>Unit</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->unit; ?></td>
+            </tr>
+            <tr>
+                  <td>Brand</td>
                   <td>:</td>
                   <td><?php echo $all_data->client; ?></td>
             </tr>
@@ -25,6 +30,11 @@
                   <td>Budget</td>
                   <td>:</td>
                   <td><?php echo $all_data->budget; ?></td>
+            </tr>
+            <tr>
+                  <td>Campaign</td>
+                  <td>:</td>
+                  <td><?php echo $all_data->campaign; ?></td>
             </tr>
             <tr>
                   <td>AE / Sales</td>

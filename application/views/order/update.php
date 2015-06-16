@@ -10,19 +10,6 @@
                         <label for="nopaketuser">No Paket User : </label> 
                         <input name="txtNoPaketUser" id="txtNoPaketUser" type="text" disabled="disabled" value="<?php echo $all_data->no_paket_user; ?>" />
                         <br>
-                        <label for="agency">Perusahaan : </label> 
-                        <select name="selectAgency" id="selectAgency" style="width: 150px;">
-                              <option value="-">-</option>
-                              <?php
-                              foreach ($all_agency as $agency):
-                                    $selected = "";
-                                    if ($all_data->agency_id == $agency->id)
-                                          $selected = "selected='selected'";
-                                    ?>
-                                    <option value="<?php echo $agency->id; ?>" <?php echo $selected; ?>><?php echo $agency->name; ?></option>
-                              <?php endforeach; ?>
-                        </select>
-                        <br>
                         <label for="unit">Unit : </label> 
                         <select name="selectUnit" id="selectUnit" style="width: 150px;">
 								<option value="" disabled selected>-- Pilih Unit --</option>
@@ -33,6 +20,19 @@
                                           $selected = "selected='selected'";
                                     ?>
                                     <option value="<?php echo $unit->id; ?>" <?php echo $selected; ?>><?php echo $unit->name; ?></option>
+                              <?php endforeach; ?>
+                        </select>
+                        <br>
+                        <label for="agency">Perusahaan : </label> 
+                        <select name="selectAgency" id="selectAgency" style="width: 150px;">
+                              <option value="-">-</option>
+                              <?php
+                              foreach ($all_agency as $agency):
+                                    $selected = "";
+                                    if ($all_data->agency_id == $agency->id)
+                                          $selected = "selected='selected'";
+                                    ?>
+                                    <option value="<?php echo $agency->id; ?>" <?php echo $selected; ?>><?php echo $agency->name; ?></option>
                               <?php endforeach; ?>
                         </select>
                         <br>
