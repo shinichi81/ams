@@ -35,19 +35,20 @@
                           <input name='txtNoPaket' id='txtNoPaket' type='text' disabled='disabled' value='<?php echo $no_paket; ?>' /> <span class="error" id="errTxtNoPaket"></span>
                          */ ?>
                         <br>
+                        <label for="unit">Unit : </label> 
+                        <select name="selectUnit" id="selectUnit" style="width: 150px;"> 
+								<option value="" disabled selected>-- Pilih Unit --</option>
+                              <?php foreach ($all_unit as $unit): ?>
+                                    <option value="<?php echo $unit->id; ?>"><?php echo $unit->name; ?></option>
+                              <?php endforeach; ?>
+                        </select>
+						<span class="error" id="errTxtUnit"></span>
+                        <br>
                         <label for="agency">Perusahaan : </label>
                         <select name="selectAgency" id="selectAgency" style="width: 150px;">
 								<option value="" disabled selected>-- Pilih Perusahaan --</option>
                               <?php foreach ($all_agency as $agency): ?>
                                     <option value="<?php echo $agency->id; ?>"><?php echo $agency->name; ?></option>
-                              <?php endforeach; ?>
-                        </select>
-                        <br>
-                        <label for="unit">Unit : </label> 
-                        <select name="selectUnit" id="selectUnit" style="width: 150px;">
-								<option value="" disabled selected>-- Pilih Unit --</option>
-                              <?php foreach ($all_unit as $unit): ?>
-                                    <option value="<?php echo $unit->id; ?>"><?php echo $unit->name; ?></option>
                               <?php endforeach; ?>
                         </select>
                         <br>
@@ -736,8 +737,12 @@ function format(input)
 						hitungTotal();
 				  });
 
-                  $("#selectAgency").die('change').live('change', function() {
-                        loadListOption3('<?php echo site_url("order/get_unit"); ?>', 'selectAgency', 'selectUnit');
+                  // $("#selectAgency").die('change').live('change', function() {
+                        // loadListOption3('<?php echo site_url("order/get_unit"); ?>', 'selectAgency', 'selectUnit');
+                  // });
+
+                  $("#selectUnit").die('change').live('change', function() {
+                        loadListOption3('<?php echo site_url("order/get_agency"); ?>', 'selectUnit', 'selectAgency');
                   });
             });
 //END TAMBAHAN WILLY

@@ -1152,12 +1152,13 @@ function injectError(obj, error) {
       } else if (obj == "cpm") {
             $("#errTxtCpmQuota").text("* required");
       } else if (obj == "order" || obj == "expired_paket") {
-            $("#errTxtAgency").text("");
-            $("#errTxtClient").text("");
+            // $("#errTxtAgency").text("");
+            // $("#errTxtClient").text("");
+            $("#errTxtUnit").text("");
             $("#errTxtBudget").text("");
             $("#errTxtCampaign").text("");
             $("#errTxtDiskon").text("");
-            $("#errTxtBenefit").text("");
+            // $("#errTxtBenefit").text("");
             $("#errPaket").text("");
             //$("#errTxtNoPaket").text("");
             $("#errTxtNo").text("");
@@ -1173,14 +1174,16 @@ function injectError(obj, error) {
                         $("#errTxtNo").text("* number not valid");
                   /*if (error[index] == "txtNoPaket")
 				$("#errTxtNoPaket").text("* required");*/
-                  if (error[index] == "txtAgency")
-                        $("#errTxtAgency").text("* required");
-                  if (error[index] == "txtClient")
-                        $("#errTxtClient").text("* required");
+                  // if (error[index] == "txtAgency")
+                        // $("#errTxtAgency").text("* required");
+                  // if (error[index] == "txtClient")
+                        // $("#errTxtClient").text("* required");
                   // if (error[index] == "txtDiskon")
                         // $("#errTxtDiskon").text("* required");
                   if (error[index] == "selectIndustryCat")
                         $("#errSelectIndustryCat").text("* required");
+                  if (error[index] == "selectUnit")
+                        $("#errTxtUnit").text("* required");
                   if (error[index] == "txtCampaign")
                         $("#errTxtCampaign").text("* required");
                   if (error[index] == "txtDate")

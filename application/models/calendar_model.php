@@ -197,7 +197,7 @@ class Calendar_Model extends CI_Model {
       public function getAllKanal() {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_kanal");
+                  $this->db->from("tbl_kanal_new");
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();
 
@@ -217,7 +217,7 @@ class Calendar_Model extends CI_Model {
       public function getKanal($id) {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_kanal");
+                  $this->db->from("tbl_kanal_new");
                   $this->db->where("id", $id);
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();
@@ -235,11 +235,12 @@ class Calendar_Model extends CI_Model {
             }
       }
 
-      public function getAllProductgroup($kanal_id) {
+      // public function getAllProductgroup($kanal_id) {
+      public function getAllProductgroup() {
             try {
                   $this->db->select("id, name, position_id");
-                  $this->db->from("tbl_product_group");
-                  $this->db->where("kanal_id", $kanal_id);
+                  $this->db->from("tbl_product_group_new");
+                  // $this->db->where("kanal_id", $kanal_id);
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();
 
@@ -259,7 +260,7 @@ class Calendar_Model extends CI_Model {
       public function getProductgroup($id) {
             try {
                   $this->db->select("id, name, position_id");
-                  $this->db->from("tbl_product_group");
+                  $this->db->from("tbl_product_group_new");
                   $this->db->where("id", $id);
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();
@@ -282,7 +283,7 @@ class Calendar_Model extends CI_Model {
 				$query = $this->db->query("
 					SELECT
 					  id,name
-					FROM (tbl_position)
+					FROM (tbl_position_new)
 					WHERE id IN(" . $id . ")
 						AND active_status = 'Y'
 						ORDER BY FIELD (id, " . $id . ")
@@ -309,7 +310,7 @@ class Calendar_Model extends CI_Model {
       public function getPosition($id) {
             try {
                   $this->db->select("id, name");
-                  $this->db->from("tbl_position");
+                  $this->db->from("tbl_position_new");
                   $this->db->where("id", $id);
                   $this->db->where("active_status", "Y");
                   $query = $this->db->get();

@@ -652,11 +652,12 @@ class Order_Model extends CI_Model {
             }
       }
 
-      public function getUnit($agency_id = "") {
+      public function getUnit() {
             try {
                   $this->db->select("id, name");
                   $this->db->from("tbl_unit");
-                  $this->db->where("perusahaan_id", $agency_id);
+                  // $this->db->where("id in (" . $id . ")", NULL);
+               // $this->db->where("perusahaan_id", $agency_id);
                   $this->db->where("active_status", "Y");
                   $this->db->order_by("name", "asc");
                   $query = $this->db->get();
@@ -1425,6 +1426,28 @@ class Order_Model extends CI_Model {
                   $this->db->select("date_format(end_date, '%Y-%m-%d') end_date", FALSE);
                   $this->db->from("tbl_order_event");
                   $this->db->where("no_paket", $no_paket);
+                  $query = $this->db->get();
+
+                  if (!$query)
+                        throw new Exception();
+
+                  $result = $query->result();
+                  return $result;
+            } catch (Exception $e) {
+                  $errNo = $this->db->_error_number();
+                  //$errMsg = $this->db->_error_message();
+
+                  return error_message($errNo);
+            }
+      }
+	  
+      public function getAgencyUnit($unit_id) {
+            try {
+                  $this->db->select("id, name");
+                  $this->db->from("tbl_agency");
+                  $this->db->where("active_status", "Y");
+                  $this->db->like("unit_id", $unit_id);
+                  $this->db->order_by("name", "asc");
                   $query = $this->db->get();
 
                   if (!$query)

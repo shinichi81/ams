@@ -1415,11 +1415,24 @@ class Order extends CI_Controller {
     }
 	
     public function get_unit($agency_id) {
+        // $unitId = $this->Order_Model->getUnitId($agency_id);
         $allUnit = $this->Order_Model->getUnit($agency_id);
 
         $data = "";
         foreach ($allUnit as $unit) {
             $data .= "<option value='" . $unit->id . "'>" . preg_replace('/[^A-Za-z0-9\-]/', '', $unit->name) . "</option>";
+        }
+
+        echo $data;
+        die;
+    }
+
+    public function get_agency($unit_id) {
+        $allAgency = $this->Order_Model->getAgencyUnit($unit_id);
+
+        $data = "";
+        foreach ($allAgency as $agency) {
+            $data .= "<option value='" . $agency->id . "'>" . $agency->name . "</option>";
         }
 
         echo $data;
