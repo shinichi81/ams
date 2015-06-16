@@ -44,7 +44,7 @@ class Done_Model extends CI_Model {
                   $this->db->join("tbl_agency c", "a.agency_id = c.id", "left");
                   $this->db->join("tbl_user d", "a.ae_id = d.username");
                   $this->db->join("tbl_industry e", "a.industry_id = e.id", "left");
-                  $this->db->join("tbl_order_harga f", "a.no_paket = f.no_paket");
+                  $this->db->join("tbl_order_harga f", "a.no_paket = f.no_paket", "left");
                   $this->db->join("tbl_unit g", "a.unit_id = g.id", "left");
                   $this->db->where("a.no_paket", $no_paket);
                   $this->db->where("a.active_status", "Y");
