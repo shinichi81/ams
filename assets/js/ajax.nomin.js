@@ -14,7 +14,7 @@ function hide_loading() {
 
 function show_dialog_confirmation($message) {
       $("#confirmation").html("<p>"+$message+"</p>");
-		
+
       // untuk menampilkan dialog box konfirmasi
       $("#confirmation").dialog({
             modal: true,
@@ -32,9 +32,9 @@ function show_dialog_delete(obj, todo, urlChange, urlContent, urlInsert, id) {
             message = "Anda yakin ingin menghapus ?";
       else if (todo == "unapprove")
             message = "Anda yakin ingin mengunapprove ?";
-		
+
       $("#confirmation").html("<p>"+message+"</p>");
-		
+
       // untuk menampilkan dialog box konfirmasi
       $("#confirmation").dialog({
             modal: true,
@@ -43,19 +43,19 @@ function show_dialog_delete(obj, todo, urlChange, urlContent, urlInsert, id) {
                         $(this).dialog("close");
                         ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id);
                   },
-                  Tidak: function() {				
+                  Tidak: function() {
                         $(this).dialog("close");
                   }
             }
       });
-	
+
       return false;
 }
 
 function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
       if (id == undefined)
             id = "";
-	
+
       if (obj == "client") {
             if (todo == "insert") {
                   var txtName = $("#txtName").val();
@@ -194,7 +194,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
       } else if (obj == "position") {
             if (todo == "insert") {
                   var txtName = $("#txtName").val();
-                  var txtKeterangan = $("#txtKeterangan").val();	
+                  var txtKeterangan = $("#txtKeterangan").val();
                   //                  var txtOverride = $("input[name=rdbOverride]:checked").val();
                   //                  var txtCpmQuota = $("#txtCpmQuota").val();
                   var arrParam = new Array(txtName, txtKeterangan/*, txtOverride, txtCpmQuota*/);
@@ -211,50 +211,50 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
       } else if (obj == "productgroup") {
             if (todo == "insert") {
                   var txtName = $("#txtName").val();
-                  var txtKeterangan = $("#txtKeterangan").val();	
+                  var txtKeterangan = $("#txtKeterangan").val();
                   var txtKanal = $("#selectKanal").val();
-			
+
                   var txtRubrik = "";
                   $("select[name=selectRubrikDestination] option").each(function() {
                         txtRubrik += $(this).val() +",";
                   });
                   txtRubrik = txtRubrik.substring(0, txtRubrik.length-1); // untuk menghilangkan "," di belakang
-			
+
                   var txtPosition = "";
                   $("select[name=selectPositionDestination] option").each(function() {
                         txtPosition += $(this).val() +",";
                   });
                   txtPosition = txtPosition.substring(0, txtPosition.length-1); // untuk menghilangkan "," di belakang
-                  
+
                   var chkCpm = new Array();
                   $("input[name=chkCpm]:checked").each(function() {
                         chkCpm.push($(this).val());
                   });
-                  
+
                   var arrParam = new Array(txtName, txtKeterangan, txtKanal, txtRubrik, txtPosition, chkCpm);
             } else if (todo == "update") {
                   var hdId = $("#hdId").val();
                   var txtName = $("#txtName").val();
                   var txtKeterangan = $("#txtKeterangan").val();
                   var txtKanal = $("#selectKanal").val();
-			
+
                   var txtRubrik = "";
                   $("select[name=selectRubrikDestination] option").each(function() {
                         txtRubrik += $(this).val() +",";
                   });
                   txtRubrik = txtRubrik.substring(0, txtRubrik.length-1); // untuk menghilangkan "," di belakang
-			
+
                   var txtPosition = "";
                   $("select[name=selectPositionDestination] option").each(function() {
                         txtPosition += $(this).val() +",";
                   });
                   txtPosition = txtPosition.substring(0, txtPosition.length-1); // untuk menghilangkan "," di belakang
-			
+
                   var chkCpm = new Array();
                   $("input[name=chkCpm]:checked").each(function() {
                         chkCpm.push($(this).val());
                   });
-                        
+
                   var arrParam = new Array(hdId, txtName, txtKeterangan, txtKanal, txtRubrik, txtPosition, chkCpm);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
@@ -262,24 +262,24 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
       }else if (obj == "industry_cat") {
             if (todo == "insert") {
                   var txtName = $("#txtName").val();
-			
+
                   var txtSubIndustry = "";
                   $("select[name=selectSubIndustryDestination] option").each(function() {
                         txtSubIndustry += $(this).val() +",";
                   });
                   txtSubIndustry = txtSubIndustry.substring(0, txtSubIndustry.length-1); // untuk menghilangkan "," di belakang
-                  
+
                   var arrParam = new Array(txtName, txtSubIndustry);
             } else if (todo == "update") {
                   var hdId = $("#hdId").val();
                   var txtName = $("#txtName").val();
-			
+
                   var txtSubIndustry = "";
                   $("select[name=selectSubIndustryDestination] option").each(function() {
                         txtSubIndustry += $(this).val() +",";
                   });
                   txtSubIndustry = txtSubIndustry.substring(0, txtSubIndustry.length-1); // untuk menghilangkan "," di belakang
-                        
+
                   var arrParam = new Array(hdId, txtName, txtSubIndustry);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
@@ -297,10 +297,10 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
             }
       } else if (obj == "conflictbrand") {
             if (todo == "insert") {
-                  var selectIndustry = $("#selectIndustry").val();	
+                  var selectIndustry = $("#selectIndustry").val();
                   var selectKanal = $("#selectKanal").val();
                   var selectProductGroup = $("#selectProductgroup").val();
-			
+
                   var selectRule = new Array();
                   $("input[name=txtRule]").each(function() {
                         selectRule.push($(this).attr("nilai"));
@@ -310,16 +310,16 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var arrParam = new Array(selectIndustry, selectKanal, selectProductGroup, selectRule);
             } else if (todo == "update") {
                   var hdId = $("#hdId").val();
-                  var selectIndustry = $("#selectIndustry").val();	
+                  var selectIndustry = $("#selectIndustry").val();
                   var selectKanal = $("#selectKanal").val();
                   var selectProductGroup = $("#selectProductgroup").val();
-			
+
                   var selectRule = new Array();
                   $("input[name=txtRule]").each(function() {
                         selectRule.push($(this).attr("nilai"));
                   });
                   selectRule = (selectRule.length > 0) ? selectRule : "";
-			
+
                   var arrParam = new Array(hdId, selectIndustry, selectKanal, selectProductGroup, selectRule);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
@@ -379,14 +379,14 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var hargaGross = $("#hargaGross").val();
                   var diskonNominal = $("#diskonNominal").val().split('.').join("");
 				  var addDiskon = $("#txtAddDiskon").val();
-				  var addDiskonNominal = $("#addDiskonNominal").val().split('.').join("");				  
+				  var addDiskonNominal = $("#addDiskonNominal").val().split('.').join("");
 
                   var selectProduction = ($("select[name=selectProduction]").length > 0) ? $("select[name=selectProduction]").serializeArray() : "";
                   var txtQty = ($("input[name=txtQty]").length > 0) ? $("input[name=txtQty]").serializeArray() : "";
                   var txtHargaProd = ($("input[name=txtHargaProd]").length > 0) ? $("input[name=txtHargaProd]").serializeArray() : "";
                   var txtHargaProdTotal = ($("input[name=txtHargaProdTotal]").length > 0) ? $("input[name=txtHargaProdTotal]").serializeArray() : "";
                   var txtInfoProd = ($("textarea[name=txtInfoProd]").length > 0) ? $("textarea[name=txtInfoProd]").serializeArray() : "";
-				  
+
 				  var txtEvent = ($("input[name=txtEvent]").length > 0) ? $("input[name=txtEvent]").serializeArray() : "";
 				  var txtStartDateEvent = ($("input[name=txtStartDateEvent]").length > 0) ? $("input[name=txtStartDateEvent]").serializeArray() : "";
 				  var txtEndDateEvent = ($("input[name=txtEndDateEvent]").length > 0) ? $("input[name=txtEndDateEvent]").serializeArray() : "";
@@ -398,13 +398,13 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var totalEvent = $("#totalEvent").val().split('.').join("");
                   var pajak = $("#pajak").val().split('.').join("");
                   var totalSemua = $("#akhir").val().split('.').join("");
-                  
+
 				  var jumlahItemProduction = $("#jumlahItemProduction").val();
 				  var jumlahItemEvent = $("#jumlahItemEvent").val();
 
                   var txtUnit = $("#selectUnit").val();
 				  //END TAMBAHAN
-                        				  
+
                   var arrParam = new Array(selectPacketType, txtNo, txtAgency, txtClient, txtBudget, txtCampaign, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, addDiskon, addDiskonNominal, selectProduction, txtQty, txtHargaProd, txtHargaProdTotal, txtInfoProd, txtEvent, txtStartDateEvent, txtEndDateEvent, txtHargaEvent, txtInfoEvent, totalHarga, totalProduction, totalEvent, pajak, totalSemua,jumlahItemProduction,jumlahItemEvent, txtUnit);
 				  // alert(arrParam);
             } else if (todo == "update") {
@@ -413,8 +413,8 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var txtClient = $("#selectClient").val();
                   var txtBudget = $("#txtBudget").val();
                   var txtDiskon = $("#txtDiskon").val();
-                  var txtBenefit = "";	
-                  var txtMiscInfo = "";		
+                  var txtBenefit = "";
+                  var txtMiscInfo = "";
                   var selectAds = ($("select[name=selectAds]").length > 0) ? $("select[name=selectAds]").serializeArray() : "";
                   var selectKanal = ($("select[name=selectKanal]").length > 0) ? $("select[name=selectKanal]").serializeArray() : "";
                   var selectProductGroup = ($("select[name=selectProductGroup]").length > 0) ? $("select[name=selectProductGroup]").serializeArray() : "";
@@ -430,20 +430,20 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var hdStartDate = ($("input[name=hdStartDate]").length > 0) ? $("input[name=hdStartDate]").serializeArray() : "";
                   var hdEndDate = ($("input[name=hdEndDate]").length > 0) ? $("input[name=hdEndDate]").serializeArray() : "";
                   var selectIndustriCat = $("#selectIndustryCat").val();
-				  
+
 				  //TAMBAHAN WILLY
                   var hargaSistem = $("#total").val().split('.').join("");
                   var hargaGross = $("#hargaGross").val();
                   var diskonNominal = $("#diskonNominal").val().split('.').join("");
 				  var addDiskon = $("#txtAddDiskon").val();
-				  var addDiskonNominal = $("#addDiskonNominal").val().split('.').join("");				  
+				  var addDiskonNominal = $("#addDiskonNominal").val().split('.').join("");
 
                   var selectProduction = ($("select[name=selectProduction]").length > 0) ? $("select[name=selectProduction]").serializeArray() : "";
                   var txtQty = ($("input[name=txtQty]").length > 0) ? $("input[name=txtQty]").serializeArray() : "";
                   var txtHargaProd = ($("input[name=txtHargaProd]").length > 0) ? $("input[name=txtHargaProd]").serializeArray() : "";
                   var txtHargaProdTotal = ($("input[name=txtHargaProdTotal]").length > 0) ? $("input[name=txtHargaProdTotal]").serializeArray() : "";
                   var txtInfoProd = ($("textarea[name=txtInfoProd]").length > 0) ? $("textarea[name=txtInfoProd]").serializeArray() : "";
-				  
+
 				  var txtEvent = ($("input[name=txtEvent]").length > 0) ? $("input[name=txtEvent]").serializeArray() : "";
 				  var txtStartDateEvent = ($("input[name=txtStartDateEvent]").length > 0) ? $("input[name=txtStartDateEvent]").serializeArray() : "";
 				  var txtEndDateEvent = ($("input[name=txtEndDateEvent]").length > 0) ? $("input[name=txtEndDateEvent]").serializeArray() : "";
@@ -463,7 +463,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var arrParam = new Array(txtNoPaket, txtAgency, txtClient, txtBudget, txtDiskon, txtBenefit, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndustri, txtMiscInfo, txtMiscInfoPaket, txtMiscInfoEvent, txtMiscInfoProductionCost, cpmQuota, hdStartDate, hdEndDate, selectIndustriCat, hargaSistem, hargaGross, diskonNominal, addDiskon, addDiskonNominal, selectProduction, txtQty, txtHargaProd, txtHargaProdTotal, txtInfoProd, txtEvent, txtStartDateEvent, txtEndDateEvent, txtHargaEvent, txtInfoEvent, totalHarga, totalProduction, totalEvent, pajak, totalSemua, txtCampaign, txtUnit);
             } else if (todo == "progress") {
                   var hdNoPaket = $("#hdNoPaket").val();
-                  var txtPercent = $("#percent").text();			
+                  var txtPercent = $("#percent").text();
                   var arrParam = new Array(hdNoPaket, txtPercent);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
@@ -472,8 +472,8 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
             if (todo == "insert") {
                   //var txtNoSpace = $("#txtNoSpace").val();
                   var txtAgency = $("#selectAgency").val();
-                  var txtClient = $("#selectClient").val();	
-                  var txtMiscInfo = $("#txtMiscInfo").val();	
+                  var txtClient = $("#selectClient").val();
+                  var txtMiscInfo = $("#txtMiscInfo").val();
                   var selectAds = ($("select[name=selectAds]").length > 0) ? $("select[name=selectAds]").serializeArray() : "";
                   var selectKanal = ($("select[name=selectKanal]").length > 0) ? $("select[name=selectKanal]").serializeArray() : "";
                   var selectProductGroup = ($("select[name=selectProductGroup]").length > 0) ? $("select[name=selectProductGroup]").serializeArray() : "";
@@ -490,8 +490,8 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var txtNoSpace = $("#txtNoSpace").val();
                   var txtNoPaket = $("#txtNoPaket").val();
                   var txtAgency = $("#selectAgency").val();
-                  var txtClient = $("#selectClient").val();	
-                  var txtMiscInfo = $("#txtMiscInfo").val();	
+                  var txtClient = $("#selectClient").val();
+                  var txtMiscInfo = $("#txtMiscInfo").val();
                   var selectAds = ($("select[name=selectAds]").length > 0) ? $("select[name=selectAds]").serializeArray() : "";
                   var selectKanal = ($("select[name=selectKanal]").length > 0) ? $("select[name=selectKanal]").serializeArray() : "";
                   var selectProductGroup = ($("select[name=selectProductGroup]").length > 0) ? $("select[name=selectProductGroup]").serializeArray() : "";
@@ -506,7 +506,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var arrParam = new Array(txtNoSpace, txtAgency, txtClient, selectAds, selectKanal, selectProductGroup, selectPosition, txtStartDate, txtEndDate, chkIsRestrict, selectIndsutri, txtMiscInfo, txtMiscInfoSpace, cpmQuota, selectIndsutriCat);
             } else if (todo == "progress") {
                   var hdNoSpace = $("#hdNoSpace").val();
-                  var txtPercent = $("#percent").text();			
+                  var txtPercent = $("#percent").text();
                   var arrParam = new Array(hdNoSpace, txtPercent);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
@@ -516,8 +516,8 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var txtNoSpace = $("#txtNoSpace").val();
                   var txtNoPaket = $("#txtNoPaket").val();
                   var txtAgency = $("#selectAgency").val();
-                  var txtClient = $("#selectClient").val();	
-                  var txtMiscInfo = $("#txtMiscInfo").val();	
+                  var txtClient = $("#selectClient").val();
+                  var txtMiscInfo = $("#txtMiscInfo").val();
                   var selectAds = ($("select[name=selectAds]").length > 0) ? $("select[name=selectAds]").serializeArray() : "";
                   var selectKanal = ($("select[name=selectKanal]").length > 0) ? $("select[name=selectKanal]").serializeArray() : "";
                   var selectProductGroup = ($("select[name=selectProductGroup]").length > 0) ? $("select[name=selectProductGroup]").serializeArray() : "";
@@ -532,7 +532,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
       } else if (obj == "request") {
             if (todo == "insert") {
                   var txtNoPaket = $("#txtNoPaket").val();
-                  //var txtBrand = $("#txtBrand").val();		
+                  //var txtBrand = $("#txtBrand").val();
                   var txtOrderType = $("input[name=rdbOrderType]:checked").val();
                   var txtDetail = $("#txtDetail").val();
                   var chkRequest = $("input[name=chkRequest]:checked").serializeArray();
@@ -577,18 +577,18 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var txtStartDate = $("input[name=txtStartDate]").val();
                   var txtEndDate = $("input[name=txtEndDate]").val();
                   var txtDetail = ($("textarea[name=txtDetail]").length > 0) ? $("textarea[name=txtDetail]").serializeArray() : "";
-                  var hdItemId = ($("input[name=hdItemId]").length > 0) ? $("input[name=hdItemId]").serializeArray() : "";			
+                  var hdItemId = ($("input[name=hdItemId]").length > 0) ? $("input[name=hdItemId]").serializeArray() : "";
                   var feedback = ($("textarea[name=txtFeedback]").length > 0) ? $("textarea[name=txtFeedback]").val() : null;
                   var hdStartDate = $("input[name=hdStartDate]").val();
                   var hdEndDate = $("input[name=hdEndDate]").val();
                   var arrParam = new Array(txtNoBrandcomm, txtStartDate, txtEndDate, txtDetail, hdItemId, feedback, hdStartDate, hdEndDate);
             } else if (todo == "progress") {
                   var hdNoBrandcomm = $("#hdNoBrandcomm").val();
-                  var txtPercent = $("#percent").text();			
+                  var txtPercent = $("#percent").text();
                   var arrParam = new Array(hdNoBrandcomm, txtPercent);
             } else if (todo == "delete") {
                   var arrParam = new Array(id);
-            }	
+            }
       } else if (obj == "approve") {
             if (todo == "update") {
                   var txtNoPaket = $("#txtNoPaket").val();
@@ -598,7 +598,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var txtNoPo = new Array(10);
                   $("input[name=txtNoPo]").each(function(index) {
                         txtNoPo[index] = new Object();
-                        
+
                         txtNoPo[index]["id"] = $(this).attr("rel");
                         txtNoPo[index]["value"] = $(this).val();
                   });
@@ -620,8 +620,8 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var txtClient = $("#selectClient").val();
                   var txtBudget = $("#txtBudget").val();
                   var txtDiskon = $("#txtDiskon").val();
-                  var txtBenefit = $("#txtBenefit").val();	
-                  var txtMiscInfo = $("#txtMiscInfo").val();		
+                  var txtBenefit = $("#txtBenefit").val();
+                  var txtMiscInfo = $("#txtMiscInfo").val();
                   var selectAds = ($("select[name=selectAds]").length > 0) ? $("select[name=selectAds]").serializeArray() : "";
                   var selectKanal = ($("select[name=selectKanal]").length > 0) ? $("select[name=selectKanal]").serializeArray() : "";
                   var selectProductGroup = ($("select[name=selectProductGroup]").length > 0) ? $("select[name=selectProductGroup]").serializeArray() : "";
@@ -695,7 +695,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var no_paket = $("#hdId").val();
                   var no_invoice = $("#noInvoice").val();
                   var jatuh_tempo = $("#txtTempo").val();
-                        
+
                   var arrParam = new Array(no_paket, no_invoice, jatuh_tempo);
             } else if (todo == "delete") {
             }
@@ -707,7 +707,7 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var no_po = $("#noPO").val();
                   var no_so = $("#noSO").val();
                   var bukti_report = $("#status").text();
-                        
+
                   var arrParam = new Array(no_paket, selectAgency, no_po, no_so, bukti_report);
 				  // alert(arrParam);
             } else if (todo == "delete") {
@@ -748,12 +748,12 @@ function ajaxChange(obj, todo, urlChange, urlContent, urlInsert, id) {
                   var no_paket = $("#hdId").val();
                   var approve_manager = $("input[name=rdbApprove]:checked").val();
                   var alasan = $("#alasan").val();
-                        
+
                   var arrParam = new Array(no_paket, approve_manager, alasan);
             } else if (todo == "delete") {
             }
       }
-	  
+
       show_loading();
       do_process(obj, todo, urlChange, urlContent, urlInsert, arrParam);
 }
@@ -765,15 +765,15 @@ function do_process(obj, todo, urlChange, urlContent, urlInsert, arrParam) {
       },
       function(data) {
             hide_loading();
-						
+
             if (data == null) {
                   show_dialog_confirmation("");
             } else if (data.status == true) {
                   loadContent(urlContent);
-							
+
                   // untuk load form insert
                   loadForm(urlInsert);
-							
+
                   // tentukan pesan yang akan ditampilkan
                   if (todo == "insert")
                         show_dialog_confirmation("Data berhasil disimpan!");
@@ -797,7 +797,7 @@ function do_process(obj, todo, urlChange, urlContent, urlInsert, arrParam) {
             }
       }
       , "json");
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
@@ -816,48 +816,48 @@ function loadContent(url, obj) {
       //      var year = $("#selectYear").val();
       var startDate = $("#txtStartDate").val();
       var endDate = $("#txtEndDate").val();
-	
+
       // jika undefined atau event dari orderby, kosongkan nilainya
       if (page == undefined || obj == "orderby")
             page = "1";
-		
+
       if (orderBy == undefined)
             orderBy = "ALL";
       else if (orderBy == "nopaket")
             orderBy = $("#txtSearch").val();
       else if (orderBy == "sales")
             orderBy = $("#txtSearch").val();
-	
+
       //url = url +"/"+page+"/"+orderBy;
-	
+
       // untuk show loading icon
       $("#data").html("<p><div align='center'><div class='loading'>&nbsp;</div>loading..</div></p>");
       var jqxhr = $.post(url, {
-            "page" : page, 
-            "orderby" : orderBy, 
-            "type" : type, 
-            //            "month" : month, 
+            "page" : page,
+            "orderby" : orderBy,
+            "type" : type,
+            //            "month" : month,
             //            "year" : year
-            "start_date" : startDate, 
+            "start_date" : startDate,
             "end_date" : endDate
       },
       function(data) {
             $("#data").hide();
             if (data == "")
                   $("#data").html("");
-            else 
+            else
                   $("#data").html(data);
             $("#data").fadeIn("slow");
       }
       );
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
             });
             $("#data").hide();
       });
-	
+
       return false;
 }
 
@@ -870,7 +870,7 @@ function do_search(obj, url) {
             var selectClient = $("#selectClient").val();
             var arrParam = new Array(selectAgency, selectClient);
       }
-	
+
       show_loading();
       var jqxhr = $.post(url, {
             "arrParam" : arrParam
@@ -880,7 +880,7 @@ function do_search(obj, url) {
             $("#addme").html(data);
       }
       );
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
@@ -904,7 +904,7 @@ function loadShow(url, id, kanal_id, product_group_id, position_id, start_date, 
             start_date = "";
       if (end_date == undefined)
             end_date = "";
-	
+
       // untuk show loading icon dan dialog box
       $("#show").html("<p><div align='center'><div class='loading'>&nbsp;</div>loading..</div></p>");
       $("#show").dialog({
@@ -916,7 +916,7 @@ function loadShow(url, id, kanal_id, product_group_id, position_id, start_date, 
                   }
             }
       });
-	
+
       var jqxhr = $.post(url, {
             "id" : id,
             "kanal_id" : kanal_id,
@@ -928,14 +928,14 @@ function loadShow(url, id, kanal_id, product_group_id, position_id, start_date, 
       function(data) {
             if (data == "")
                   data = "";
-									
+
             $("#show").html(data);
             $("#show").dialog({
                   position: ['center', 'center']
             });
       }
       );
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
@@ -949,9 +949,9 @@ function loadShow(url, id, kanal_id, product_group_id, position_id, start_date, 
 function loadForm(url, id) {
       if (id == undefined)
             id = "";
-	
+
       //var url = (id != "") ? url+"/"+id : url;
-	
+
       // untuk show loading icon
       $(".box_form").html("<p><div align='center'><div class='loading'>&nbsp;</div>loading..</div></p>");
       var jqxhr = $.post(url, {
@@ -966,7 +966,7 @@ function loadForm(url, id) {
             $(".box_form").fadeIn("slow");
       }
       );
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
@@ -977,10 +977,10 @@ function loadForm(url, id) {
       return false;
 }
 
-function loadListOption2(url, idSource, idDestination) {	
+function loadListOption2(url, idSource, idDestination) {
       var id = $("#"+idSource).val();
       var url = url+"/"+id;
-	
+
       var jqxhr = $.get(url,
             function(data) {
                   $("."+idDestination).html(data);
@@ -988,49 +988,49 @@ function loadListOption2(url, idSource, idDestination) {
                         $("#selectRubrikDestination").empty();
             }
             );
-	
+
       jqxhr.complete(function() {
             $("."+idDestination).trigger("change");
       });
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
             });
       });
-	
+
       return false;
 }
 
 function loadListOption3(url, idSource, idDestination) {
       var id = $("#"+idSource).val();
       var url = url+"/"+id;
-	
+
       var jqxhr = $.get(url,
             function(data) {
                   $("#"+idDestination).html(data);
             }
             );
-	
+
       jqxhr.complete(function() {
             $("#"+idDestination).trigger("change");
       });
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
             });
       });
-	
+
       return false;
 }
 
 function loadDetail(url, id, toreplace) {
       //var url = url+"/"+no_paket;
-	
+
       if (toreplace == undefined)
             toreplace = "#addme";
-	
+
       var jqxhr = $.post(url, {
             "id" : id
       },
@@ -1038,36 +1038,36 @@ function loadDetail(url, id, toreplace) {
             $(toreplace).html(data);
       }
       );
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
             });
       });
-	
+
       return false;
 }
 
 function loadListOption(index, url, idSource, idDestination) {
       var id = $("#addme tr").eq(index).children().children("#"+idSource).val();
       var url = url+"/"+id;
-	
+
       var jqxhr = $.get(url,
             function(data) {
                   $("#addme tr").eq(index).children().children("#"+idDestination).html(data);
             }
             );
-	
+
       jqxhr.complete(function() {
             $("#"+idDestination).trigger("change", [index]);
       });
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
             });
       });
-	
+
       return false;
 }
 
@@ -1081,7 +1081,7 @@ function injectError(obj, error) {
       } else if (obj == "level") {
             $("#errTxtName").text("");
             $("#errTxtAccess").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtName")
                         $("#errTxtName").text("* required");
@@ -1091,7 +1091,7 @@ function injectError(obj, error) {
       } else if (obj == "user") {
             $("#errTxtUsername").text("");
             $("#errTxtPassword").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtUsername")
                         $("#errTxtUsername").text("* required");
@@ -1103,7 +1103,7 @@ function injectError(obj, error) {
       } else if (obj == "kanal") {
             $("#errTxtName").text("");
             $("#errTxtRubrik").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtName")
                         $("#errTxtName").text("* required");
@@ -1116,7 +1116,7 @@ function injectError(obj, error) {
             $("#errTxtName").text("");
             $("#errTxtRubrik").text("");
             $("#errTxtPosition").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtName")
                         $("#errTxtName").text("* required");
@@ -1128,7 +1128,7 @@ function injectError(obj, error) {
       } else if (obj == "industry_cat") {
             $("#errTxtName").text("");
             $("#errTxtSubIndustry").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtName")
                         $("#errTxtName").text("* required");
@@ -1167,9 +1167,14 @@ function injectError(obj, error) {
             $("#errTxtNo").text("");
             $("#errSelectIndustryCat").text("");
             $("#errSelectIndustry").text("");
+            if ($("#chkIsRestrict").is(":checked")) {
+              if ($("#selectIndustryCat").val() == "")
+                $("#errSelectIndustryCat").text("* required");
+            }
+
             for (var n=0; n<error["tot_row"]; n++)
                   $("#addme tr").eq(n).children().children("#errConflict").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtNo")
                         $("#errTxtNo").text("* required");
@@ -1193,12 +1198,12 @@ function injectError(obj, error) {
                         $("#errPaket").text("* some field(s) empty");
                   if (error[index] == "txtConflict") {
                         var idConflict = error["idConflict"].split(",");
-                        for (var n in idConflict)				
+                        for (var n in idConflict)
                               $("#addme tr").eq(idConflict[n]).children().children("#errConflict").text("* packet conflict");
                   }
                   if (error[index] == "txtInUse") {
                         var idInUse = error["idInUse"].split(",");
-                        for (var n in idInUse)				
+                        for (var n in idInUse)
                               $("#addme tr").eq(idInUse[n]).children().children("#errConflict").text("* packet in use");
                   }
                   if (error[index] == "txtCpmEmpty") {
@@ -1213,7 +1218,7 @@ function injectError(obj, error) {
                   }
                   if (error[index] == "txtDateWrong") {
                         var idDateWrong = error["idDateWrong"].split(",");
-                        for (var n in idDateWrong)				
+                        for (var n in idDateWrong)
                               $("#addme tr").eq(idDateWrong[n]).children().children("#errConflict").text("* wrong date range");
                   }
             }
@@ -1224,7 +1229,7 @@ function injectError(obj, error) {
             $("#errSpace").text("");
             for (var n=0; n<error["tot_row"]; n++)
                   $("#addme tr").eq(n).children().children("#errConflict").text("");
-		
+
             for (var index in error) {
                   /*if (error[index] == "txtNoSpace")
 				$("#errNoSpace").text("* required");*/
@@ -1241,7 +1246,7 @@ function injectError(obj, error) {
                   }
                   if (error[index] == "txtInUse") {
                         var idInUse = error["idInUse"].split(",");
-                        for (var n in idInUse)				
+                        for (var n in idInUse)
                               $("#addme tr").eq(idInUse[n]).children().children("#errConflict").text("* packet in use");
                   }
                   if (error[index] == "txtCpmEmpty") {
@@ -1267,7 +1272,7 @@ function injectError(obj, error) {
             $("#errTxtFeedback").text("");
             for (var n=0; n<error["tot_row"]; n++)
                   $("#addme tr").eq(n).children().children("#errTxtDetail").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtStartDate")
                         $("#errTxtStartDate").text("* required");
@@ -1277,7 +1282,7 @@ function injectError(obj, error) {
                         $("#errTxtWrongDateRange").text("* wrong date range");
                   if (error[index] == "txtDetail") {
                         var idItem = error["idItem"].split(",");
-                        for (var n in idItem)				
+                        for (var n in idItem)
                               $("#addme tr").eq(idItem[n]).children().children("#errTxtDetail").text("* required");
                   }
                   if (error[index] == "txtNotFeedback")
@@ -1292,7 +1297,7 @@ function injectError(obj, error) {
             $("#errPaket").text("");
             //            for (var n=0; n<error["tot_row"]; n++)
             //                  $("#addme tr").eq(n).children().children("#errConflict").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtNoPaket")
                         $("#errTxtNoPaket").text("* required");
@@ -1308,12 +1313,12 @@ function injectError(obj, error) {
                         $("#errPaket").text("* some field(s) empty");
             //                  if (error[index] == "txtConflict") {
             //                        var idConflict = error["idConflict"].split(",");
-            //                        for (var n in idConflict)				
+            //                        for (var n in idConflict)
             //                              $("#addme tr").eq(idConflict[n]).children().children("#errConflict").text("* packet conflict");
             //                  }
             //                  if (error[index] == "txtInUse") {
             //                        var idInUse = error["idInUse"].split(",");
-            //                        for (var n in idInUse)				
+            //                        for (var n in idInUse)
             //                              $("#addme tr").eq(idInUse[n]).children().children("#errConflict").text("* packet in use");
             //                  }
             //                  if (error[index] == "txtDateWrong") {
@@ -1328,7 +1333,7 @@ function injectError(obj, error) {
             $("#errReason").text("");
             for (var n=0; n<error["tot_row"]; n++)
                   $("#listpaket tr").eq(n).children().children("#errConflict").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtNoPaket")
                         $("#errTxtNoPaket").text("* required");
@@ -1338,12 +1343,12 @@ function injectError(obj, error) {
                         $("#errPaket").text("* some field(s) empty");
                   if (error[index] == "txtConflict") {
                         var idConflict = error["idConflict"].split(",");
-                        for (var n in idConflict)				
+                        for (var n in idConflict)
                               $("#listpaket tr").eq(idConflict[n]).children().children("#errConflict").text("* packet conflict");
                   }
                   if (error[index] == "txtInUse") {
                         var idInUse = error["idInUse"].split(",");
-                        for (var n in idInUse)				
+                        for (var n in idInUse)
                               $("#listpaket tr").eq(idInUse[n]).children().children("#errConflict").text("* packet in use");
                   }
                   if (error[index] == "txtCpm") {
@@ -1361,7 +1366,7 @@ function injectError(obj, error) {
             }
       } else if (obj == "backdate_receive") {
             $("#errPaket").text("");
-            
+
             for (var index in error) {
                   if (error[index] == "txtPaketAds")
                         $("#errPaket").text("* no selected");
@@ -1373,7 +1378,7 @@ function injectError(obj, error) {
             $("#errNotFeedback").text("");
             for (var n=0; n<error["tot_row"]; n++)
                   $("#addme tr").eq(n).children().children("#errConflict").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtPaket")
                         $("#errPaket").text("* no selected");
@@ -1381,12 +1386,12 @@ function injectError(obj, error) {
                         $("#errNoPo").text("* required");
                   if (error[index] == "txtConflict") {
                         var idConflict = error["idConflict"].split(",");
-                        for (var n in idConflict)				
+                        for (var n in idConflict)
                               $("#addme tr").eq(idConflict[n]).children().children("#errConflict").text("* packet conflict");
                   }
                   if (error[index] == "txtInUse") {
                         var idInUse = error["idInUse"].split(",");
-                        for (var n in idInUse)				
+                        for (var n in idInUse)
                               $("#addme tr").eq(idInUse[n]).children().children("#errConflict").text("* packet in use");
                   }
                   if (error[index] == "txtCpm") {
@@ -1404,7 +1409,7 @@ function injectError(obj, error) {
       } else if (obj == "done") {
             $("#errTxtNoPaket").text("");
             $("#errTxtNoPaketUser").text("");
-		
+
             for (var index in error) {
                   if (error[index] == "txtNoPaket")
                         $("#errTxtNoPaket").text("* required");
@@ -1423,23 +1428,23 @@ function injectError(obj, error) {
 function loadHargaProd(index, url, idSource, idDestination) {
       var id = $("#addmeProduction tr").eq(index).children().children("#"+idSource).val();
       var url = url+"/"+id;
-	
+
       var jqxhr = $.get(url,
             function(data) {
                   $("#addmeProduction tr").eq(index).children().children("#"+idDestination).html(data);
             }
             );
-	
+
       jqxhr.complete(function() {
             $("#"+idDestination).trigger("change", [index]);
       });
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
             });
       });
-	
+
       return "Changed";
 }
 
@@ -1448,22 +1453,22 @@ function loadHargaPaket(index, url, idKanal, idProduct, idPosition, idDestinatio
       var product = $("#addme tr").eq(index).children().children("#"+idProduct).val();
       var position = $("#addme tr").eq(index).children().children("#"+idPosition).val();
       var url = url+"/"+kanal+"/"+product+"/"+position;
-	
+
       var jqxhr = $.get(url,
             function(data) {
                   $("#addme tr").eq(index).children().children("#"+idDestination).html(data);
             }
             );
-	
+
       jqxhr.complete(function() {
             $("#"+idDestination).trigger("change", [index]);
       });
-	
+
       jqxhr.error(function() {
             $.fancybox({
                   "content" : "Error occurred. Try again!"
             });
       });
-	  
+
       return "Changed";
 }

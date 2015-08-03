@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Order extends CI_Controller {
     /* Controller ini untuk menampilkan halaman order
-     * Lokasi: ./application/controllers/Order.php 
+     * Lokasi: ./application/controllers/Order.php
      */
 
     private $_access;
@@ -129,7 +129,7 @@ class Order extends CI_Controller {
 
             $n += 1;
         }
-		
+
 		$arrProduction = array();
 		$m = 0;
 		foreach ($allProduction as $production) {
@@ -267,7 +267,7 @@ class Order extends CI_Controller {
         $allProduction = $this->Order_Model->getAllProd();
 		$hargaProd = $this->Order_Model->getHargaProd(1);
         $allIndustry = array();
-        
+
         $arrExp = (isset($allDataIndustry->subindustry_id)) ? explode(",", $allDataIndustry->subindustry_id) : array();
 
         $data = "";
@@ -714,7 +714,7 @@ class Order extends CI_Controller {
                 if (!empty($tempIdDateWrong))
                     $tempIdDateWrong = substr($tempIdDateWrong, 0, -1); // untuk menghilangkan "," dibelakang
                 if (!empty($tempIdInUse))
-                    $tempIdInUse = substr($tempIdInUse, 0, -1); // untuk menghilangkan "," dibelakang					
+                    $tempIdInUse = substr($tempIdInUse, 0, -1); // untuk menghilangkan "," dibelakang
                 if (!empty($tempIdCpmQuota))
                     $tempIdCpmQuota = substr($tempIdCpmQuota, 0, -1); // untuk menghilangkan "," dibelakang
                 if (!empty($tempIdCpmQuotaEmpty))
@@ -757,7 +757,7 @@ class Order extends CI_Controller {
             $date = false;
         }
 
-        if (($packet_type == "N" and empty($no)) or empty($agency_id) or empty($client_id) or empty($selectAds) or $tempIdConflict <> "" or $tempIdInUse <> "" or $tempIdCpmQuotaEmpty <> "" or $tempIdCpmQuota <> "" or $tempIdDateWrong <> "" or !$validNo or $isRestrict == "Y") {
+        if (($packet_type == "N" and empty($no)) or empty($agency_id) or empty($client_id) or empty($selectAds) or $tempIdConflict <> "" or $tempIdInUse <> "" or $tempIdCpmQuotaEmpty <> "" or $tempIdCpmQuota <> "" or $tempIdDateWrong <> "" or !$validNo or $isRestrict == "true") {
             $data["status"] = false;
             $data["error"] = array();
             $data["error"]["tot_row"] = count($selectAds);
@@ -765,8 +765,8 @@ class Order extends CI_Controller {
                 array_push($data["error"], "txtNo");
             /* if (empty($no_paket))
               array_push($data["error"], "txtNoPaket"); */
-			if ($isRestrict == "Y" and empty($industrycat_id))
-				array_push($data["error"], "selectIndustryCat");
+			      if (empty($industrycat_id))
+				        array_push($data["error"], "selectIndustryCat");
             if (empty($agency_id))
                 array_push($data["error"], "txtAgency");
             if (empty($client_id))
@@ -827,29 +827,29 @@ class Order extends CI_Controller {
                     if ($insert !== true)
                         throw new Exception($insert);
                 }
-				
+
 				for ($m = 0; $m < $jumlahItemProduction; $m++) {
 					$production_id = $selectProduction[$m]["value"];
 					$quantity = $txtQty[$m]["value"];
 					$keterangan = $txtInfoProd[$m]["value"];
-					
+
 					$insertProd = $this->Order_Model->insertOrderProduction($no_paket, $production_id, $quantity, $keterangan);
 					if ($insertProd !== true)
 						throw new Exception($insertProd);
-				}					
-			
+				}
+
 				for ($o = 0; $o < $jumlahItemEvent; $o++) {
 					$event = $txtEvent[$o]["value"];
 					$event_start = $txtStartDateEvent[$o]["value"];
 					$event_end = $txtEndDateEvent[$o]["value"];
 					$hargaEvent = $txtHargaEvent[$o]["value"];
 					$infoEvent = $txtInfoEvent[$o]["value"];
-					
+
 					$insertEvent = $this->Order_Model->insertOrderEvent($no_paket, $event, $event_start, $event_end, $hargaEvent, $infoEvent);
 					if ($insertEvent !== true)
 						throw new Exception($insertEvent);
 				}
-				
+
 				$insertHarga = $this->Order_Model->insertOrderHarga($no_paket, $harga_sistem, $harga_gross, $disc_nominal, $additional_disc, $additional_disc_nominal, $total_harga, $total_production, $total_event, $pajak, $total_semua);
                 if ($insertHarga !== true)
                     throw new Exception($insertHarga);
@@ -928,7 +928,7 @@ class Order extends CI_Controller {
         $tempIdDateWrong = "";
         $tempIdCpmQuota = "";
         $tempIdCpmQuotaEmpty = "";
-        
+
         // mengecek apakah ada kolom isian yang kosong di paket
         if (!empty($selectAds)) {
             // for ($n=0; $n<count($selectAds); $n++) {
@@ -1104,7 +1104,7 @@ class Order extends CI_Controller {
                 $update = $this->Order_Model->updateOrderHarga($no_paket, $harga_sistem, $harga_gross, $disc_nominal, $additional_disc, $additional_disc_nominal, $total_harga, $total_production, $total_event, $pajak, $total_semua);
                 if ($update !== true)
                     throw new Exception($update);
-				
+
                 // delete semua paket ads berdasarkan no paketnya
                 $update = $this->Order_Model->deleteOrderPaketAds($no_paket);
                 if ($update !== true)
@@ -1135,7 +1135,7 @@ class Order extends CI_Controller {
                     if ($update !== true)
                         throw new Exception($update);
                 }
-				
+
 				if (count($selectProduction) > 0) {
 					for ($m = 0; $m < count($selectProduction); $m++) {
 						$production_id = $selectProduction[$m]["value"];
@@ -1143,13 +1143,13 @@ class Order extends CI_Controller {
 						// $hargaProd = str_replace(".", "",$txtHargaProd[$m]["value"]);
 						// $hargaProdTotal = str_replace(".", "",$txtHargaProdTotal[$m]["value"]);
 						$keterangan = $txtInfoProd[$m]["value"];
-						
+
 						$insertProd = $this->Order_Model->insertOrderProduction($no_paket, $production_id, $quantity, $keterangan);
 						if ($insertProd !== true)
 							throw new Exception($insertProd);
-					}					
+					}
 				}
-				
+
 				if (count($txtEvent) > 0) {
 					for ($o = 0; $o < count($txtEvent); $o++) {
 						$event = $txtEvent[$o]["value"];
@@ -1157,7 +1157,7 @@ class Order extends CI_Controller {
 						$event_end = $txtEndDateEvent[$o]["value"];
 						$hargaEvent = $txtHargaEvent[$o]["value"];
 						$infoEvent = $txtInfoEvent[$o]["value"];
-						
+
 						$insertEvent = $this->Order_Model->insertOrderEvent($no_paket, $event, $event_start, $event_end, $hargaEvent, $infoEvent);
 						if ($insertEvent !== true)
 							throw new Exception($insertEvent);
@@ -1413,7 +1413,7 @@ class Order extends CI_Controller {
         echo $data;
         die;
     }
-	
+
     public function get_unit($agency_id) {
         // $unitId = $this->Order_Model->getUnitId($agency_id);
         $allUnit = $this->Order_Model->getUnit($agency_id);
