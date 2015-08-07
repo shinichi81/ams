@@ -4,13 +4,13 @@
             <fieldset id="personal">
                   <legend>Data</legend>
                   <div style="float: left; width: 400px;">
-                        <label for="nopaket">No Paket : </label> 
+                        <label for="nopaket">No Paket : </label>
                         <input name="txtNoPaket" id="txtNoPaket" type="text" disabled="disabled" value="<?php echo $all_data->no_paket; ?>" />
                         <br>
-                        <label for="nopaketuser">No Paket User : </label> 
+                        <label for="nopaketuser">No Paket User : </label>
                         <input name="txtNoPaketUser" id="txtNoPaketUser" type="text" disabled="disabled" value="<?php echo $all_data->no_paket_user; ?>" />
                         <br>
-                        <label for="unit">Unit : </label> 
+                        <label for="unit">Unit : </label>
                         <select name="selectUnit" id="selectUnit" style="width: 150px;">
 								<option value="" disabled selected>-- Pilih Unit --</option>
                               <?php
@@ -23,7 +23,7 @@
                               <?php endforeach; ?>
                         </select>
                         <br>
-                        <label for="agency">Perusahaan : </label> 
+                        <label for="agency">Perusahaan : </label>
                         <select name="selectAgency" id="selectAgency" style="width: 150px;">
                               <option value="-">-</option>
                               <?php
@@ -36,7 +36,7 @@
                               <?php endforeach; ?>
                         </select>
                         <br>
-                        <label for="client">Brand : </label> 
+                        <label for="client">Brand : </label>
                         <select name="selectClient" id="selectClient" style="width: 150px;">
                               <?php
                               foreach ($all_client as $client):
@@ -48,16 +48,16 @@
                               <?php endforeach; ?>
                         </select>
 						<br />
-                        <label for="budget">Budget : </label> 
+                        <label for="budget">Budget : </label>
                         <input name="txtBudget" id="txtBudget" type="text" value="<?php echo $all_data->budget; ?>" />
 						<br />
-                        <label for="campaign">Campaign : </label> 
-                        <input name="txtCampaign" id="txtCampaign" type="text" value="<?php echo $all_data->campaign; ?>" />
+                        <label for="campaign">Campaign : </label>
+                        <input name="txtCampaign" id="txtCampaign" type="text" value="<?php echo $all_data->campaign; ?>" /><span class="error" id="errTxtCampaign"></span>
 <!--                        <br>
-                        <label for="benefit">Benefit : </label> 
+                        <label for="benefit">Benefit : </label>
                         <input name="txtBenefit" id="txtBenefit" type="text" value="<?php echo $all_data->benefit; ?>" />
                         <br>
-                        <label for="miscinfo">Keterangan : </label> 
+                        <label for="miscinfo">Keterangan : </label>
                         <textarea name="txtMiscInfo" id="txtMiscInfo" style="height: 80px; width: 250px;"><?php echo $all_data->misc_info; ?></textarea>
 -->
                   </div>
@@ -66,7 +66,7 @@
                   <fieldset id="brandcomm">
                         <legend>Brandcomm</legend>
                         <!-- <div style="float: left; width: 400px;">
-                                <label for="nopaket">No Brandcomm : </label> 
+                                <label for="nopaket">No Brandcomm : </label>
                                 <input name="txtNoBrandcomm" id="txtNoBrandcomm" type="text" disabled="disabled" value="<?php echo $all_data->no_brandcomm; ?>" />
                                 <br> -->
                         <label for="nopaket">Start Date : </label>
@@ -123,8 +123,8 @@
 							  // $jumlah = 0;
                               foreach ($all_detail as $detail):
                                     ?>
-									<?php 
-									// remark 3 April 2013 @tio 
+									<?php
+									// remark 3 April 2013 @tio
 									// cek banner apakah sudah tayang atau belum
 									$allDetailReq = $this->Request_Model->getRequestDetail($all_data->no_paket,$detail->kanal_id,$detail->product_group_id,$detail->position_id,$detail->start_date);
 									$disabled="";
@@ -243,24 +243,25 @@
 					<input name="total" id="total" style="width:100px;" type="text" value="<?php echo $all_data->paket_sistem; ?>" />
 				  </div>
 				  <br />
-                  <label for="hargaGross">Harga Paket Gross : </label> 
+                  <label for="hargaGross">Harga Paket Gross : </label>
                   <input name="hargaGross" id="hargaGross" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo $all_data->paket_gross; ?>" />
                   <br>
-                  <label for="diskon">Diskon : </label> 
+                  <label for="diskon">Diskon : </label>
                   <input name="txtDiskon" id="txtDiskon" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo $all_data->diskon; ?>" />
 				  <br />
-				  <label for="additionalDiskon">Additional Diskon : </label> 
+				  <label for="additionalDiskon">Additional Diskon : </label>
 				  <input name="txtAddDiskon" id="txtAddDiskon" type="text" onKeyPress="gantiHarga()" onKeyUp="gantiHarga()" value="<?php echo $all_data->additional_diskon; ?>" />
                   <br>
-                  <label for="diskonNominal">Diskon (Nominal) : </label> 
+                  <label for="diskonNominal">Diskon (Nominal) : </label>
                   <input name="diskonNominal" id="diskonNominal" type="text" value="<?php echo number_format($all_data->diskon_nominal,0,",","."); ?>" readonly />
                   <br>
-                  <label for="addDiskonNominal">Additional Diskon (Nominal) : </label> 
+                  <label for="addDiskonNominal">Additional Diskon (Nominal) : </label>
                   <input name="addDiskonNominal" id="addDiskonNominal" type="text" value="<?php echo number_format($all_data->additional_diskon_nominal,0,",","."); ?>" readonly />
             </fieldset>
             <fieldset id="production">
                   <legend>Production Cost</legend>
                   <button type="button" name="btnTambahProduction" id="btnTambahProduction" title="Tambah" class="btn"><img src="<?php echo image_url("icons/add.png"); ?>" alt="Tambah" /></button>
+                  <input type="hidden" id="jumlahItemProduction" value="0" />
                   <table>
                         <thead>
                         <th>Production</th>
@@ -270,7 +271,7 @@
                         <th>Keterangan</th>
                         <th>&nbsp;</th>
                         </thead>
-                        <tbody id="addmeProduction">			
+                        <tbody id="addmeProduction">
                               <?php
 								  foreach ($all_detail_prod as $detailProd):
                               ?>
@@ -317,6 +318,7 @@
             <fieldset id="event">
                   <legend>Event</legend>
                   <button type="button" name="btnTambahEvent" id="btnTambahEvent" title="Tambah" class="btn"><img src="<?php echo image_url("icons/add.png"); ?>" alt="Tambah" /></button>
+                  <input type="hidden" id="jumlahItemEvent" value="0" />
                   <table>
                         <thead>
                         <th>Event</th>
@@ -356,7 +358,7 @@
             </fieldset>
 			<fieldset id="totalSemua">
 					<legend>Total Biaya</legend>
-					<label>Total Harga Paket :</label> 
+					<label>Total Harga Paket :</label>
 					<input name="totalHarga" id="totalHarga" type="text" value="<?= $all_data->paket_total; ?>" readonly />
 					<br>
 					<label>Total Harga Produksi :</label>
@@ -373,18 +375,18 @@
 			</fieldset>
             <fieldset id="conflict">
                   <legend>Conflict Brand</legend>
-                  <label for="conflict">Conflict Brand : </label> 
+                  <label for="conflict">Conflict Brand : </label>
                   <input type="checkbox" name="chkIsRestrict" id="chkIsRestrict" value="Y" <?php echo ($all_data->is_restrict == "Y") ? "checked='checked'" : ""; ?> /> Ya
 				  <span class="industry_cat" <?php echo ($all_data->is_restrict == "Y") ? "" : "style='display: none;'"; ?>>
                         <br>
                         <label for="industry_cat">Industri : </label>
                         <select name="selectIndustryCat" id="selectIndustryCat">
-                              <?php foreach ($all_industry_cat as $industry_cat): 
+                              <?php foreach ($all_industry_cat as $industry_cat):
 									$selected = "";
                                     if ($all_data->industrycat_id == $industry_cat->id)
                                           $selected = "selected='selected'";
 									?>
-                                    <option value="<?php echo $industry_cat->id; ?>" <?php echo $selected; ?>><?php echo $industry_cat->industry_name; ?></option>	
+                                    <option value="<?php echo $industry_cat->id; ?>" <?php echo $selected; ?>><?php echo $industry_cat->industry_name; ?></option>
                               <?php endforeach; ?>
                         </select>
                   </span>
@@ -398,7 +400,7 @@
                                     if ($all_data->industry_id == $industry->id)
                                           $selected = "selected='selected'";
                                     ?>
-                                    <option value="<?php echo $industry->id; ?>" <?php echo $selected; ?>><?php echo $industry->name; ?></option>	
+                                    <option value="<?php echo $industry->id; ?>" <?php echo $selected; ?>><?php echo $industry->name; ?></option>
                               <?php endforeach; ?>
                         </select>
                   </span>
@@ -407,48 +409,48 @@
             <fieldset id="others">
                   <legend>Others</legend>
                   <div style="float: left; width: 400px;">
-                        <label for="miscinfo">Event : </label> 
+                        <label for="miscinfo">Event : </label>
                         <textarea name="txtMiscInfoEvent" id="txtMiscInfoEvent" style="height: 80px; width: 250px;"><?php echo $all_data->misc_info_event; ?></textarea>
                   </div>
                   <div style="float: left;">
-                        <label for="miscinfo">Production Cost : </label> 
+                        <label for="miscinfo">Production Cost : </label>
                         <textarea name="txtMiscInfoProductionCost" id="txtMiscInfoProductionCost" style="height: 80px; width: 250px;"><?php echo $all_data->misc_info_production_cost; ?></textarea>
                   </div>
             </fieldset>
 -->
             <div class="ajax-loader" style="display: none;">&nbsp;</div>
             <div align="center">
-                  <input id="button1" type="button" value="Simpan" onclick="ajaxChange('order', 'update', '<?php echo site_url("order/update"); ?>', '<?php echo site_url("order/content"); ?>', '<?php echo site_url("order/insert_page"); ?>')" /> 
+                  <input id="button1" type="button" value="Simpan" onclick="ajaxChange('order', 'update', '<?php echo site_url("order/update"); ?>', '<?php echo site_url("order/content"); ?>', '<?php echo site_url("order/insert_page"); ?>')" />
                   <input id="button2" type="button" value="Kembali" onclick="loadForm('<?php echo site_url("order/insert_page"); ?>')" />
             </div>
       </form>
 
       <script type="text/javascript">
 			Number.prototype.formatMoney = function(c, d, t){
-				var n = this, 
-					c = isNaN(c = Math.abs(c)) ? 2 : c, 
-					d = d == undefined ? "," : d, 
-					t = t == undefined ? "." : t, 
-					s = n < 0 ? "-" : "", 
-					i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", 
+				var n = this,
+					c = isNaN(c = Math.abs(c)) ? 2 : c,
+					d = d == undefined ? "," : d,
+					t = t == undefined ? "." : t,
+					s = n < 0 ? "-" : "",
+					i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
 					j = (j = i.length) > 3 ? j % 3 : 0;
 				   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 			};
- 
+
             function numberOnly(e) {
                   var charCode = (e.which) ? e.which : e.keyCode;
-                                          		
+
                   if (!((charCode >= 48 && charCode <= 57) || charCode == 8 || charCode == 9))
                         return false;
             }
-                                                
+
             function currencySeparator(obj, separator) {
                   a = obj.value;
                   b = a.replace(/[^\d]/g, "");
                   c = "";
                   panjang = b.length;
                   j = 0;
-                                                	  	
+
                   for (i = panjang; i > 0; i--) {
                         j = j + 1;
                         if (((j % 3) == 1) && (j != 1)) {
@@ -459,7 +461,7 @@
                   }
                   obj.value = c;
             }
-                                                      
+
             $(document).ready(function() {
 				var simpan = parseInt($("#total").val());
 				var simpanProd = parseInt($("#totalProduction").val());
@@ -540,16 +542,16 @@
 
                         $(this).parents(".remove").remove();
                   });
-                                                                  		
+
                   // gunakan fungsi live untuk membind event 'change' ke #selectKanal
                   $("#selectKanal").die('change').live('change', function() {
                         var index = $(this).parents(".remove").prevAll().length;
-                                                                  			
+
                         loadListOption(index, '<?php echo site_url("order/get_product_group"); ?>', 'selectKanal', 'selectProductGroup');
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtStartDate]").val("");
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtEndDate]").val("");
                   });
-				  
+
                    // gunakan fungsi live untuk membind event 'change' ke #selectProductGroup
                   // gunakan fungsi live untuk membind event 'change' ke #selectProductGroup
                   $("#selectProductGroup").die('change').live('change', function(event, index) {
@@ -560,24 +562,24 @@
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtStartDate]").val("");
 						$("#addme tr").eq(index).children().next().next().next().next().find("input[name=txtEndDate]").val("");
                   });
-				  
+
                   // gunakan fungsi live untuk membind event 'change' ke #selectPosition
                   $("#selectPosition").die('change').live('change', function(event, index) {
                         if (index == undefined)
                               var index = $(this).parents(".remove").prevAll().length;
-                                                
+
 						var harga = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
 						harga = parseInt(harga.split('.').join(""));
 						simpan = simpan - harga;
 						document.getElementById('total').value = simpan.formatMoney(0);
-						
+
                         loadHargaPaket(index, '<?php echo site_url("order/get_harga"); ?>', 'selectKanal', 'selectProductGroup', 'selectPosition', 'harga');
                         alert(loadHargaPaket(index, '<?php echo site_url("order/get_harga_total"); ?>', 'selectKanal', 'selectProductGroup', 'selectPosition', 'hargaTotal'));
 
 						var harga2 = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHargaTotal").val();
 						harga2 = parseInt(harga2.split('.').join(""));
 						simpan = simpan + harga2;
-						
+
 						document.getElementById('total').value = simpan.formatMoney(0);
 						document.getElementById('hargaGross').value = simpan;
 						gantiHarga();
@@ -599,7 +601,7 @@
                               $("#addme tr").eq(index).children().next().next().next().next().find("#show_cpm").hide();
                         }
                   });
-				  
+
 				var DateDiff = {
 
 					inDays: function(d1, d2) {
@@ -636,11 +638,11 @@
 
                         var start = $("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtStartDate]").val();
                         var end = $("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtEndDate]").val();
-						
+
 						if (start != "" && end!= "") {
 							var d1 = new Date(start);
 							var d2 = new Date(end);
-							
+
 							var harga = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHarga").val();
 							harga = harga.split('.').join("");
 							harga = harga * (DateDiff.inDays(d1, d2) + 1);
@@ -649,7 +651,7 @@
 							simpan = simpan - hargaTotal;
 							$("#addme tr").eq(index).children().next().next().next().next().next().next().find("#txtHargaTotal").val(harga.formatMoney(0));
 							simpan = simpan + harga;
-							document.getElementById('total').value = simpan.formatMoney(0);							
+							document.getElementById('total').value = simpan.formatMoney(0);
 							document.getElementById('hargaGross').value = simpan;
 							gantiHarga();
 							// hitungTotal();
@@ -665,11 +667,11 @@
 
                         var start = $("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtStartDate]").val();
                         var end = $("#addme tr").eq(index).children().next().next().next().next().next().find("input[name=txtEndDate]").val();
-						
+
 						if (start != "" && end!= "") {
 							var d1 = new Date(start);
 							var d2 = new Date(end);
-							
+
 							var harga = $("#addme tr").eq(index).children().next().next().next().next().next().find("#txtHarga").val();
 							harga = harga.split('.').join("");
 							harga = harga * (DateDiff.inDays(d1, d2) + 1);
@@ -678,7 +680,7 @@
 							simpan = simpan - hargaTotal;
 							$("#addme tr").eq(index).children().next().next().next().next().next().next().find("#txtHargaTotal").val(harga.formatMoney(0));
 							simpan = simpan + harga;
-							document.getElementById('total').value = simpan.formatMoney(0);							
+							document.getElementById('total').value = simpan.formatMoney(0);
 							document.getElementById('hargaGross').value = simpan;
 							gantiHarga();
 							// hitungTotal();
@@ -715,10 +717,11 @@
                               "		<div class='error' id='errConflict'></div>"+
                               "	</td>"+
                               "</tr>");
-							  
+
 						simpanProd = simpanProd + <?= $harga_production->harga; ?>;
 						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
 						hitungTotal();
+            document.getElementById('jumlahItemProduction').value = parseInt(document.getElementById('jumlahItemProduction').value) + 1;
 				  });
 
                   $("#btnHapusProduction").die('click').live('click', function() {
@@ -730,31 +733,31 @@
                         $(this).parents(".remove").remove();
 						hitungTotal();
                   });
-				  
+
                   $("#selectProduction").die('change').live('change', function(event, index) {
                         if (index == undefined)
                               var index = $(this).parents(".remove").prevAll().length;
-                                                
+
                         var hargaTotal = $("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val();
 						hargaTotal = hargaTotal.split('.').join("");
 						simpanProd = simpanProd - hargaTotal;
                         loadHargaProd(index, '<?php echo site_url("order/get_harga_prod"); ?>', 'selectProduction', 'harga');
                         alert(loadHargaProd(index, '<?php echo site_url("order/get_harga_prod_total"); ?>', 'selectProduction', 'hargaTotal'));
 						$("#addmeProduction tr").eq(index).children().next().find("#txtQty").val(1);
-						
+
 						var hargaBaru = $("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val();
 						hargaBaru = parseInt(hargaBaru.split('.').join(""));
 						simpanProd = simpanProd + hargaBaru;
-						
+
 						// simpanProd = simpanProd + newHarga;
 						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
 						hitungTotal();
 				  });
-				  
+
                   $("input[name=txtQty]").die('change').live('change', function(event, index) {
                         if (index == undefined)
                               var index = $(this).parents(".remove").prevAll().length;
-						
+
                         var harga = $("#addmeProduction tr").eq(index).children().next().next().find("#txtHarga").val();
                         var hargaTotal = $("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val();
 						harga = harga.split('.').join("");
@@ -762,11 +765,11 @@
 						simpanProd = simpanProd - hargaTotal;
 						hargaTotal = harga * $(this).val();
 						simpanProd = simpanProd + hargaTotal;
-						$("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val(hargaTotal.formatMoney(0));                                                
+						$("#addmeProduction tr").eq(index).children().next().next().next().find("#txtHargaTotal").val(hargaTotal.formatMoney(0));
 						document.getElementById('totalProduction').value = simpanProd.formatMoney(0);
 						hitungTotal();
 				  });
-				  				  
+
                   $("#btnTambahEvent").click(function() {
                         $("#addmeEvent").append("<tr class='remove'>"+
                               "	<td align='center'>"+
@@ -789,6 +792,7 @@
                               "	</td>"+
                               "</tr>");
 						hitungTotal();
+            document.getElementById('jumlahItemEvent').value = parseInt(document.getElementById('jumlahItemEvent').value) + 1;
 				  });
 
                   $("input[name=txtStartDateEvent]").die('change').live('change', function(event, index) {
@@ -809,14 +813,14 @@
 				  $('input[name=txtHargaEvent]').live('focus', function(event, index){
                         if (index == undefined)
                               var index = $(this).parents(".remove").prevAll().length;
-						
+
 						$("#addmeEvent tr").eq(index).children().next().next().find("#txtHargaEvent").attr('oldValue',$("#addmeEvent tr").eq(index).children().next().next().find("#txtHargaEvent").val());
 				  });
-				  
+
                   $("input[name=txtHargaEvent]").die('change').live('change', function(event, index) {
                         if (index == undefined)
                               var index = $(this).parents(".remove").prevAll().length;
-					  
+
 						var oldValue = $("#addmeEvent tr").eq(index).children().next().next().find("#txtHargaEvent").attr('oldValue');
 						oldValue = parseInt(oldValue);
 						simpanEvent = simpanEvent - oldValue;
@@ -848,7 +852,7 @@
         loadListOption(index, '<?php echo site_url("order/get_position"); ?>', 'selectProductGroup', 'selectPosition');
         });
         <?php */ ?>
-                                                                        				
+
                     // untuk menampilkan inputan industri
                     $("#chkIsRestrict").click(function() {
                           if ($(this).is(":checked")){

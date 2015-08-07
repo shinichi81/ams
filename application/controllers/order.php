@@ -921,6 +921,8 @@ class Order extends CI_Controller {
         $total_semua = $arrParam[41];
 		$campaign = $arrParam[42];
 		$unit_id = $arrParam[43];
+    $jumlahItemProduction = $arrParam[44];
+    $jumlahItemEvent = $arrParam[45];
 		//END TAMBAHAN
         $date = true;
         $tempIdInUse = "";
@@ -1057,7 +1059,7 @@ class Order extends CI_Controller {
             $date = false;
         }
 
-        if (empty($no_paket) or empty($agency_id) or empty($client_id) or empty($diskon) or empty($selectAds) or $tempIdConflict <> "" or $tempIdInUse <> "" or $tempIdCpmQuotaEmpty <> "" or $tempIdCpmQuota <> "" or $tempIdDateWrong <> "") {
+        if (empty($no_paket) or empty($agency_id) or empty($client_id) or empty($selectAds) or $tempIdConflict <> "" or $tempIdInUse <> "" or $tempIdCpmQuotaEmpty <> "" or $tempIdCpmQuota <> "" or $tempIdDateWrong <> "") {
             $data["status"] = false;
             $data["error"] = array();
             $data["error"]["tot_row"] = count($selectAds);
@@ -1067,8 +1069,10 @@ class Order extends CI_Controller {
                 array_push($data["error"], "txtAgency");
             if (empty($client_id))
                 array_push($data["error"], "txtClient");
-            if (empty($diskon))
-                array_push($data["error"], "txtDiskon");
+            if (empty($campaign))
+                array_push($data["error"], "txtCampaign");
+            // if (empty($diskon))
+            //     array_push($data["error"], "txtDiskon");
             /* if (!$date)
               array_push($data["error"], "txtDate"); */
             if (empty($selectAds))
